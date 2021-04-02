@@ -14,6 +14,14 @@
 				"type" : "color",
 				"value" : "0 0 0"
 			},
+			"background_image_file" : 
+			{
+				"condition" : "background_type.value == \"image\" && background_image_type.value == \"file\"",
+				"order" : 2,
+				"text" : "&emsp;背景圖片",
+				"type" : "file",
+				"value" : ""
+			},
 			"background_image_type" : 
 			{
 				"condition" : "background_type.value == \"image\"",
@@ -24,22 +32,14 @@
 						"value" : "file"
 					},
 					{
-						"label" : "網路上選擇<sub>不推薦</sub>",
+						"label" : "網路上選擇<br><small>可能會被禁止訪問</small>",
 						"value" : "url"
 					}
 				],
 				"order" : 3,
 				"text" : "&emsp;&emsp;檔案位置",
 				"type" : "combo",
-				"value" : "url"
-			},
-			"background_image_file" : 
-			{
-				"condition" : "background_type.value == \"image\" && background_image_type.value == \"file\"",
-				"order" : 2,
-				"text" : "&emsp;背景圖片",
-				"type" : "file",
-				"value" : ""
+				"value" : "file"
 			},
 			"background_image_url" : 
 			{
@@ -92,7 +92,7 @@
 				"order" : 1,
 				"text" : "背景",
 				"type" : "combo",
-				"value" : "color"
+				"value" : "image"
 			},
 			"bing_api" : 
 			{
@@ -160,7 +160,7 @@
 				"order" : 102,
 				"text" : "&emsp;顏色設置",
 				"type" : "color",
-				"value" : "1 1 1"
+				"value" : "0 0 0"
 			},
 			"panel_cal$bg_img" : 
 			{
@@ -213,6 +213,25 @@
 				"text" : "&emsp;文字顏色",
 				"type" : "color",
 				"value" : "1 1 1"
+			},
+			"panel_cal$day_lang" : 
+			{
+				"condition" : "panel_cal$type.value == true && panel_cal$show_week.value == true",
+				"options" : 
+				[
+					{
+						"label" : "中文",
+						"value" : "zh"
+					},
+					{
+						"label" : "英文",
+						"value" : "us"
+					}
+				],
+				"order" : 118,
+				"text" : "&emsp;&emsp;星期幾",
+				"type" : "combo",
+				"value" : "zh"
 			},
 			"panel_cal$full_setting" : 
 			{
@@ -274,6 +293,14 @@
 				"text" : "&emsp;上下位置<sub>px</sub>",
 				"type" : "textinput",
 				"value" : "0"
+			},
+			"panel_cal$show_week" : 
+			{
+				"condition" : "panel_cal$type.value == true",
+				"order" : 117,
+				"text" : "&emsp;顯示星期",
+				"type" : "bool",
+				"value" : true
 			},
 			"panel_cal$size" : 
 			{
@@ -337,7 +364,7 @@
 				"order" : 13,
 				"text" : "&emsp;顏色設置",
 				"type" : "color",
-				"value" : "1 1 1"
+				"value" : "0 0 0"
 			},
 			"panel_clock$bg_img" : 
 			{
@@ -415,33 +442,6 @@
 				"text" : "位置設置",
 				"type" : "combo",
 				"value" : "pc"
-			},
-			"panel_cal$show_week" : 
-			{
-				"condition" : "panel_cal$type.value == true",
-				"order" : 117,
-				"text" : "&emsp;顯示星期",
-				"type" : "bool",
-				"value" : true
-			},
-			"panel_cal$day_lang" : 
-			{
-				"condition" : "panel_cal$type.value == true && panel_cal$show_week.value == true",
-				"options" : 
-				[
-					{
-						"label" : "中文",
-						"value" : "zh"
-					},
-					{
-						"label" : "英文",
-						"value" : "us"
-					}
-				],
-				"order" : 118,
-				"text" : "&emsp;&emsp;星期幾",
-				"type" : "combo",
-				"value" : "zh"
 			},
 			"panel_clock$pos_pc_x" : 
 			{
@@ -566,8 +566,8 @@
 	"preview" : "preview.jpg",
 	"tags" : [ "Relaxing" ],
 	"title" : "onTEST",
-	"type" : "Web",
-	"version" : 4,
+	"type" : "web",
+	"version" : 5,
 	"visibility" : "friends",
 	"workshopid" : "2440585648",
 	"workshopurl" : "steam://url/CommunityFilePage/2440585648"

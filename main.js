@@ -117,9 +117,11 @@ $(() => {
                     break;
                     case("image"):
                         body.css({
-                            "background-image": (bg.img_type == "file" )?
-                                bg.img_file:
-                                bg.img_url,
+                            "background-image": "url('" + (
+                                    (bg.img_type == "file" )?
+                                    bg.img_file:
+                                    bg.img_url
+                                )+ "')",
                             "background-color": ""
                         })
                     break;
@@ -146,15 +148,16 @@ $(() => {
                 change_bg()
             }
             if (user.background_image_file) {
-                bg.img_file = "url('file:///" + user.background_image_file.value + "')"
+                let val = user.background_image_file.value
+                bg.img_file = (val == "")?("background.webp"):("file:///" + val)
                 change_bg()
             }
             if (user.background_image_url) {
                 let val = user.background_image_url.value
-                if(val.indexOf("https://") === -1 || val.indexOf("http://") === -1){
+                if(val.indexOf("https://") === -1 && val.indexOf("http://") === -1){
                     val = "https://" + val 
                 }
-                bg.img_url = "url('" + val + "')"
+                bg.img_url =  val 
                 change_bg()
             }
             if (user.background_size) {
