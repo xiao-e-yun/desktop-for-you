@@ -65,6 +65,16 @@ body>div{
     font-weight:bold;
 }
 
+
+/*特效*/
+#FX {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 @keyframes rainbow{
     100%,0%{
         background-color: rgb(255,0,0);

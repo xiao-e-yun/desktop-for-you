@@ -1,5 +1,20 @@
 ﻿//==================================變數==================================
 window.bg = {}
+//特效設定
+window.fx={
+    fps:{
+        fixed:0,
+        frame_count:0,
+        time_passed:0
+    },
+    sakura:{//櫻花
+        chg_opc:function(){
+            if(window.fx.sakura.tmp){
+                $("#sakura").css("opacity",1-this.opacity/100)
+            }
+        }
+    }
+}
 //時鐘設定
 window.clock_opt = {
     time: {
@@ -9,18 +24,18 @@ window.clock_opt = {
     remind: {
         run: false,
     },
-    day:{
-        zh:[ //中文
-            "日","一","二","三","四","五","六"
+    day: {
+        zh: [ //中文
+            "日", "一", "二", "三", "四", "五", "六"
         ],
-        us:[ //英文縮寫
-            "&nbsp;Sun","&nbsp;Mon","Tues","&nbsp;Wed","Thur","&nbsp;Fri","&nbsp;Sat"
+        us: [ //英文縮寫
+            "&nbsp;Sun", "&nbsp;Mon", "Tues", "&nbsp;Wed", "Thur", "&nbsp;Fri", "&nbsp;Sat"
         ]
     }
 }
 //==================================面板==================================
 window.panel = {
-    RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm ,
+    RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm,
     creat: function (_id) {
         this[_id] = {
             id: _id, //ID
@@ -81,58 +96,58 @@ window.panel = {
     },
 };
 $(() => {
+    window.requestAnimationFrame(re);
     //================================創建面板================================
     panel.creat("clock") //時鐘
     panel.creat("cal") //日曆
     //==================================監聽==================================
     window.wallpaperPropertyListener = {
-        setPaused: function (isPaused) {//監聽暫停
+        //▲-------------------------監聽暫停-------------------------▲
+        setPaused: function (isPaused) {
             if (!isPaused) {//重新啟動
                 timer.set()
             } else { //已暫停
 
             }
         },
-        applyUserProperties: function (user) {//監聽用戶設定
-
-            //==================================面板==================================
-            for (const [$key, $val] of Object.entries(user)) {
-                if ($key.indexOf("panel_") === 0) {//驗證是否為面板
-                    let key = panel.RegExp.exec($key).groups
-                    let val = $val.value
-                    panel.RegExp.lastIndex = 0;
-                    panel.set(key.panel,key.type,val)
-                }
+        //▲-------------------------監聽系統設定-------------------------▲
+        applyGeneralProperties: function(properties) {
+            if (properties.fps) {
+                fx.fps.fixed = properties.fps;
             }
+            
+        },
+        //▲-------------------------監聽用戶設定-------------------------▲
+        applyUserProperties: function (user) {
             //==================================背景==================================
 
             body = $("body")
             function change_bg() {
-                switch(bg.type){
-                    case("color"):
-                    body.css({
-                        "background-image": "",
-                        "background-color": bg.color
-                    })
-                    break;
-                    case("image"):
+                switch (bg.type) {
+                    case ("color"):
+                        body.css({
+                            "background-image": "",
+                            "background-color": bg.color
+                        })
+                        break;
+                    case ("image"):
                         body.css({
                             "background-image": "url('" + (
-                                    (bg.img_type == "file" )?
-                                    bg.img_file:
+                                (bg.img_type == "file") ?
+                                    bg.img_file :
                                     bg.img_url
-                                )+ "')",
+                            ) + "')",
                             "background-color": ""
                         })
-                    break;
-                    case("bing_api"):
-                    $.getJSON("https://bing.biturl.top/",(json)=>{
-                        body.css({
-                            "background-image": "url('"+json.url+"')",
-                            "background-color": ""
+                        break;
+                    case ("bing_api"):
+                        $.getJSON("https://bing.biturl.top/", (json) => {
+                            body.css({
+                                "background-image": "url('" + json.url + "')",
+                                "background-color": ""
+                            })
                         })
-                    })
-                    break;
+                        break;
                 }
             }
             if (user.background_type) {
@@ -149,21 +164,48 @@ $(() => {
             }
             if (user.background_image_file) {
                 let val = user.background_image_file.value
-                bg.img_file = (val == "")?("background.webp"):("file:///" + val)
+                bg.img_file = (val == "") ? ("background.webp") : ("file:///" + val)
                 change_bg()
             }
             if (user.background_image_url) {
                 let val = user.background_image_url.value
-                if(val.indexOf("https://") === -1 && val.indexOf("http://") === -1){
-                    val = "https://" + val 
+                if (val.indexOf("https://") === -1 && val.indexOf("http://") === -1) {
+                    val = "https://" + val
                 }
-                bg.img_url =  val 
+                bg.img_url = val
                 change_bg()
             }
             if (user.background_size) {
                 body.css({ "background-size": user.background_size.value })
             }
-
+            //==================================特效==================================
+            if(user.fx_sakura$type){
+                if(fx.sakura.tmp){
+                    toggleAnimation()
+                }else{
+                    if(user.fx_sakura$type.value){
+                        $.get("sakura/shader.html",(data)=>{
+                            $("body").append(data)
+                            sakura_onload()
+                        })
+                        window.fx.sakura.tmp=true
+                    }
+                }
+                fx.sakura.chg_opc()
+            }
+            if(user.fx_sakura$opc){
+                window.fx.sakura.opacity=user.fx_sakura$opc.value
+                fx.sakura.chg_opc()
+            }
+            //==================================面板==================================
+            for (const [$key, $val] of Object.entries(user)) {
+                if ($key.indexOf("panel_") === 0) {//驗證是否為面板
+                    let key = panel.RegExp.exec($key).groups
+                    let val = $val.value
+                    panel.RegExp.lastIndex = 0;
+                    panel.set(key.panel, key.type, val)
+                }
+            }
         }
     };
 })

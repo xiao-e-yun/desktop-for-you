@@ -1,3 +1,72 @@
+// Utility object to display FPS
+var fpsDisplay = {
+    frameCount: 0,
+    timePassed: 0
+};
+
+// The square we want to animate
+var square;
+var squarePosition = 0;
+
+// Timer used to implement an FPS limit
+var last = performance.now() / 1000;
+var fpsThreshold = 0;
+
+function animateSquare(now) {
+    // Moves the square
+    squarePosition = (Math.sin(now * 3) + 1.0) * 100;
+    square.style.left = squarePosition + 'px';
+}
+
+function updateFPS() {
+	// Updates the FPS display
+    ++fpsDisplay.frameCount;
+    if (fpsDisplay.timePassed > 1.0) {
+        var fpsElement = document.getElementById('FPSDisplay');
+        fpsElement.textContent = fpsDisplay.frameCount;
+        fpsDisplay.frameCount = 0;
+        fpsDisplay.timePassed -= 1.0;
+    }
+}
+
+function run() {
+    // Keep animating
+    window.requestAnimationFrame(run);
+
+    // Figure out how much time passed since the last animation
+    var now = performance.now() / 1000;
+    var dt = now - last;
+    last = now;
+
+    // Update the fps timer
+    fpsDisplay.timePassed += dt;
+
+	// FPS LIMIT IMPLEMENTATION HERE
+    // If there is an FPS limit, abort updating the animation if we reached the desired FPS
+    if (generalData.fps > 0) {
+        fpsThreshold += dt;
+        if (fpsThreshold < 1.0 / generalData.fps) {
+            return;
+        }
+        fpsThreshold -= 1.0 / generalData.fps;
+    }
+
+    // Update the animation
+    animateSquare(now);
+
+    // Update the FPS display
+    updateFPS();
+}
+
+
+window.onload = function() {
+    // Get the element that we want to animate
+    square = document.getElementById('AnimTest');
+
+    // Start the animation
+    window.requestAnimationFrame(run);
+};
+
 <name> = 名稱
 <type> = 面板名稱
 <order> = 排列
