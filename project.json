@@ -1,6 +1,6 @@
 {
 	"contentrating" : "Everyone",
-	"description" : "整體系統 建置中~\r\n[url=https://69.run/E3xQ8X]github[/url]\r\n[spoiler]^轉址網址[/spoiler]",
+	"description" : "整體由可自訂性為核心\r\n盡可能提高效能\r\n\r\n目前可以設置有:\r\n     時鐘\r\n     日曆\r\n\r\n[url=https://69.run/E3xQ8X]github[/url]",
 	"file" : "index.html",
 	"general" : 
 	{
@@ -566,9 +566,9 @@
 	"preview" : "preview.jpg",
 	"tags" : [ "Relaxing" ],
 	"title" : "精緻桌布",
-	"type" : "Web",
+	"type" : "web",
 	"version" : 7,
-	"visibility" : "friends",
+	"visibility" : "public",
 	"workshopid" : "2440585648",
 	"workshopurl" : "steam://url/CommunityFilePage/2440585648"
 }
