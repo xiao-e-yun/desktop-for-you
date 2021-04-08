@@ -23,8 +23,7 @@ window.fx = {
                 fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
             }
 			//
-            if(typeof(animate)=="function"){animate()}
-
+            if(typeof(animate)=="function" && fx.sakura.type){animate()}
         }
     },
     sakura: {//櫻花
@@ -64,11 +63,7 @@ window.panel = {
             bor: {}, //邊框
             pos: {}, //位置
             display: function (bool) {//顯示模式
-                if (bool) {
-                    this.dom.show()
-                } else {
-                    this.dom.hide()
-                }
+                this.dom[bool?"fadeIn":"fadeOut"]()
             },
             css: function (set) {//修改css
                 this.dom.css(set)
@@ -200,10 +195,9 @@ $(() => {
             }
             //==================================特效==================================
             if (user.fx_sakura$type) {
-                if (fx.sakura.tmp) {
-                    toggleAnimation()
-                } else {
-                    if (user.fx_sakura$type.value) {
+                let val = user.fx_sakura$type.value
+                if (!fx.sakura.tmp) {
+                    if (val) {
                         $.get("sakura/shader.html", (data) => {
                             $("body").append(data)
                             sakura_onload()
@@ -211,6 +205,8 @@ $(() => {
                         window.fx.sakura.tmp = true
                     }
                 }
+                window.fx.sakura.type= val
+                $("#sakura")[val ? 'fadeIn' : 'fadeOut']();
                 fx.sakura.chg_opc()
             }
             if (user.fx_sakura$opc) {
