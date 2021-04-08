@@ -785,7 +785,6 @@ function animate() {
     timeInfo.delta = (curdate - timeInfo.prev) / 1000.0;
     timeInfo.prev = curdate;
     
-    if(animating) requestAnimationFrame(animate);
     render();
 }
 

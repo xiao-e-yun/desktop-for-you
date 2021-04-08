@@ -1,16 +1,36 @@
 ﻿//==================================變數==================================
 window.bg = {}
 //特效設定
-window.fx={
-    fps:{
-        fixed:0,
-        frame_count:0,
-        time_passed:0
+window.fx = {
+    fps: {
+        fixed: 0,
+        last: performance.now() / 1000,
+        fpsThreshold:0,
+        run: function () {
+            // 刷新畫面
+            window.requestAnimationFrame(fx.fps.run);
+            // 計算時差
+            var now = performance.now() / 1000;
+            var dt = now - fx.fps.last;
+            fx.fps.last = now;
+            // FPS LIMIT IMPLEMENTATION HERE
+            // If there is an FPS limit, abort updating the animation if we reached the desired FPS
+            if (fx.fps.fixed > 0) {
+                fx.fps.fpsThreshold += dt;
+                if (fx.fps.fpsThreshold < 1.0 / fx.fps.fixed) {
+                    return ;
+                }
+                fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
+            }
+			//
+            if(typeof(animate)=="function"){animate()}
+
+        }
     },
-    sakura:{//櫻花
-        chg_opc:function(){
-            if(window.fx.sakura.tmp){
-                $("#sakura").css("opacity",1-this.opacity/100)
+    sakura: {//櫻花
+        chg_opc: function () {
+            if (window.fx.sakura.tmp) {
+                $("#sakura").css("opacity", 1 - this.opacity / 100)
             }
         }
     }
@@ -96,7 +116,7 @@ window.panel = {
     },
 };
 $(() => {
-    window.requestAnimationFrame(re);
+    window.requestAnimationFrame(fx.fps.run);
     //================================創建面板================================
     panel.creat("clock") //時鐘
     panel.creat("cal") //日曆
@@ -111,11 +131,11 @@ $(() => {
             }
         },
         //▲-------------------------監聽系統設定-------------------------▲
-        applyGeneralProperties: function(properties) {
-            if (properties.fps) {
-                fx.fps.fixed = properties.fps;
+        applyGeneralProperties: function (setting) {
+            if (setting.fps) {
+                fx.fps.fixed = setting.fps;
             }
-            
+
         },
         //▲-------------------------監聽用戶設定-------------------------▲
         applyUserProperties: function (user) {
@@ -179,22 +199,22 @@ $(() => {
                 body.css({ "background-size": user.background_size.value })
             }
             //==================================特效==================================
-            if(user.fx_sakura$type){
-                if(fx.sakura.tmp){
+            if (user.fx_sakura$type) {
+                if (fx.sakura.tmp) {
                     toggleAnimation()
-                }else{
-                    if(user.fx_sakura$type.value){
-                        $.get("sakura/shader.html",(data)=>{
+                } else {
+                    if (user.fx_sakura$type.value) {
+                        $.get("sakura/shader.html", (data) => {
                             $("body").append(data)
                             sakura_onload()
                         })
-                        window.fx.sakura.tmp=true
+                        window.fx.sakura.tmp = true
                     }
                 }
                 fx.sakura.chg_opc()
             }
-            if(user.fx_sakura$opc){
-                window.fx.sakura.opacity=user.fx_sakura$opc.value
+            if (user.fx_sakura$opc) {
+                window.fx.sakura.opacity = user.fx_sakura$opc.value
                 fx.sakura.chg_opc()
             }
             //==================================面板==================================
