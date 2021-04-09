@@ -5,7 +5,7 @@ window.fx = {
     fps: {
         fixed: 0,
         last: performance.now() / 1000,
-        fpsThreshold:0,
+        fpsThreshold: 0,
         run: function () {
             // 刷新畫面
             window.requestAnimationFrame(fx.fps.run);
@@ -18,12 +18,12 @@ window.fx = {
             if (fx.fps.fixed > 0) {
                 fx.fps.fpsThreshold += dt;
                 if (fx.fps.fpsThreshold < 1.0 / fx.fps.fixed) {
-                    return ;
+                    return;
                 }
                 fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
             }
-			//
-            if(typeof(animate)=="function" && fx.sakura.type){animate()}
+            //
+            if (typeof (animate) == "function" && fx.sakura.type) { animate() }
         }
     },
     sakura: {//櫻花
@@ -63,7 +63,7 @@ window.panel = {
             bor: {}, //邊框
             pos: {}, //位置
             display: function (bool) {//顯示模式
-                this.dom[bool?"fadeIn":"fadeOut"]()
+                this.dom[bool ? "fadeIn" : "fadeOut"]()
             },
             css: function (set) {//修改css
                 this.dom.css(set)
@@ -138,10 +138,14 @@ $(() => {
 
             body = $("body")
             function change_bg() {
+                body.css({
+                    "background-image": "",
+                    "background-color": ""
+                })
+                $("#bg_video")[0].src=""
                 switch (bg.type) {
                     case ("color"):
                         body.css({
-                            "background-image": "",
                             "background-color": bg.color
                         })
                         break;
@@ -151,15 +155,18 @@ $(() => {
                                 (bg.img_type == "file") ?
                                     bg.img_file :
                                     bg.img_url
-                            ) + "')",
-                            "background-color": ""
+                            ) + "')"
                         })
+                        break;
+                    case ("video"):
+                        if(bg.video_file){
+                        $("#bg_video")[0].src="file:///" + bg.video_file
+                        }
                         break;
                     case ("bing_api"):
                         $.getJSON("https://bing.biturl.top/", (json) => {
                             body.css({
-                                "background-image": "url('" + json.url + "')",
-                                "background-color": ""
+                                "background-image": "url('" + json.url + "')"
                             })
                         })
                         break;
@@ -190,6 +197,10 @@ $(() => {
                 bg.img_url = val
                 change_bg()
             }
+            if (user.background_video_file) {
+                bg.video_file = unescape(user.background_video_file.value)
+                change_bg()
+            }
             if (user.background_size) {
                 body.css({ "background-size": user.background_size.value })
             }
@@ -205,7 +216,7 @@ $(() => {
                         window.fx.sakura.tmp = true
                     }
                 }
-                window.fx.sakura.type= val
+                window.fx.sakura.type = val
                 $("#sakura")[val ? 'fadeIn' : 'fadeOut']();
                 fx.sakura.chg_opc()
             }

@@ -22,6 +22,21 @@
 				"type" : "file",
 				"value" : ""
 			},
+			"background_video_file" : 
+			{
+				"condition" : "background_type.value == \"video\"",
+				"order" : 2,
+				"text" : "&emsp;背景影片",
+				"type" : "file",
+				"fileType":"video",
+				"value" : ""
+			},
+			"background_video_info" : 
+			{
+				"condition" : "background_type.value == \"video\"",
+				"order" : 3,
+				"text" : "&emsp;&emsp;<a href='https://video.online-convert.com/convert-to-webm'>WebM 線上轉檔工具<small>最大100 MB</small></a><br>&emsp;&emsp;也可以使用其他工具 <code><a title='ffmpeg -i (輸入檔案) -c:v libvpx-vp9 -crf (畫質) -b:v 0 -b:a 128k -c:a libopus (輸出檔案)' href='https://stackoverflow.com/questions/47510489/ffmpeg-convert-mp4-to-webm-poor-results#answer-47512301'>ffmpeg</a></code>"
+			},
 			"background_image_type" : 
 			{
 				"condition" : "background_type.value == \"image\"",
@@ -83,6 +98,10 @@
 					{
 						"label" : "圖片",
 						"value" : "image"
+					},
+					{
+						"label" : "影片",
+						"value" : "video"
 					},
 					{
 						"label" : "每日一圖",

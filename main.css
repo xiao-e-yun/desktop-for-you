@@ -25,6 +25,10 @@ body>div{
 * {
     font-family:'Microsoft JhengHei','Arial'
 }
+#bg_video{
+    width: inherit;
+    height: inherit;
+}
 #clock {
     padding: 0 20px;
     letter-spacing: 10px;
