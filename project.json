@@ -1,6 +1,6 @@
 {
 	"contentrating" : "Everyone",
-	"description" : "整體由可自訂性為核心\r\n盡可能提高效能\r\n\r\n目前可以設置有:\r\n     時鐘\r\n     日曆\r\n\r\n[url=https://69.run/E3xQ8X]github[/url]",
+	"description" : "整體由可自訂性為核心\n盡可能提高效能\n\n背景選項:\n     純色\n     圖片\n     影片\n     每日一圖 (Edge提供)\n\n目前可以設置有:\n     時鐘\n     日曆\n\n特效選單\n     櫻花飄落 (無法使用 影片背景)\n\n[url=https://69.run/E3xQ8X]github[/url]",
 	"file" : "index.html",
 	"general" : 
 	{
@@ -21,21 +21,6 @@
 				"text" : "&emsp;背景圖片",
 				"type" : "file",
 				"value" : ""
-			},
-			"background_video_file" : 
-			{
-				"condition" : "background_type.value == \"video\"",
-				"order" : 2,
-				"text" : "&emsp;背景影片",
-				"type" : "file",
-				"fileType":"video",
-				"value" : ""
-			},
-			"background_video_info" : 
-			{
-				"condition" : "background_type.value == \"video\"",
-				"order" : 3,
-				"text" : "&emsp;&emsp;<a href='https://video.online-convert.com/convert-to-webm'>WebM 線上轉檔工具<small>最大100 MB</small></a><br>&emsp;&emsp;也可以使用其他工具 <code><a title='ffmpeg -i (輸入檔案) -c:v libvpx-vp9 -crf (畫質) -b:v 0 -b:a 128k -c:a libopus (輸出檔案)' href='https://stackoverflow.com/questions/47510489/ffmpeg-convert-mp4-to-webm-poor-results#answer-47512301'>ffmpeg</a></code>"
 			},
 			"background_image_type" : 
 			{
@@ -113,6 +98,21 @@
 				"type" : "combo",
 				"value" : "image"
 			},
+			"background_video_file" : 
+			{
+				"condition" : "background_type.value == \"video\"",
+				"fileType" : "video",
+				"order" : 2,
+				"text" : "&emsp;背景影片",
+				"type" : "file",
+				"value" : ""
+			},
+			"background_video_info" : 
+			{
+				"condition" : "background_type.value == \"video\"",
+				"order" : 3,
+				"text" : "&emsp;&emsp;<a href='https://video.online-convert.com/convert-to-webm'>WebM 線上轉檔工具<small>最大100 MB</small></a><br>&emsp;&emsp;也可以使用其他工具 <code><a title='ffmpeg -i (輸入檔案) -c:v libvpx-vp9 -crf (畫質) -b:v 0 -b:a 128k -c:a libopus (輸出檔案)' href='https://stackoverflow.com/questions/47510489/ffmpeg-convert-mp4-to-webm-poor-results#answer-47512301'>ffmpeg</a></code>"
+			},
 			"bing_api" : 
 			{
 				"condition" : "background_type.value == \"bing_api\"",
@@ -126,9 +126,15 @@
 				"type" : "bool",
 				"value" : false
 			},
+			"fx_sakura$error" : 
+			{
+				"condition" : "fx.value == true && background_type.value ==\"video\"",
+				"order" : 52,
+				"text" : "&emsp;櫻花<br>&emsp;<small>不可以與影片背景一起使用</small>"
+			},
 			"fx_sakura$opc" : 
 			{
-				"condition" : "fx.value == true && fx_sakura$type.value == true",
+				"condition" : "fx.value == true && fx_sakura$type.value == true &&  background_type.value !=\"video\"",
 				"max" : 100,
 				"min" : 0,
 				"order" : 53,
@@ -138,7 +144,7 @@
 			},
 			"fx_sakura$type" : 
 			{
-				"condition" : "fx.value == true",
+				"condition" : "fx.value == true && background_type.value !=\"video\"",
 				"order" : 52,
 				"text" : "&emsp;櫻花特效",
 				"type" : "bool",
@@ -622,7 +628,7 @@
 	"tags" : [ "Relaxing" ],
 	"title" : "精緻桌布",
 	"type" : "web",
-	"version" : 9,
+	"version" : 10,
 	"visibility" : "public",
 	"workshopid" : "2440585648",
 	"workshopurl" : "steam://url/CommunityFilePage/2440585648"

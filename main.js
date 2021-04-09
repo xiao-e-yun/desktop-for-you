@@ -23,7 +23,10 @@ window.fx = {
                 fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
             }
             //
-            if (typeof (animate) == "function" && fx.sakura.type) { animate() }
+            if (bg.type == "video") {$("canvas").css("display","none")}else{
+                $("canvas").css("display","")
+                if (typeof (animate) == "function" && fx.sakura.type ) { animate() }
+            }
         }
     },
     sakura: {//櫻花
@@ -137,12 +140,16 @@ $(() => {
             //==================================背景==================================
 
             body = $("body")
+
             function change_bg() {
                 body.css({
                     "background-image": "",
                     "background-color": ""
                 })
-                $("#bg_video")[0].src=""
+                if (bg.video_tmp) {
+                    $("#bg_video").remove()
+                    bg.video_tmp = false
+                }
                 switch (bg.type) {
                     case ("color"):
                         body.css({
@@ -159,8 +166,12 @@ $(() => {
                         })
                         break;
                     case ("video"):
-                        if(bg.video_file){
-                        $("#bg_video")[0].src="file:///" + bg.video_file
+                        if (bg.video_file) {
+                            if (!bg.video_tmp) {
+                                $("body").append("<video id=\"bg_video\" src=\"\" loop autoplay></video>")
+                                bg.video_tmp = true
+                            }
+                            $("#bg_video")[0].src = "file:///" + bg.video_file
                         }
                         break;
                     case ("bing_api"):
