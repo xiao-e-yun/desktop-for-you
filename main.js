@@ -8,30 +8,30 @@ window.fx = {
         fpsThreshold: 0,
         run: function () {
             // 刷新畫面
-            window.requestAnimationFrame(fx.fps.run);
+            fx.fps.req = window.requestAnimationFrame(fx.fps.run);
             // 計算時差
-            var now = performance.now() / 1000;
+            var now = performance.now() / 1000; // 
             var dt = now - fx.fps.last;
             fx.fps.last = now;
             // FPS LIMIT IMPLEMENTATION HERE
-            // If there is an FPS limit, abort updating the animation if we reached the desired FPS
             if (fx.fps.fixed > 0) {
                 fx.fps.fpsThreshold += dt;
                 if (fx.fps.fpsThreshold < 1.0 / fx.fps.fixed) {
-                    return;
+                    window.cancelAnimationFrame(fx.fps.req)
+                    setTimeout(() => { fx.fps.req = window.requestAnimationFrame(fx.fps.run) }, fx.fps.fpsThreshold * 1000)
+                    var stop = true
+                } else {
+                    fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
                 }
-                fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
             }
-            //
-            if (bg.type == "video") {$("canvas").css("display","none")}else{
-                $("canvas").css("display","")
-                if (typeof (animate) == "function" && fx.sakura.type ) { animate() }
-            }
+            //執行
+            if (typeof (animate) == "function" && fx.sakura.type && !stop) { animate() }
+            if (typeof (audv.run) == "function" && audv.opt.type && !stop) { audv.run() }
         }
     },
     sakura: {//櫻花
         chg_opc: function () {
-            if (window.fx.sakura.tmp) {
+            if (window.fx.sakura.tmp && window.fx.sakura.type) {
                 $("#sakura").css("opacity", 1 - this.opacity / 100)
             }
         }
@@ -55,6 +55,10 @@ window.clock_opt = {
         ]
     }
 }
+//音效可視化
+window.audv = {
+    opt: {}
+}
 //==================================面板==================================
 window.panel = {
     RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm,
@@ -65,6 +69,7 @@ window.panel = {
             bg: {}, //背景
             bor: {}, //邊框
             pos: {}, //位置
+            shadow: {}, //光暈
             display: function (bool) {//顯示模式
                 this.dom[bool ? "fadeIn" : "fadeOut"]()
             },
@@ -137,8 +142,8 @@ $(() => {
         },
         //▲-------------------------監聽用戶設定-------------------------▲
         applyUserProperties: function (user) {
-            //==================================背景==================================
 
+            //==================================背景==================================
             body = $("body")
 
             function change_bg() {
@@ -218,8 +223,8 @@ $(() => {
             //==================================特效==================================
             if (user.fx_sakura$type) {
                 let val = user.fx_sakura$type.value
-                if (!fx.sakura.tmp) {
-                    if (val) {
+                if (val) {
+                    if (!fx.sakura.tmp) {
                         $.get("sakura/shader.html", (data) => {
                             $("body").append(data)
                             sakura_onload()
@@ -227,21 +232,44 @@ $(() => {
                         window.fx.sakura.tmp = true
                     }
                 }
+                $("#sakura")[val ? "fadeIn" : "fadeOut"]()
                 window.fx.sakura.type = val
-                $("#sakura")[val ? 'fadeIn' : 'fadeOut']();
                 fx.sakura.chg_opc()
             }
             if (user.fx_sakura$opc) {
                 window.fx.sakura.opacity = user.fx_sakura$opc.value
                 fx.sakura.chg_opc()
             }
-            //==================================面板==================================
-            for (const [$key, $val] of Object.entries(user)) {
-                if ($key.indexOf("panel_") === 0) {//驗證是否為面板
-                    let key = panel.RegExp.exec($key).groups
-                    let val = $val.value
-                    panel.RegExp.lastIndex = 0;
-                    panel.set(key.panel, key.type, val)
+
+            const $key = Object.keys(user)
+            if ($key.some((t) => { return t.indexOf("$") != -1 })) {
+                // ============================================================================================
+                //                                   ※switch 大型搜尋設置
+                // ============================================================================================
+                for (const [$key, $val] of Object.entries(user)) {
+                    //==================================聲音可視化==================================Z
+                    let audio = "audio_visualization$"
+                    if ($key.indexOf(audio) === 0) {//驗證是否為聲音可視化
+                        let main = $key.slice(audio.length)
+                        let val = $val.value
+                        if (main === "type" && val === true && !audv.tmp) {
+                            $.getScript("audio_visualization/index.js", () => {
+                                audv.tmp = true
+                                audv.reload()
+                            })
+                        }
+                        audv.opt[main] = val
+                        if (audv.tmp) { audv.set(main); }
+                        // 在json添加| audio_visualization$類型 |
+                    }
+
+                    //==================================面板==================================
+                    if ($key.indexOf("panel_") === 0) {//驗證是否為面板
+                        let key = panel.RegExp.exec($key).groups
+                        let val = $val.value
+                        panel.RegExp.lastIndex = 0;
+                        panel.set(key.panel, key.type, val)
+                    }
                 }
             }
         }

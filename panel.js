@@ -1,7 +1,7 @@
 console.log("panel settings is load!")
 
 panel.set = function (pan, type, val) { //this = panel
-    $pan = this[pan]
+    let $pan = this[pan]
     //=================================================================
     //                              基本面板設置
     //=================================================================
@@ -79,13 +79,25 @@ panel.set = function (pan, type, val) { //this = panel
             $pan.color = get_color(val, true)
             $pan.css({ "color": $pan.color })
             break;
+        case ("shadow_blur"):
+            $pan.shadow.blur = val
+            $pan.css({ "box-shadow": "0 0 " + $pan.shadow.blur + "px " + $pan.shadow.size + "px " + $pan.shadow.color })
+            break;
+        case ("shadow_size"):
+            $pan.shadow.size = val
+            $pan.css({ "box-shadow": "0 0 " + $pan.shadow.blur + "px " + $pan.shadow.size + "px " + $pan.shadow.color })
+            break;
+        case ("shadow"):
+            $pan.shadow.color = get_color(val, true)
+            $pan.css({ "box-shadow": "0 0 " + $pan.shadow.blur + "px " + $pan.shadow.size + "px " + $pan.shadow.color })
+            break;
     }
 
     //=================================================================
     //                           特定呼叫
     //=================================================================
 
-    switch (pan) { 
+    switch (pan) {
         //==================================時鐘==================================
         case ("clock"):
             let clock = this.clock
