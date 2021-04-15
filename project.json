@@ -1,635 +1,1071 @@
 {
-	"contentrating" : "Everyone",
-	"description" : "整體由可自訂性為核心\n盡可能提高效能\n\n背景選項:\n     純色\n     圖片\n     影片\n     每日一圖 (Edge提供)\n\n目前可以設置有:\n     時鐘\n     日曆\n\n特效選單\n     櫻花飄落 (無法使用 影片背景)\n\n[url=https://69.run/E3xQ8X]github[/url]",
-	"file" : "index.html",
-	"general" : 
-	{
-		"properties" : 
-		{
-			"background_color" : 
-			{
-				"condition" : "background_type.value == \"color\"",
-				"order" : 2,
-				"text" : "&emsp;背景顏色",
-				"type" : "color",
-				"value" : "0 0 0"
-			},
-			"background_image_file" : 
-			{
-				"condition" : "background_type.value == \"image\" && background_image_type.value == \"file\"",
-				"order" : 2,
-				"text" : "&emsp;背景圖片",
-				"type" : "file",
-				"value" : ""
-			},
-			"background_image_type" : 
-			{
-				"condition" : "background_type.value == \"image\"",
-				"options" : 
-				[
+	"contentrating": "Everyone",
+	"description": "整體由可自訂性為核心\n盡可能提高效能\n\n背景選項:\n     純色\n     圖片\n     影片\n     每日一圖 (Edge提供)\n\n目前可以設置有:\n     時鐘\n     日曆\n\n特效選單\n     櫻花飄落 (無法使用 影片背景)\n\n[url=https://69.run/E3xQ8X]github[/url]",
+	"file": "index.html",
+	"general": {
+		"properties": {
+			"list": {
+				"order": -2,
+				"text": "&emsp;檢視可修改の類型",
+				"options": [
 					{
-						"label" : "從電腦選擇",
-						"value" : "file"
+						"label": "全部顯示",
+						"value": "all"
 					},
 					{
-						"label" : "網路上選擇<br><small>可能會被禁止訪問</small>",
-						"value" : "url"
+						"label": "背景",
+						"value": "bg"
+					},
+					{
+						"label": "特效",
+						"value": "fx"
+					},
+					{
+						"label": "時鐘",
+						"value": "clock"
+					},
+					{
+						"label": "日曆",
+						"value": "cal"
+					},
+					{
+						"label": "音效視覺化",
+						"value": "audv"
 					}
 				],
-				"order" : 3,
-				"text" : "&emsp;&emsp;檔案位置",
-				"type" : "combo",
-				"value" : "file"
+				"type": "combo",
+				"value": "all"
 			},
-			"background_image_url" : 
-			{
-				"condition" : "background_type.value == \"image\" && background_image_type.value == \"url\"",
-				"order" : 2,
-				"text" : "&emsp;背景圖片",
-				"type" : "textinput",
-				"value" : ""
+			"background_color": {
+				"condition": "background_type.value == \"color\" && (list.value==\"all\" || list.value==\"bg\")",
+				"order": 2,
+				"text": "&emsp;背景顏色",
+				"type": "color",
+				"value": "0 0 0"
 			},
-			"background_size" : 
-			{
-				"condition" : "background_type.value == \"image\" || background_type.value == \"image\"",
-				"options" : 
-				[
+			"background_image_file": {
+				"condition": "background_type.value == \"image\" && background_image_type.value == \"file\"  && (list.value==\"all\" || list.value==\"bg\")",
+				"order": 2,
+				"text": "&emsp;背景圖片",
+				"type": "file",
+				"value": ""
+			},
+			"background_image_type": {
+				"condition": "background_type.value == \"image\"  && (list.value==\"all\" || list.value==\"bg\")",
+				"options": [
 					{
-						"label" : "裁剪並保持同比例",
-						"value" : "cover"
+						"label": "從電腦選擇",
+						"value": "file"
 					},
 					{
-						"label" : "縮放並保持同比例",
-						"value" : "contain"
-					},
-					{
-						"label" : "原比例背景圖片",
-						"value" : "auto"
+						"label": "網路上選擇<br><small>可能會被禁止訪問</small>",
+						"value": "url"
 					}
 				],
-				"order" : 4,
-				"text" : "&emsp;背景大小",
-				"type" : "combo",
-				"value" : "cover"
+				"order": 3,
+				"text": "&emsp;&emsp;檔案位置",
+				"type": "combo",
+				"value": "file"
 			},
-			"background_type" : 
-			{
-				"options" : 
-				[
+			"background_image_url": {
+				"condition": "background_type.value == \"image\" && background_image_type.value == \"url\"  && (list.value==\"all\" || list.value==\"bg\")",
+				"order": 2,
+				"text": "&emsp;背景圖片",
+				"type": "textinput",
+				"value": ""
+			},
+			"background_size": {
+				"condition": "(background_type.value == \"image\" || background_type.value == \"image\")   && (list.value==\"all\" || list.value==\"bg\")",
+				"options": [
 					{
-						"label" : "純色",
-						"value" : "color"
+						"label": "裁剪並保持同比例",
+						"value": "cover"
 					},
 					{
-						"label" : "圖片",
-						"value" : "image"
+						"label": "縮放並保持同比例",
+						"value": "contain"
 					},
 					{
-						"label" : "影片",
-						"value" : "video"
-					},
-					{
-						"label" : "每日一圖",
-						"value" : "bing_api"
+						"label": "原比例背景圖片",
+						"value": "auto"
 					}
 				],
-				"order" : 1,
-				"text" : "背景",
-				"type" : "combo",
-				"value" : "image"
+				"order": 4,
+				"text": "&emsp;背景大小",
+				"type": "combo",
+				"value": "cover"
 			},
-			"background_video_file" : 
-			{
-				"condition" : "background_type.value == \"video\"",
-				"fileType" : "video",
-				"order" : 2,
-				"text" : "&emsp;背景影片",
-				"type" : "file",
-				"value" : ""
-			},
-			"background_video_info" : 
-			{
-				"condition" : "background_type.value == \"video\"",
-				"order" : 3,
-				"text" : "&emsp;&emsp;<a href='https://video.online-convert.com/convert-to-webm'>WebM 線上轉檔工具<small>最大100 MB</small></a><br>&emsp;&emsp;也可以使用其他工具 <code><a title='ffmpeg -i (輸入檔案) -c:v libvpx-vp9 -crf (畫質) -b:v 0 -b:a 128k -c:a libopus (輸出檔案)' href='https://stackoverflow.com/questions/47510489/ffmpeg-convert-mp4-to-webm-poor-results#answer-47512301'>ffmpeg</a></code>"
-			},
-			"bing_api" : 
-			{
-				"condition" : "background_type.value == \"bing_api\"",
-				"order" : 2,
-				"text" : "&emsp;由 Bing 提供"
-			},
-			"fx" : 
-			{
-				"order" : 50,
-				"text" : "特效選單",
-				"type" : "bool",
-				"value" : false
-			},
-			"fx_sakura$error" : 
-			{
-				"condition" : "fx.value == true && background_type.value ==\"video\"",
-				"order" : 52,
-				"text" : "&emsp;櫻花<br>&emsp;<small>不可以與影片背景一起使用</small>"
-			},
-			"fx_sakura$opc" : 
-			{
-				"condition" : "fx.value == true && fx_sakura$type.value == true &&  background_type.value !=\"video\"",
-				"max" : 100,
-				"min" : 0,
-				"order" : 53,
-				"text" : "&emsp;&emsp;透明度<sub>%</sub>",
-				"type" : "slider",
-				"value" : 95
-			},
-			"fx_sakura$type" : 
-			{
-				"condition" : "fx.value == true && background_type.value !=\"video\"",
-				"order" : 52,
-				"text" : "&emsp;櫻花特效",
-				"type" : "bool",
-				"value" : false
-			},
-			"fxinfo" : 
-			{
-				"condition" : "fx.value == true",
-				"order" : 51,
-				"text" : "&emsp;※以下啟用功能可能會有較高占用"
-			},
-			"lineBG" : 
-			{
-				"order" : 0,
-				"text" : "_________________________________<br />___| 背景修改 |_____________________<br />"
-			},
-			"lineCAL" : 
-			{
-				"order" : 199,
-				"text" : "_________________________________<br />___| 日曆修改 |_____________________<br />"
-			},
-			"lineCLOCK" : 
-			{
-				"order" : 99,
-				"text" : "_________________________________<br />___| 時鐘修改 |_____________________<br />"
-			},
-			"lineFX" : 
-			{
-				"order" : 49,
-				"text" : "_________________________________<br />___| 特效修改 |_____________________<br />"
-			},
-			"panel_cal$bg" : 
-			{
-				"condition" : "panel_cal$type.value == true",
-				"options" : 
-				[
+			"background_type": {
+				"condition": "(list.value==\"all\" || list.value==\"bg\")",
+				"options": [
 					{
-						"label" : "純色",
-						"value" : "color"
+						"label": "純色",
+						"value": "color"
 					},
 					{
-						"label" : "圖片",
-						"value" : "img"
+						"label": "圖片",
+						"value": "image"
+					},
+					{
+						"label": "影片",
+						"value": "video"
+					},
+					{
+						"label": "每日一圖",
+						"value": "bing_api"
 					}
 				],
-				"order" : 201,
-				"text" : "背景設置",
-				"type" : "combo",
-				"value" : "color"
+				"order": 1,
+				"text": "背景",
+				"type": "combo",
+				"value": "image"
 			},
-			"panel_cal$bg_blur" : 
+			"background_video_file": {
+				"condition": "background_type.value == \"video\"  && (list.value==\"all\" || list.value==\"bg\")",
+				"fileType": "video",
+				"order": 2,
+				"text": "&emsp;背景影片",
+				"type": "file",
+				"value": ""
+			},
+			"background_video_info": {
+				"condition": "background_type.value == \"video\"  && (list.value==\"all\" || list.value==\"bg\")",
+				"order": 3,
+				"text": "&emsp;&emsp;<a href='https://video.online-convert.com/convert-to-webm'>WebM 線上轉檔工具<small>最大100 MB</small></a><br>&emsp;&emsp;也可以使用其他工具 <code><a title='ffmpeg -i (輸入檔案) -c:v libvpx-vp9 -crf (畫質) -b:v 0 -b:a 128k -c:a libopus (輸出檔案)' href='https://stackoverflow.com/a/47512301'>ffmpeg</a></code>"
+			},
+			"bing_api": {
+				"condition": "background_type.value == \"bing_api\"  && (list.value==\"all\" || list.value==\"bg\")",
+				"order": 2,
+				"text": "&emsp;由 Bing 提供"
+			},
+			"fx_sakura$opc": {
+				"condition": "fx_sakura$type.value == true  && (list.value==\"all\" || list.value==\"fx\")",
+				"max": 100,
+				"min": 0,
+				"order": 52,
+				"text": "&emsp;&emsp;透明度<sub>%</sub>",
+				"type": "slider",
+				"value": 95
+			},
+			"fx_sakura$type": {
+				"condition": "list.value==\"all\" || list.value==\"fx\"",
+				"order": 51,
+				"text": "&emsp;櫻花特效",
+				"type": "bool",
+				"value": false
+			},
+			"fxinfo": {
+				"condition": "fx.value == true  && (list.value==\"all\" || list.value==\"fx\")",
+				"order": 50,
+				"text": "&emsp;※以下啟用功能可能會有較高占用"
+			},
+			"lineBG": {
+				"condition": "list.value==\"all\" || list.value==\"bg\"",
+				"order": 0,
+				"text": "_________________________________<br />___| 背景修改 |_____________________<br />"
+			},
+			"lineCAL": {
+				"condition": "list.value==\"all\" || list.value==\"cal\"",
+				"order": 199,
+				"text": "_________________________________<br />___| 日曆修改 |_____________________<br />"
+			},
+			"lineAUDV": {
+				"condition": "list.value==\"all\" || list.value==\"audv\"",
+				"order": 299,
+				"text": "_________________________________<br />___| 音效視覺化修改 |________________<br />"
+			},
+			"lineCLOCK": {
+				"condition": "list.value==\"all\" || list.value==\"clock\"",
+				"order": 99,
+				"text": "_________________________________<br />___| 時鐘修改 |_____________________<br />"
+			},
+			"lineFX": {
+				"condition": "list.value==\"all\" || list.value==\"fx\"",
+				"order": 49,
+				"text": "_________________________________<br />___| 特效修改 |_____________________<br />"
+			},
+			"audio_visualization$type": {
+				"condition": "list.value==\"all\" || list.value==\"audv\"",
+				"order": 300,
+				"text": "啟用音效視覺化",
+				"type": "bool",
+				"value": true
+			},
+			"audio_visualization$maintype": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"options": [
+					{
+						"label": "長條",
+						"value": "strip"
+					},
+					{
+						"label": "圓形",
+						"value": "round"
+					}
+				],
+				"order": 301,
+				"text": "類型",
+				"type": "combo",
+				"value": "strip"
+			},
+			"audio_visualization$audio_info": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"text": "音頻設置",
+				"order": 303
+			},
+			"audio_visualization$amplitude": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"max": 1500,
+				"min": 50,
+				"order": 304,
+				"step": 50,
+				"text": "&emsp;幅度大小",
+				"type": "slider",
+				"value": "500"
+			},
+			"audio_visualization$pointNum": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"max": 120,
+				"min": 2,
+				"step": 2,
+				"order": 305,
+				"text": "&emsp;疏密度<sub>數量</sub>",
+				"type": "slider",
+				"value": "500"
+			},
+			"audio_visualization$pos_info": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 306,
+				"text": "位置設置"
+			},
+			"audio_visualization$color_info": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 309,
+				"text": "顏色設置"
+			},
+			"audio_visualization$colorMode": {
+				"condition": "panel_cal$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"options": [
+					{
+						"label": "單色",
+						"value": "monochrome"
+					},
+					{
+						"label": "漸變",
+						"value": "colorTransformation"
+					},
+					{
+						"label": "彩色",
+						"value": "rainBow"
+					}
+				],
+				"order": 310,
+				"text": "&emsp;顏色模式",
+				"type": "combo",
+				"value": "monochrome"
+			},
+			"audio_visualization$color": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$colorMode.value == \"monochrome\" && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 311,
+				"text": "&emsp;顏色",
+				"type": "color",
+				"value":"1 1 1"
+			},
+			"audio_visualization$opacity": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"max": 100,
+				"min": 0,
+				"order": 312,
+				"text": "&emsp;透明度<sub>%</sub>",
+				"type": "slider",
+				"value": "90"
+			},
+			"audio_visualization$shadowBlur": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"max": 16,
+				"min": 0,
+				"order": 313,
+				"text": "&emsp;陰影<sub>px</sub>",
+				"type": "slider",
+				"value": "0"
+			},
+			"audio_visualization$shadowColor": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 314,
+				"text": "&emsp;&emsp;顏色",
+				"type": "color",
+				"value":"1 1 1"
+			},
+			"audio_visualization$setting_info": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 319,
+				"text": "基礎設置"
+			},
+			"audio_visualization$barsDirection": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"strip\" && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"長條使用 strip",
+				"order": 320,
+				"text": "&emsp;音頻成長方向",
+				"options": [
+					{
+						"label": "上方",
+						"value": "upperBars"
+					},
+					{
+						"label": "下方",
+						"value": "lowerBars"
+					},
+					{
+						"label": "上下方",
+						"value": "twoBars"
+					}
+				],
+				"type": "combo",
+				"value": "upperBars"
+			},
+			"audio_visualization$lineDirection": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"圓環使用 round",
+				"order": 320,
+				"text": "&emsp;音頻成長方向",
+				"options": [
+					{
+						"label": "內圓",
+						"value": "innerRing"
+					},
+					{
+						"label": "外圓",
+						"value": "outerRing"
+					},
+					{
+						"label": "內外圓",
+						"value": "twoRing"
+					}
+				],
+				"type": "combo",
+				"value": "twoRing"
+			},
+			"audio_visualization$isBars": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"strip\" && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"長條使用 strip",
+				"order": 321,
+				"text": "&emsp;音頻長條",
+				"type":"bool",
+				"value": true
+			},
+			"audio_visualization$isRing": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"圓環使用 round",
+				"order": 321,
+				"text": "&emsp;圓環顯示",
+				"type":"bool",
+				"value": true
+			},
+			"audio_visualization$isLineTo": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"共用 all",
+				"order": 322,
+				"text": "&emsp;頂點連線",
+				"type":"bool",
+				"value": true
+			},
+			"audio_visualization$isStaticRing": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\"&& audio_visualization$isRing.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"圓環使用 round",
+				"order": 322,
+				"text": "&emsp;&emsp;靜態圓環",
+				"type":"bool",
+				"value": true
+			},
+			"audio_visualization$isInnerRing": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\"&& audio_visualization$isRing.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"圓環使用 round",
+				"order": 323,
+				"text": "&emsp;&emsp;動態內圓",
+				"type":"bool",
+				"value": true
+			},
+			"audio_visualization$isOuterRing": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\"&& audio_visualization$isRing.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"圓環使用 round",
+				"order": 324,
+				"text": "&emsp;&emsp;動態外圓",
+				"type":"bool",
+				"value": true
+			},
+			"audio_visualization$isWave": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"共用 all",
+				"order": 325,
+				"text": "&emsp;波浪模式",
+				"type":"bool",
+				"value": false
+			},
+			"audio_visualization$waveDirectionBars": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"strip\" && audio_visualization$isWave.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"長條使用 strip",
+				"order": 326,
+				"text": "&emsp;&emsp;成長方向",
+				"options": [
+					{
+						"label": "上方",
+						"value": "upperBars"
+					},
+					{
+						"label": "下方",
+						"value": "lowerBars"
+					},
+					{
+						"label": "上下方",
+						"value": "twoBars"
+					}
+				],
+				"type": "combo",
+				"value": "upperBars"
+			},
+			"audio_visualization$waveDirectionCircle": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && audio_visualization$isWave.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"圓環使用 round",
+				"order": 326,
+				"text": "&emsp;&emsp;成長方向",
+				"options": [
+					{
+						"label": "內圓",
+						"value": "innerRing"
+					},
+					{
+						"label": "外圓",
+						"value": "outerRing"
+					},
+					{
+						"label": "內外圓",
+						"value": "twoRing"
+					}
+				],
+				"type": "combo",
+				"value": "innerRing"
+			},
+			"audio_visualization$isRotate3D": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"圓環使用 round",
+				"order": 327,
+				"text": "&emsp;隨鼠標3D旋轉",
+				"type": "bool",
+				"value": true
+			},
+			"audio_visualization$isBall": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 328,
+				"text": "&emsp;小球設置",
+				"type":"bool",
+				"value":true
+			},
+			"audio_visualization$ballSpacer": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"max":12,
+				"min":0,
+				"order": 328,
+				"text": "&emsp;&emsp;疏密度",
+				"type":"slider",
+				"value":3
+			},
+			"audio_visualization$ballDistance": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"max":100,
+				"min":0,
+				"step":5,
+				"order": 329,
+				"text": "&emsp;&emsp;靜態圓環距離<sub>px</sub>",
+				"type":"slider",
+				"value":50
+			},
+			"audio_visualization$ballDirection": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"max":5,
+				"min":0,
+				"step":0.5,
+				"order": 330,
+				"text": "&emsp;&emsp;跳動幅度",
+				"type":"slider",
+				"value":1
+			},
+			"audio_visualization$bindRingRotation": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"round\" && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 331,
+				"text": "&emsp;&emsp;旋轉綁定",
+				"type":"bool",
+				"value":false
+			},
+			"audio_visualization$size_info": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"order": 339,
+				"text": "大小設置"
+			},
+			"audio_visualization$barsWidth": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"strip\" && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"長條使用 strip",
+				"max":5,
+				"min":1,
+				"order": 340,
+				"text": "&emsp;&emsp;寬度<sub>%</sub>",
+				"type": "slider",
+				"value": 1
+			},
+			"audio_visualization$barsHeight": {
+				"condition": "audio_visualization$type.value == true && audio_visualization$maintype.value == \"strip\" && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"長條使用 strip",
+				"max":5,
+				"min":0,
+				"order": 341,
+				"text": "&emsp;&emsp;最低高度<sub>px</sub>",
+				"type": "slider",
+				"value": 1
+			},
+			"audio_visualization$lineJoin": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"info":"共用",
+				"options": [
+					{
+						"label": "直角",
+						"value": "butt"
+					},
+					{
+						"label": "倒角",
+						"value": "square"
+					},
+					{
+						"label": "圓弧",
+						"value": "round"
+					}
+				],
+				"order": 342,
+				"text": "&emsp;&emsp;折角樣式",
+				"type": "combo",
+				"value": 1
+			},
+			"audio_visualization$offsetX": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"max": 100,
+				"min": 0,
+				"precision": 1,
+				"step": 0.1,
+				"order": 308,
+				"text": "&emsp;左右偏移<sub>%</sub>",
+				"type": "slider",
+				"value": 0.2
+			},
+			"audio_visualization$offsetY": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"max": 100,
+				"min": 0,
+				"precision": 1,
+				"step": 0.1,
+				"order": 307,
+				"text": "&emsp;上下偏移<sub>%</sub>",
+				"type": "slider",
+				"value": 0.2
+			},
+			"audio_visualization$decline": {
+				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
+				"max": 100,
+				"min": 0,
+				"order": 304,
+				"text": "&emsp;下落速度",
+				"type": "slider",
+				"value": "0.2"
+			},
+			"panel_cal$bg": {
+				"condition": "panel_cal$type.value == true && (list.value==\"all\" || list.value==\"cal\")",
+				"options": [
+					{
+						"label": "純色",
+						"value": "color"
+					},
+					{
+						"label": "圖片",
+						"value": "img"
+					}
+				],
+				"order": 201,
+				"text": "背景設置",
+				"type": "combo",
+				"value": "color"
+			},
+			"panel_cal$bg_blur": {
+				"condition": "panel_cal$type.value==true && panel_cal$bg.value==\"color\" && (list.value==\"all\" || list.value==\"cal\")",
+				"max": 16,
+				"min": 0,
+				"order": 204,
+				"text": "&emsp;模糊設置<sub>px</sub>",
+				"type": "slider",
+				"value": 8
+			},
+			"panel_cal$bg_blur_opc": {
+				"condition": "panel_cal$type.value==true && panel_cal$bg.value==\"color\" && (list.value==\"all\" || list.value==\"cal\")",
+				"max": 100,
+				"min": 0,
+				"order": 205,
+				"text": "&emsp;透明設置<sub>%</sub>",
+				"type": "slider",
+				"value": 20
+			},
+			"panel_cal$bg_color": {
+				"condition": "panel_cal$type.value==true && panel_cal$bg.value == \"color\" && (list.value==\"all\" || list.value==\"cal\")",
+				"order": 202,
+				"text": "&emsp;顏色設置",
+				"type": "color",
+				"value": "0 0 0"
+			},
+			"panel_cal$bg_img": {
+				"condition": "panel_cal$type.value==true && panel_cal$bg.value == \"img\" && (list.value==\"all\" || list.value==\"cal\")",
+				"order": 203,
+				"text": "&emsp;圖片設置",
+				"type": "file",
+				"value": ""
+			},
+			"panel_cal$border": {
+				"condition": "panel_cal$type.value == true && (list.value==\"all\" || list.value==\"cal\")",
+				"order": 206,
+				"text": "邊框設置",
+				"type": "bool",
+				"value": true
+			},
+			"panel_cal$border_color": {
+				"condition": "panel_cal$type.value == true && panel_cal$border.value == true && (list.value==\"all\" || list.value==\"cal\")",
+				"order": 209,
+				"text": "&emsp;邊框顏色",
+				"type": "color",
+				"value": "1 1 1"
+			},
+			"panel_cal$border_opacity": {
+				"condition": "panel_cal$type.value == true && panel_cal$border.value == true && (list.value==\"all\" || list.value==\"cal\")",
+				"max": 100,
+				"min": 1,
+				"order": 208,
+				"text": "&emsp;邊框透明度<sub>%</sub>",
+				"type": "slider",
+				"value": 100
+			},
+			"panel_cal$border_width": {
+				"condition": "panel_cal$type.value == true && panel_cal$border.value == true && (list.value==\"all\" || list.value==\"cal\")",
+				"max": 10,
+				"min": 1,
+				"order": 207,
+				"text": "&emsp;邊框寬度<sub>px</sub>",
+				"type": "slider",
+				"value": 2
+			},
+			"panel_cal$day_lang": {
+				"condition": "panel_cal$type.value == true && panel_cal$show_week.value == true  && (list.value==\"all\" || list.value==\"cal\")",
+				"options": [
+					{
+						"label": "中文",
+						"value": "zh"
+					},
+					{
+						"label": "英文",
+						"value": "us"
+					}
+				],
+				"order": 221,
+				"text": "&emsp;&emsp;星期幾",
+				"type": "combo",
+				"value": "zh"
+			},
+			"panel_cal$shadow_setting" : 
 			{
-				"condition" : "panel_cal$type.value==true && panel_cal$bg.value==\"color\"",
+				"condition" : "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
+				"order" : 213,
+				"text" : "光暈設置"
+			},
+			"panel_cal$shadow_size" : 
+			{
+				"condition" : "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
 				"max" : 16,
 				"min" : 0,
-				"order" : 204,
-				"text" : "&emsp;模糊設置<sub>px</sub>",
+				"order" : 214,
+				"text" : "&emsp;大小設置<sub>px</sub>",
 				"type" : "slider",
-				"value" : 8
+				"value" : 0
 			},
-			"panel_cal$bg_blur_opc" : 
+			"panel_cal$shadow_blur" : 
 			{
-				"condition" : "panel_cal$type.value==true && panel_cal$bg.value==\"color\"",
-				"max" : 100,
+				"condition" : "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
+				"max" : 16,
 				"min" : 0,
-				"order" : 205,
-				"text" : "&emsp;透明設置<sub>%</sub>",
+				"order" : 215,
+				"text" : "&emsp;模糊程度<sub>px</sub>",
 				"type" : "slider",
-				"value" : 20
+				"value" : 0
 			},
-			"panel_cal$bg_color" : 
+			"panel_cal$shadow" : 
 			{
-				"condition" : "panel_cal$type.value==true && panel_cal$bg.value == \"color\"",
-				"order" : 202,
-				"text" : "&emsp;顏色設置",
-				"type" : "color",
-				"value" : "0 0 0"
-			},
-			"panel_cal$bg_img" : 
-			{
-				"condition" : "panel_cal$type.value==true && panel_cal$bg.value == \"img\"",
-				"order" : 203,
-				"text" : "&emsp;圖片設置",
-				"type" : "file",
-				"value" : ""
-			},
-			"panel_cal$border" : 
-			{
-				"condition" : "panel_cal$type.value == true",
-				"order" : 206,
-				"text" : "邊框設置",
-				"type" : "bool",
-				"value" : true
-			},
-			"panel_cal$border_color" : 
-			{
-				"condition" : "panel_cal$type.value == true && panel_cal$border.value == true",
-				"order" : 209,
-				"text" : "&emsp;邊框顏色",
+				"condition" : "panel_cal$type.value==true && (panel_cal$shadow_blur.value!=0 || panel_cal$shadow_size.value!=0) && (list.value==\"all\" || list.value==\"cal\")",
+				"order" : 216,
+				"text" : "&emsp;顏色",
 				"type" : "color",
 				"value" : "1 1 1"
 			},
-			"panel_cal$border_opacity" : 
+			"panel_cal$full_setting" : 
 			{
-				"condition" : "panel_cal$type.value == true && panel_cal$border.value == true",
-				"max" : 100,
-				"min" : 1,
-				"order" : 208,
-				"text" : "&emsp;邊框透明度<sub>%</sub>",
-				"type" : "slider",
-				"value" : 100
-			},
-			"panel_cal$border_width" : 
-			{
-				"condition" : "panel_cal$type.value == true && panel_cal$border.value == true",
-				"max" : 10,
-				"min" : 1,
-				"order" : 207,
-				"text" : "&emsp;邊框寬度<sub>px</sub>",
-				"type" : "slider",
-				"value" : 2
+				"condition" : "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
+				"order" : 217,
+				"text" : "詳細設置"
 			},
 			"panel_cal$color" : 
 			{
-				"condition" : "panel_cal$type.value == true",
-				"order" : 214,
+				"condition" : "panel_cal$type.value == true && (list.value==\"all\" || list.value==\"cal\")",
+				"order" : 218,
 				"text" : "&emsp;文字顏色",
 				"type" : "color",
 				"value" : "1 1 1"
 			},
-			"panel_cal$day_lang" : 
+            "panel_cal$size" : 
 			{
-				"condition" : "panel_cal$type.value == true && panel_cal$show_week.value == true",
-				"options" : 
-				[
-					{
-						"label" : "中文",
-						"value" : "zh"
-					},
-					{
-						"label" : "英文",
-						"value" : "us"
-					}
-				],
-				"order" : 218,
-				"text" : "&emsp;&emsp;星期幾",
-				"type" : "combo",
-				"value" : "zh"
-			},
-			"panel_cal$full_setting" : 
-			{
-				"condition" : "panel_cal$type.value==true",
-				"order" : 213,
-				"text" : "詳細設置"
-			},
-			"panel_cal$pos" : 
-			{
-				"condition" : "panel_cal$type.value == true",
-				"options" : 
-				[
-					{
-						"label" : "百分比模式",
-						"value" : "pc"
-					},
-					{
-						"label" : "像素模式",
-						"value" : "px"
-					}
-				],
-				"order" : 210,
-				"text" : "位置設置",
-				"type" : "combo",
-				"value" : "pc"
-			},
-			"panel_cal$pos_pc_x" : 
-			{
-				"condition" : "panel_cal$type.value==true && panel_cal$pos.value == \"pc\"",
-				"max" : 100,
-				"min" : 0,
-				"order" : 211,
-				"text" : "&emsp;左右位置<sub>%</sub>",
-				"type" : "slider",
-				"value" : 15
-			},
-			"panel_cal$pos_pc_y" : 
-			{
-				"condition" : "panel_cal$type.value==true && panel_cal$pos.value == \"pc\"",
-				"max" : 100,
-				"min" : 0,
-				"order" : 212,
-				"text" : "&emsp;上下位置<sub>%</sub>",
-				"type" : "slider",
-				"value" : 5
-			},
-			"panel_cal$pos_px_x" : 
-			{
-				"condition" : "panel_cal$type.value==true && panel_cal$pos.value == \"px\"",
-				"order" : 211,
-				"text" : "&emsp;左右位置<sub>px</sub>",
-				"type" : "textinput",
-				"value" : "0"
-			},
-			"panel_cal$pos_px_y" : 
-			{
-				"condition" : "panel_cal$type.value==true && panel_cal$pos.value == \"px\"",
-				"order" : 212,
-				"text" : "&emsp;上下位置<sub>px</sub>",
-				"type" : "textinput",
-				"value" : "0"
-			},
-			"panel_cal$show_week" : 
-			{
-				"condition" : "panel_cal$type.value == true",
-				"order" : 217,
-				"text" : "&emsp;顯示星期",
-				"type" : "bool",
-				"value" : true
-			},
-			"panel_cal$size" : 
-			{
-				"condition" : "panel_cal$type.value==true",
+				"condition" : "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
 				"max" : 150,
 				"min" : 12,
-				"order" : 215,
+				"order" : 219,
 				"text" : "&emsp;字體大小<sub>px</sub>",
 				"type" : "slider",
 				"value" : 50
 			},
-			"panel_cal$type" : 
-			{
-				"order" : 200,
-				"text" : "啟用日曆",
-				"type" : "bool",
-				"value" : true
-			},
-			"panel_clock$bg" : 
-			{
-				"condition" : "panel_clock$type.value == true",
-				"options" : 
-				[
+			"panel_cal$pos": {
+				"condition": "panel_cal$type.value == true  && (list.value==\"all\" || list.value==\"cal\")",
+				"options": [
 					{
-						"label" : "純色",
-						"value" : "color"
+						"label": "百分比模式",
+						"value": "pc"
 					},
 					{
-						"label" : "圖片",
-						"value" : "img"
+						"label": "像素模式",
+						"value": "px"
 					}
 				],
-				"order" : 101,
-				"text" : "背景設置",
-				"type" : "combo",
-				"value" : "color"
+				"order": 210,
+				"text": "位置設置",
+				"type": "combo",
+				"value": "pc"
 			},
-			"panel_clock$bg_blur" : 
+			"panel_cal$pos_pc_x": {
+				"condition": "panel_cal$type.value==true && panel_cal$pos.value == \"pc\"  && (list.value==\"all\" || list.value==\"cal\")",
+				"max": 100,
+				"min": 0,
+				"precision": 1,
+				"step": 0.1,
+				"order": 211,
+				"text": "&emsp;左右偏移<sub>%</sub>",
+				"type": "slider",
+				"value": 15
+			},
+			"panel_cal$pos_pc_y": {
+				"condition": "panel_cal$type.value==true && panel_cal$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"cal\")",
+				"max": 100,
+				"min": 0,
+				"precision": 1,
+				"step": 0.1,
+				"order": 212,
+				"text": "&emsp;上下偏移<sub>%</sub>",
+				"type": "slider",
+				"value": 5
+			},
+			"panel_cal$pos_px_x": {
+				"condition": "panel_cal$type.value==true && panel_cal$pos.value == \"px\" && (list.value==\"all\" || list.value==\"cal\")",
+				"order": 211,
+				"text": "&emsp;左右偏移<sub>px</sub>",
+				"type": "textinput",
+				"value": "0"
+			},
+			"panel_cal$pos_px_y": {
+				"condition": "panel_cal$type.value==true && panel_cal$pos.value == \"px\" && (list.value==\"all\" || list.value==\"cal\")",
+				"order": 212,
+				"text": "&emsp;上下偏移<sub>px</sub>",
+				"type": "textinput",
+				"value": "0"
+			},
+			"panel_cal$show_week": {
+				"condition": "panel_cal$type.value == true && (list.value==\"all\" || list.value==\"cal\")",
+				"order": 220,
+				"text": "&emsp;顯示星期",
+				"type": "bool",
+				"value": true
+			},
+			"panel_cal$type": {
+				"condition": "list.value==\"all\" || list.value==\"cal\"",
+				"order": 200,
+				"text": "啟用日曆",
+				"type": "bool",
+				"value": true
+			},
+			"panel_clock$bg": {
+				"condition": "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"options": [
+					{
+						"label": "純色",
+						"value": "color"
+					},
+					{
+						"label": "圖片",
+						"value": "img"
+					}
+				],
+				"order": 101,
+				"text": "背景設置",
+				"type": "combo",
+				"value": "color"
+			},
+			"panel_clock$bg_blur": {
+				"condition": "panel_clock$type.value==true && panel_clock$bg.value==\"color\" && (list.value==\"all\" || list.value==\"clock\") ",
+				"max": 16,
+				"min": 0,
+				"order": 103,
+				"text": "&emsp;模糊設置<sub>px</sub>",
+				"type": "slider",
+				"value": 8
+			},
+			"panel_clock$bg_blur_opc": {
+				"condition": "panel_clock$type.value==true && panel_clock$bg.value==\"color\" && (list.value==\"all\" || list.value==\"clock\")",
+				"max": 100,
+				"min": 0,
+				"order": 104,
+				"text": "&emsp;透明設置<sub>%</sub>",
+				"type": "slider",
+				"value": 20
+			},
+			"panel_clock$bg_color": {
+				"condition": "panel_clock$type.value==true && panel_clock$bg.value == \"color\" && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 102,
+				"text": "&emsp;顏色設置",
+				"type": "color",
+				"value": "0 0 0"
+			},
+			"panel_clock$bg_img": {
+				"condition": "panel_clock$type.value==true && panel_clock$bg.value == \"img\" && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 102,
+				"text": "&emsp;圖片設置",
+				"type": "file",
+				"value": ""
+			},
+			"panel_clock$border": {
+				"condition": "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 105,
+				"text": "邊框設置",
+				"type": "bool",
+				"value": true
+			},
+			"panel_clock$border_color": {
+				"condition": "panel_clock$type.value == true && panel_clock$border.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 108,
+				"text": "&emsp;邊框顏色",
+				"type": "color",
+				"value": "1 1 1"
+			},
+			"panel_clock$border_opacity": {
+				"condition": "panel_clock$type.value == true && panel_clock$border.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"max": 100,
+				"min": 1,
+				"order": 107,
+				"text": "&emsp;邊框透明度<sub>%</sub>",
+				"type": "slider",
+				"value": 100
+			},
+			"panel_clock$border_width": {
+				"condition": "panel_clock$type.value == true && panel_clock$border.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"max": 10,
+				"min": 1,
+				"order": 106,
+				"text": "&emsp;邊框寬度<sub>px</sub>",
+				"type": "slider",
+				"value": 2
+			},
+			"panel_clock$shadow_setting" : 
 			{
-				"condition" : "panel_clock$type.value==true && panel_clock$bg.value==\"color\"",
+				"condition" : "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
+				"order" : 113,
+				"text" : "光暈設置"
+			},
+			"panel_clock$shadow_size" : 
+			{
+				"condition" : "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
 				"max" : 16,
 				"min" : 0,
-				"order" : 103,
-				"text" : "&emsp;模糊設置<sub>px</sub>",
+				"order" : 114,
+				"text" : "&emsp;大小設置<sub>px</sub>",
 				"type" : "slider",
-				"value" : 8
+				"value" : 0
 			},
-			"panel_clock$bg_blur_opc" : 
+			"panel_clock$shadow_blur" : 
 			{
-				"condition" : "panel_clock$type.value==true && panel_clock$bg.value==\"color\"",
-				"max" : 100,
+				"condition" : "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
+				"max" : 16,
 				"min" : 0,
-				"order" : 104,
-				"text" : "&emsp;透明設置<sub>%</sub>",
+				"order" : 115,
+				"text" : "&emsp;模糊程度<sub>px</sub>",
 				"type" : "slider",
-				"value" : 20
+				"value" : 0
 			},
-			"panel_clock$bg_color" : 
+			"panel_clock$shadow" : 
 			{
-				"condition" : "panel_clock$type.value==true && panel_clock$bg.value == \"color\"",
-				"order" : 102,
-				"text" : "&emsp;顏色設置",
-				"type" : "color",
-				"value" : "0 0 0"
-			},
-			"panel_clock$bg_img" : 
-			{
-				"condition" : "panel_clock$type.value==true && panel_clock$bg.value == \"img\"",
-				"order" : 102,
-				"text" : "&emsp;圖片設置",
-				"type" : "file",
-				"value" : ""
-			},
-			"panel_clock$border" : 
-			{
-				"condition" : "panel_clock$type.value == true",
-				"order" : 105,
-				"text" : "邊框設置",
-				"type" : "bool",
-				"value" : true
-			},
-			"panel_clock$border_color" : 
-			{
-				"condition" : "panel_clock$type.value == true && panel_clock$border.value == true",
-				"order" : 108,
-				"text" : "&emsp;邊框顏色",
-				"type" : "color",
-				"value" : "1 1 1"
-			},
-			"panel_clock$border_opacity" : 
-			{
-				"condition" : "panel_clock$type.value == true && panel_clock$border.value == true",
-				"max" : 100,
-				"min" : 1,
-				"order" : 107,
-				"text" : "&emsp;邊框透明度<sub>%</sub>",
-				"type" : "slider",
-				"value" : 100
-			},
-			"panel_clock$border_width" : 
-			{
-				"condition" : "panel_clock$type.value == true && panel_clock$border.value == true",
-				"max" : 10,
-				"min" : 1,
-				"order" : 106,
-				"text" : "&emsp;邊框寬度<sub>px</sub>",
-				"type" : "slider",
-				"value" : 2
-			},
-			"panel_clock$color" : 
-			{
-				"condition" : "panel_clock$type.value == true",
-				"order" : 113,
-				"text" : "&emsp;文字顏色",
+				"condition" : "panel_clock$type.value==true && (panel_clock$shadow_blur.value!=0 || panel_clock$shadow_size.value!=0) && (list.value==\"all\" || list.value==\"clock\")",
+				"order" : 116,
+				"text" : "&emsp;顏色",
 				"type" : "color",
 				"value" : "1 1 1"
 			},
 			"panel_clock$full_setting" : 
 			{
-				"condition" : "panel_clock$type.value==true",
-				"order" : 112,
+				"condition" : "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
+				"order" : 117,
 				"text" : "詳細設置"
 			},
-			"panel_clock$pos" : 
+			"panel_clock$color" : 
 			{
-				"condition" : "panel_clock$type.value == true",
-				"options" : 
-				[
-					{
-						"label" : "百分比模式",
-						"value" : "pc"
-					},
-					{
-						"label" : "像素模式",
-						"value" : "px"
-					}
-				],
-				"order" : 109,
-				"text" : "位置設置",
-				"type" : "combo",
-				"value" : "pc"
-			},
-			"panel_clock$pos_pc_x" : 
-			{
-				"condition" : "panel_clock$type.value==true && panel_clock$pos.value == \"pc\"",
-				"max" : 100,
-				"min" : 0,
-				"order" : 110,
-				"text" : "&emsp;左右位置<sub>%</sub>",
-				"type" : "slider",
-				"value" : 80
-			},
-			"panel_clock$pos_pc_y" : 
-			{
-				"condition" : "panel_clock$type.value==true && panel_clock$pos.value == \"pc\"",
-				"max" : 100,
-				"min" : 0,
-				"order" : 111,
-				"text" : "&emsp;上下位置<sub>%</sub>",
-				"type" : "slider",
-				"value" : 5
-			},
-			"panel_clock$pos_px_x" : 
-			{
-				"condition" : "panel_clock$type.value==true && panel_clock$pos.value == \"px\"",
-				"order" : 110,
-				"text" : "&emsp;左右位置<sub>px</sub>",
-				"type" : "textinput",
-				"value" : "0"
-			},
-			"panel_clock$pos_px_y" : 
-			{
-				"condition" : "panel_clock$type.value==true && panel_clock$pos.value == \"px\"",
-				"order" : 111,
-				"text" : "&emsp;上下位置<sub>px</sub>",
-				"type" : "textinput",
-				"value" : "0"
-			},
-			"panel_clock$remind" : 
-			{
-				"condition" : "panel_clock$type.value == true",
-				"options" : 
-				[
-					{
-						"label" : "純色",
-						"value" : "color"
-					},
-					{
-						"label" : "彩虹",
-						"value" : "rainbow"
-					},
-					{
-						"label" : "關閉",
-						"value" : "none"
-					}
-				],
-				"order" : 117,
-				"text" : "&emsp;小時提醒<sub>顯示不明顯</sub>",
-				"type" : "combo",
-				"value" : "color"
-			},
-			"panel_clock$remind_color" : 
-			{
-				"condition" : "panel_clock$type.value == true && panel_clock$remind.value == \"color\"",
+				"condition" : "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
 				"order" : 118,
-				"text" : "&emsp;&emsp;顏色",
+				"text" : "&emsp;文字顏色",
 				"type" : "color",
-				"value" : "0 0 0"
+				"value" : "1 1 1"
 			},
-			"panel_clock$show_sec" : 
+            "panel_clock$size" : 
 			{
-				"condition" : "panel_clock$type.value == true",
-				"order" : 115,
-				"text" : "&emsp;顯示秒數",
-				"type" : "bool",
-				"value" : true
-			},
-			"panel_clock$size" : 
-			{
-				"condition" : "panel_clock$type.value==true",
+				"condition" : "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
 				"max" : 150,
 				"min" : 12,
-				"order" : 114,
+				"order" : 119,
 				"text" : "&emsp;字體大小<sub>px</sub>",
 				"type" : "slider",
 				"value" : 50
 			},
-			"panel_clock$twelve_hour" : 
-			{
-				"condition" : "panel_clock$type.value == true",
-				"options" : 
-				[
+			"panel_clock$pos": {
+				"condition": "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"options": [
 					{
-						"label" : "12小時制",
-						"value" : true
+						"label": "百分比模式",
+						"value": "pc"
 					},
 					{
-						"label" : "24小時制",
-						"value" : false
+						"label": "像素模式",
+						"value": "px"
 					}
 				],
-				"order" : 116,
-				"text" : "&emsp;小時格式",
-				"type" : "combo",
-				"value" : true
+				"order": 109,
+				"text": "位置設置",
+				"type": "combo",
+				"value": "pc"
 			},
-			"panel_clock$type" : 
-			{
-				"order" : 100,
-				"text" : "啟用時鐘",
-				"type" : "bool",
-				"value" : true
+			"panel_clock$pos_pc_x": {
+				"condition": "panel_clock$type.value==true && panel_clock$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"clock\")",
+				"max": 100,
+				"min": 0,
+				"precision": 1,
+				"step": 0.1,
+				"order": 110,
+				"text": "&emsp;左右偏移<sub>%</sub>",
+				"type": "slider",
+				"value": 80
 			},
-			"schemecolor" : 
-			{
-				"condition" : "dev.value == true",
-				"order" : 0,
-				"text" : "ui_browse_properties_scheme_color",
-				"type" : "color"
+			"panel_clock$pos_pc_y": {
+				"condition": "panel_clock$type.value==true && panel_clock$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"clock\")",
+				"max": 100,
+				"min": 0,
+				"precision": 1,
+				"step": 0.1,
+				"order": 111,
+				"text": "&emsp;上下偏移<sub>%</sub>",
+				"type": "slider",
+				"value": 5
+			},
+			"panel_clock$pos_px_x": {
+				"condition": "panel_clock$type.value==true && panel_clock$pos.value == \"px\" && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 110,
+				"text": "&emsp;左右偏移<sub>px</sub>",
+				"type": "textinput",
+				"value": "0"
+			},
+			"panel_clock$pos_px_y": {
+				"condition": "panel_clock$type.value==true && panel_clock$pos.value == \"px\" && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 111,
+				"text": "&emsp;上下偏移<sub>px</sub>",
+				"type": "textinput",
+				"value": "0"
+			},
+			"panel_clock$remind": {
+				"condition": "panel_clock$type.value == true  && (list.value==\"all\" || list.value==\"clock\")",
+				"options": [
+					{
+						"label": "純色",
+						"value": "color"
+					},
+					{
+						"label": "彩虹",
+						"value": "rainbow"
+					},
+					{
+						"label": "關閉",
+						"value": "none"
+					}
+				],
+				"order": 120,
+				"text": "&emsp;小時提醒<sub>顯示不明顯</sub>",
+				"type": "combo",
+				"value": "color"
+			},
+			"panel_clock$remind_color": {
+				"condition": "panel_clock$type.value == true && panel_clock$remind.value == \"color\" && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 121,
+				"text": "&emsp;&emsp;顏色",
+				"type": "color",
+				"value": "0 0 0"
+			},
+			"panel_clock$show_sec": {
+				"condition": "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"order": 123,
+				"text": "&emsp;顯示秒數",
+				"type": "bool",
+				"value": true
+			},
+			"panel_clock$twelve_hour": {
+				"condition": "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
+				"options": [
+					{
+						"label": "12小時制",
+						"value": true
+					},
+					{
+						"label": "24小時制",
+						"value": false
+					}
+				],
+				"order": 122,
+				"text": "&emsp;小時格式",
+				"type": "combo",
+				"value": true
+			},
+			"panel_clock$type": {
+				"condition": "list.value==\"all\" || list.value==\"clock\"",
+				"order": 100,
+				"text": "啟用時鐘",
+				"type": "bool",
+				"value": true
+			},
+			"schemecolor": {
+				"condition": "dev.value == true",
+				"order": 0,
+				"text": "ui_browse_properties_scheme_color",
+				"type": "color"
 			}
-		}
+		},
+		"supportsaudioprocessing": true
 	},
-	"preview" : "preview.jpg",
-	"tags" : [ "Relaxing" ],
-	"title" : "精緻桌布",
-	"type" : "web",
-	"version" : 10,
-	"visibility" : "public",
-	"workshopid" : "2440585648",
-	"workshopurl" : "steam://url/CommunityFilePage/2440585648"
+	"preview": "preview.jpg",
+	"tags": [
+		"Relaxing"
+	],
+	"title": "精緻桌布",
+	"type": "web",
+	"version": 10,
+	"visibility": "public",
+	"workshopid": "2440585648",
+	"workshopurl": "steam://url/CommunityFilePage/2440585648"
 }
+
