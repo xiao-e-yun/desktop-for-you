@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "es2017.string",
+            "dom",
+            "scripthost"
+        ],
+        "module": "ES6",
+        "target": "es2016",
+        "jsx": "preserve",
+        "strictFunctionTypes": true,
+        "outDir":"index/",
+        "noEmitOnError":true,
+        "allowJs": true
+    },
+    "include": [
+        "ts/*",
+        "ts/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}

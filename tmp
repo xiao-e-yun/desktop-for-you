@@ -1,0 +1,220 @@
+<name> = 名稱
+<type> = 面板名稱
+<order> = 排列
+
+
+			"panel_<type>$type" : 
+			{
+				"condition" : "list.value==\"all\" || list.value==\"<type>\""
+				"order" : <order>00,
+				"text" : "啟用<name>",
+				"type" : "bool",
+				"value" : true
+			},
+            "panel_<type>$bg" : 
+			{
+				"condition" : "panel_<type>$type.value == true && (list.value==\"all\" || list.value==\"<type>\")",
+				"options" : 
+				[
+					{
+						"label" : "純色",
+						"value" : "color"
+					},
+					{
+						"label" : "圖片",
+						"value" : "img"
+					}
+				],
+				"order" : <order>01,
+				"text" : "背景設置",
+				"type" : "combo",
+				"value" : "color"
+			},
+			"panel_<type>$bg_color" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$bg.value == \"color\"&& (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>02,
+				"text" : "&emsp;顏色設置",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+            "panel_<type>$bg_img" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$bg.value == \"img\"&& (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>03,
+				"text" : "&emsp;圖片設置",
+				"type" : "file",
+				"value" : ""
+			},
+			"panel_<type>$bg_blur" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$bg.value==\"color\"&& (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 16,
+				"min" : 0,
+				"order" : <order>04,
+				"text" : "&emsp;模糊設置<sub>px</sub>",
+				"type" : "slider",
+				"value" : 8
+			},
+			"panel_<type>$bg_blur_opc" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$bg.value==\"color\"&& (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 100,
+				"min" : 0,
+				"order" : <order>05,
+				"text" : "&emsp;透明設置<sub>%</sub>",
+				"type" : "slider",
+				"value" : 20
+			},
+			"panel_<type>$border" : 
+			{
+				"condition" : "panel_<type>$type.value == true && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>06,
+				"text" : "邊框設置",
+				"type" : "bool",
+				"value" : true
+			},
+			"panel_<type>$border_width" : 
+			{
+				"condition" : "panel_<type>$type.value == true && panel_<type>$border.value == true && (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 10,
+				"min" : 1,
+				"order" : <order>07,
+				"text" : "&emsp;邊框寬度<sub>px</sub>",
+				"type" : "slider",
+				"value" : 2
+			},
+			"panel_<type>$border_opacity" : 
+			{
+				"condition" : "panel_<type>$type.value == true && panel_<type>$border.value == true && (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 100,
+				"min" : 1,
+				"order" : 18,
+				"text" : "&emsp;邊框透明度<sub>%</sub>",
+				"type" : "slider",
+				"value" : 100
+			},
+			"panel_<type>$border_color" : 
+			{
+				"condition" : "panel_<type>$type.value == true && panel_<type>$border.value == true && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>09,
+				"text" : "&emsp;邊框顏色",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+			"panel_<type>$pos" : 
+			{
+				"condition" : "panel_<type>$type.value == true && (list.value==\"all\" || list.value==\"<type>\")",
+				"options" : 
+				[
+					{
+						"label" : "百分比模式",
+						"value" : "pc"
+					},
+					{
+						"label" : "像素模式",
+						"value" : "px"
+					}
+				],
+				"order" : <order>10,
+				"text" : "位置設置",
+				"type" : "combo",
+				"value" : "pc"
+			},
+			"panel_<type>$pos_pc_x" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 100,
+				"min" : 0,
+				"order" : <order>11,
+				"text" : "&emsp;左右位置<sub>%</sub>",
+				"type" : "slider",
+				"value" : 50
+			},
+			"panel_<type>$pos_pc_y" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 100,
+				"min" : 0,
+				"order" : <order>12,
+				"text" : "&emsp;上下位置<sub>%</sub>",
+				"type" : "slider",
+				"value" : 50
+			},
+			"panel_<type>$pos_px_x" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$pos.value == \"px\" && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>11,
+				"text" : "&emsp;左右位置<sub>px</sub>",
+				"type" : "textinput",
+				"value" : "0"
+			},
+			"panel_<type>$pos_px_y" : 
+			{
+				"condition" : "panel_<type>$type.value==true && panel_<type>$pos.value == \"px\" && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>12,
+				"text" : "&emsp;上下位置<sub>px</sub>",
+				"type" : "textinput",
+				"value" : "0"
+			},
+			"panel_<type>$shadow_setting" : 
+			{
+				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>13,
+				"text" : "光暈設置"
+			},
+			"panel_<type>$shadow_size" : 
+			{
+				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 16,
+				"min" : 0,
+				"order" : <order>14,
+				"text" : "&emsp;大小設置<sub>px</sub>",
+				"type" : "slider",
+				"value" : 0
+			},
+			"panel_<type>$shadow_blur" : 
+			{
+				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 16,
+				"min" : 0,
+				"order" : <order>15,
+				"text" : "&emsp;模糊程度<sub>px</sub>",
+				"type" : "slider",
+				"value" : 0
+			},
+			"panel_<type>$shadow" : 
+			{
+				"condition" : "panel_<type>$type.value==true && (panel_<type>$shadow_blur.value!=0 || panel_<type>$shadow_size.value!=0) && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>16,
+				"text" : "&emsp;顏色",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+			"panel_<type>$full_setting" : 
+			{
+				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>17,
+				"text" : "詳細設置"
+			},
+			"panel_<type>$color" : 
+			{
+				"condition" : "panel_<type>$type.value == true && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>18,
+				"text" : "&emsp;文字顏色",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+            "panel_<type>$size" : 
+			{
+				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
+				"max" : 150,
+				"min" : 12,
+				"order" : <order>19,
+				"text" : "&emsp;字體大小<sub>px</sub>",
+				"type" : "slider",
+				"value" : 50
+			},
+
+
+            ...其他
