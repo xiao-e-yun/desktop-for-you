@@ -50,7 +50,9 @@
 				"text":"ui_browse_properties_saturation"
 				},
 			"wec_e": {
-				"condition": "dev.value == true"
+				"condition": "dev.value == true",
+				"type":"bool",
+				"value":true
 			},
 			"audio_visualization$amplitude": {
 				"condition": "audio_visualization$type.value == true && (list.value==\"all\" || list.value==\"audv\")",
