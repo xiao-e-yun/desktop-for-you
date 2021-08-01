@@ -1,0 +1,38 @@
+{
+  "name": "desktop-for-you",
+  "version": "2.0.0",
+  "description": "精緻桌布",
+  "main": "index.js",
+  "dependencies": {
+    "gsap": "^3.7.1",
+    "lodash": "^4.17.21",
+    "sass": "^1.37.0",
+    "sass-loader": "^12.1.0",
+    "ts-loader": "^9.2.4",
+    "webpack": "^5.47.1",
+    "webpack-cli": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.5",
+    "css-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.1.0"
+  },
+  "scripts": {
+    "ts-dev": "tsc -w",
+    "ts-build": "tsc",
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "xiao-e-yun",
+  "license": " BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiao-e-yun/desktop-for-you.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xiao-e-yun/desktop-for-you/issues"
+  },
+  "homepage": "https://github.com/xiao-e-yun/desktop-for-you#readme"
+}

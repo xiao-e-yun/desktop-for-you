@@ -1,0 +1,90 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "[h1]兼顧美觀和性能[/h1]\r\n整體由可自訂性為核心\r\n同時採用 \"自動包含\"\r\n盡量降低性能損失\r\n\r\n背景選項:\r\n     純色\r\n     圖片\r\n     影片\r\n     每日一圖 (Edge提供)\r\n\r\n目前可以設置有:\r\n     時鐘\r\n     日曆\r\n    音效可視化\r\n\r\n特效選單\r\n     櫻花飄落\r\n\r\n未來將添加\r\n    特效 雪花飄落\r\n    快速youtube播放面板(技術問題)\r\n\r\n背景圖片來源:\r\n作者:[url=https://www.pixiv.net/users/73798]ユイザキカズヤ[/url]\r\n作品:[url=https://www.pixiv.net/artworks/71994556]囚われの繭[/url]\r\n\r\n原始碼\r\n[url=https://69.run/E3xQ8X]github[/url]",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"alignmentfliph" : 
+			{
+				"condition" : "browse_settings.value == true",
+				"order" : -14,
+				"text" : "ui_browse_properties_alignment_flip_horizontally",
+				"type" : "bool",
+				"value" : false
+			},
+			"browse_settings" : 
+			{
+				"order" : -15,
+				"text" : "系統配置",
+				"type" : "bool",
+				"value" : false
+			},
+			"schemecolor" : 
+			{
+				"condition" : "dev.value == true",
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color"
+			},
+			"show_settings" : 
+			{
+				"order" : 1,
+				"text" : "開啟設定",
+				"type" : "bool",
+				"value" : false
+			},
+			"wec_brs" : 
+			{
+				"condition" : "browse_settings.value == true",
+				"max" : 100,
+				"min" : 0,
+				"text" : "ui_browse_properties_brightness",
+				"type" : "slider",
+				"value" : 50
+			},
+			"wec_con" : 
+			{
+				"condition" : "browse_settings.value == true",
+				"max" : 100,
+				"min" : 0,
+				"text" : "ui_browse_properties_contrast",
+				"type" : "slider",
+				"value" : 50
+			},
+			"wec_e" : 
+			{
+				"condition" : "dev.value == true",
+				"type" : "bool",
+				"value" : true
+			},
+			"wec_hue" : 
+			{
+				"condition" : "browse_settings.value == true",
+				"max" : 100,
+				"min" : 0,
+				"text" : "ui_browse_properties_hue_shift",
+				"type" : "slider",
+				"value" : 50
+			},
+			"wec_sa" : 
+			{
+				"condition" : "browse_settings.value == true",
+				"max" : 100,
+				"min" : 0,
+				"text" : "ui_browse_properties_saturation",
+				"type" : "slider",
+				"value" : 50
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"tags" : [ "Relaxing" ],
+	"title" : "精緻桌布",
+	"type" : "Web",
+	"version" : 12,
+	"visibility" : "public",
+	"workshopid" : "2440585648",
+	"workshopurl" : "steam://url/CommunityFilePage/2440585648"
+}

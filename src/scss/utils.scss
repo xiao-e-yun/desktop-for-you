@@ -1,0 +1,24 @@
+.hide{
+    animation: hide .2s ease-in-out both;
+}
+@keyframes hide{
+    from{
+        opacity: 1;
+    }to{
+        opacity: 0;
+        display: none;
+    }
+}
+.show{
+    animation: show .2s ease-in-out both;    
+}
+.delay_show{
+    animation: show .2s ease-in-out both .2s;
+}
+@keyframes show{
+    from{
+        opacity: 0;
+    }to{
+        opacity: 1;
+    }
+}
