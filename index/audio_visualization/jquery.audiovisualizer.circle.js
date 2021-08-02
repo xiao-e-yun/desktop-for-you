@@ -1,3 +1,4 @@
+"use strict";
 /*！
  * jQuery AudioVisualizer Circle plugin v0.0.20
  * project:

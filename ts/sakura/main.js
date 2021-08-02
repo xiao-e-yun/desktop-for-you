@@ -789,10 +789,10 @@ function animate() {
 }
 
 function makeCanvasFullScreen(canvas) {
-    var b = document.body;
-    var d = document.documentElement;
-    fullw = Math.max(b.clientWidth, b.scrollWidth, d.scrollWidth, d.clientWidth);
-    fullh = Math.max(b.clientHeight, b.scrollHeight, d.scrollHeight, d.clientHeight);
+    const b = document.body;
+    const d = document.documentElement;
+    const fullw = Math.max(b.clientWidth, b.scrollWidth, d.scrollWidth, d.clientWidth);
+    const fullh = Math.max(b.clientHeight, b.scrollHeight, d.scrollHeight, d.clientHeight);
     canvas.width = fullw;
     canvas.height = fullh;
 }

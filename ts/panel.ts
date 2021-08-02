@@ -1,6 +1,3 @@
-/// <reference path="main.ts"/>
-/// <reference path="other.ts"/>
-
 console.log("panel settings is load!")
 
 panel.set = function (pan, type, val) { //this = panel

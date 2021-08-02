@@ -1,16 +1,9 @@
 {
     "compilerOptions": {
-        "lib": [
-            "es2017.string",
-            "dom",
-            "scripthost"
-        ],
-        "module": "ES6",
-        "target": "es2016",
-        "jsx": "preserve",
-        "strictFunctionTypes": true,
-        "outDir":"index/",
-        "noEmitOnError":true,
+        "module": "ES2020",
+        "target": "ES2020",
+        "alwaysStrict": true,
+        "outDir": "./index/",
         "allowJs": true
     },
     "include": [

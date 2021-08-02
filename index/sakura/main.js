@@ -1,3 +1,4 @@
+"use strict";
 //來自 https://codepen.io/FrankFitzGerald/pen/LAbfm
 //作者(同分享者)也不知道這個神作從哪裡來
 function sakura_onload() {
@@ -658,10 +659,10 @@ function animate() {
     render();
 }
 function makeCanvasFullScreen(canvas) {
-    var b = document.body;
-    var d = document.documentElement;
-    fullw = Math.max(b.clientWidth, b.scrollWidth, d.scrollWidth, d.clientWidth);
-    fullh = Math.max(b.clientHeight, b.scrollHeight, d.scrollHeight, d.clientHeight);
+    const b = document.body;
+    const d = document.documentElement;
+    const fullw = Math.max(b.clientWidth, b.scrollWidth, d.scrollWidth, d.clientWidth);
+    const fullh = Math.max(b.clientHeight, b.scrollHeight, d.scrollHeight, d.clientHeight);
     canvas.width = fullw;
     canvas.height = fullh;
 }

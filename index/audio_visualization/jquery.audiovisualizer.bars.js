@@ -1,3 +1,4 @@
+"use strict";
 /*！
  * jQuery AudioVisualizer Bars plugin v0.0.15
  * project:
@@ -1300,9 +1301,6 @@
                 case 'isClickOffset':
                 case 'milliSec':
                 case 'degSize':
-					if(property === 'decline'){
-						value = (value / 500) + 0.05
-					}
                     this[property] = value;
                     break;
                 case 'isMasking':

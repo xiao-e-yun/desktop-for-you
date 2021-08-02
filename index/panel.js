@@ -1,5 +1,4 @@
-/// <reference path="main.ts"/>
-/// <reference path="other.ts"/>
+"use strict";
 console.log("panel settings is load!");
 panel.set = function (pan, type, val) {
     let $pan = this[pan];

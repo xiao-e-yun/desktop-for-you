@@ -1,13 +1,13 @@
-/// <reference path="other.ts"/>
-/// <reference path="panel.ts"/>
-/// <reference path="sakura/main.js"/>
-bg = {};
+"use strict";
+//==================================變數==================================
+const bg = {};
 //特效設定
-fx = {
+const fx = {
     fps: {
         fixed: 0,
         last: performance.now() / 1000,
         fpsThreshold: 0,
+        req: null,
         run: function () {
             // 刷新畫面
             fx.fps.req = window.requestAnimationFrame(fx.fps.run);
@@ -41,34 +41,58 @@ fx = {
             if (fx.sakura.tmp && fx.sakura.type) {
                 $("#sakura").css("opacity", 1 - this.opacity / 100);
             }
-        }
-    }
+        },
+        type: false,
+        tmp: false,
+        opacity: Number,
+    },
+    dom: false,
 };
 //時鐘設定
-clock_opt = {
+const clock_opt = {
     time: {
         AM_PM: "",
-        mon: "",
+        new_sec: undefined,
+        mon: undefined,
+        hr: undefined,
+        min: undefined,
+        sec: undefined,
+        date: undefined,
     },
     remind: {
-        run: false,
+        run: newFunction(),
+        type: undefined,
+        color: undefined,
     },
     day: {
+        lang: "zh",
         zh: [
             "日", "一", "二", "三", "四", "五", "六"
         ],
         us: [
             "&nbsp;Sun", "&nbsp;Mon", "Tues", "&nbsp;Wed", "Thur", "&nbsp;Fri", "&nbsp;Sat"
-        ]
-    }
+        ],
+    },
+    type: undefined,
+    color: undefined,
+    twelve_hour: undefined,
+    show_sec: undefined,
+    show_week: undefined,
 };
 //音效可視化
-audv = {
-    opt: {}
+const audv = {
+    opt: {},
+    run: undefined,
+    set: undefined,
+    reload: undefined,
+    tmp: false,
+    maintmp: undefined
 };
-//==================================面板==================================
-panel = {
+const panel = {
+    clock: undefined,
+    cal: undefined,
     RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm,
+    set: undefined,
     creat: function (_id) {
         this[_id] = {
             id: _id,
@@ -132,14 +156,15 @@ window.requestAnimationFrame(fx.fps.run);
 panel.creat("clock"); //時鐘
 panel.creat("cal"); //日曆
 //==================================監聽==================================
-window.wallpaperPropertyListener = {
+window["wallpaperPropertyListener"] = {
     //▲-------------------------監聽暫停-------------------------▲
     setPaused: function (isPaused) {
         if (!isPaused) { //重新啟動
             timer.set();
         }
-        else { //已暫停
-        }
+        // else
+        // { //已暫停
+        // }
     },
     //▲-------------------------監聽系統設定-------------------------▲
     applyGeneralProperties: function (setting) {
@@ -149,12 +174,12 @@ window.wallpaperPropertyListener = {
     },
     //▲-------------------------監聽用戶設定-------------------------▲
     applyUserProperties: function (user) {
-        if (window.fx.dom) { //等待DOM加載完成
-            window["apply_setting"](user);
+        if (fx.dom) { //等待DOM加載完成
+            apply_setting(user);
         }
         else {
             console.log("DOM need ready!");
-            $(() => { window["apply_setting"](user); });
+            $(() => { apply_setting(user); });
         }
     }
 };
@@ -244,15 +269,15 @@ $(() => {
                         $("body").append(data);
                         sakura_onload();
                     });
-                    window.fx.sakura.tmp = true;
+                    fx.sakura.tmp = true;
                 }
             }
             $("#sakura")[val ? "fadeIn" : "fadeOut"]();
-            window.fx.sakura.type = val;
+            fx.sakura.type = val;
             fx.sakura.chg_opc();
         }
         if (user.fx_sakura$opc) {
-            window.fx.sakura.opacity = user.fx_sakura$opc.value;
+            fx.sakura.opacity = user.fx_sakura$opc.value;
             fx.sakura.chg_opc();
         }
         const $key = Object.keys(user);
@@ -289,6 +314,9 @@ $(() => {
         }
     };
 });
+function newFunction() {
+    return false;
+}
 //==================================函式==================================
 //讀取顏色
 function get_color(data, type) {

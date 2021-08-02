@@ -1,5 +1,4 @@
-/// <reference path="main.ts"/>
-/// <reference path="panel.ts"/>
+"use strict";
 console.log("other settings is load!");
 var timer = {
     type: false,
@@ -33,34 +32,6 @@ var timer = {
                         $clock.removeClass("clock-remind");
                     }, 5000);
                 }
-            }
-            function twelve_hr() {
-                if (clock_opt.twelve_hour) {
-                    //12小時制
-                    if (setting.hr <= 12 && setting.hr != 0) {
-                        //AM
-                        if (setting.AM_PM != "AM") {
-                            setting.AM_PM = "AM";
-                        }
-                    }
-                    else {
-                        //PM
-                        if (setting.AM_PM != "PM") {
-                            setting.AM_PM = "PM";
-                        }
-                        if (setting.hr == 0) {
-                            setting.hr += 12;
-                        }
-                        else {
-                            setting.hr -= 12;
-                        }
-                    }
-                }
-                else {
-                    //24小時制
-                    setting.hr == 0 ? 24 : setting.hr;
-                }
-                $clock.find(".AMPM").text(setting.AM_PM);
             }
             //運行
             if (setting.new_sec != setting.sec) { //更新秒
@@ -109,6 +80,34 @@ var timer = {
             if (timer["clock"]) {
                 reload_clock();
             }
+        }
+        function twelve_hr() {
+            if (clock_opt.twelve_hour) {
+                //12小時制
+                if (setting.hr <= 12 && setting.hr != 0) {
+                    //AM
+                    if (setting.AM_PM != "AM") {
+                        setting.AM_PM = "AM";
+                    }
+                }
+                else {
+                    //PM
+                    if (setting.AM_PM != "PM") {
+                        setting.AM_PM = "PM";
+                    }
+                    if (setting.hr == 0) {
+                        setting.hr += 12;
+                    }
+                    else {
+                        setting.hr -= 12;
+                    }
+                }
+            }
+            else {
+                //24小時制
+                setting.hr == 0 ? 24 : setting.hr;
+            }
+            $clock.find(".AMPM").text(setting.AM_PM);
         }
         function reload_clock() {
             setting.sec = setting.new_sec;

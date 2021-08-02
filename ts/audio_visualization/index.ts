@@ -1,6 +1,4 @@
-/// <reference path="../other.ts"/>
-/// <reference path="../main.ts"/>
-declare var wallpaperRegisterAudioListener
+declare let wallpaperRegisterAudioListener:any
 
 console.log("audio-visualization settings is load!")
 console.log("jQuery AudioVisualizer Bars v0.0.15\njQuery AudioVisualizer  Circle v0.0.20\n\nproject form \n  https://github.com/Alice-Jie/AudioVisualizer\n  https://gitee.com/Alice_Jie/circleaudiovisualizer\n  https://steamcommunity.com/sharedfiles/filedetails/?id=921617616\n\nLICENSE MIT licensed\nAUTHOR Alice\nDATE 2018/08/17")
@@ -8,8 +6,8 @@ let sel = $("#audv")
 audv.set = function (type) {
     let val = audv.opt[type]
     function turn($key,$val = val) {
-        if (audv.maintmp && audv.maintmp.strip)sel["visualizerBars"]("set", $key, $val);
-        if (audv.maintmp && audv.maintmp.round)sel["visualizerCircle"]("set", $key, $val);
+        if (audv.maintmp && audv.maintmp.strip){sel["visualizerBars"]("set", $key, $val)};
+        if (audv.maintmp && audv.maintmp.round){sel["visualizerCircle"]("set", $key, $val)};
     }
     if (type === "type") {
         wallpaperRegisterAudioListener((audio) => { this.audio = audio });
