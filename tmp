@@ -5,7 +5,7 @@
 
 			"panel_<type>$type" : 
 			{
-				"condition" : "list.value==\"all\" || list.value==\"<type>\""
+				"condition" : "list.value==\"all\" || list.value==\"<type>\"",
 				"order" : <order>00,
 				"text" : "啟用<name>",
 				"type" : "bool",
@@ -89,7 +89,7 @@
 				"condition" : "panel_<type>$type.value == true && panel_<type>$border.value == true && (list.value==\"all\" || list.value==\"<type>\")",
 				"max" : 100,
 				"min" : 1,
-				"order" : 18,
+				"order" : <order>08,
 				"text" : "&emsp;邊框透明度<sub>%</sub>",
 				"type" : "slider",
 				"value" : 100
@@ -126,6 +126,8 @@
 				"condition" : "panel_<type>$type.value==true && panel_<type>$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"<type>\")",
 				"max" : 100,
 				"min" : 0,
+				"precision": 1,
+				"step": 0.10000000000000001,
 				"order" : <order>11,
 				"text" : "&emsp;左右位置<sub>%</sub>",
 				"type" : "slider",
@@ -136,6 +138,8 @@
 				"condition" : "panel_<type>$type.value==true && panel_<type>$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"<type>\")",
 				"max" : 100,
 				"min" : 0,
+				"precision": 1,
+				"step": 0.10000000000000001,
 				"order" : <order>12,
 				"text" : "&emsp;上下位置<sub>%</sub>",
 				"type" : "slider",
@@ -163,12 +167,31 @@
 				"order" : <order>13,
 				"text" : "光暈設置"
 			},
-			"panel_<type>$shadow_size" : 
+			"panel_<type>$shadow_type" : 
 			{
 				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
+				"order" : <order>14,
+				"text" : "&emsp;光暈區塊",
+				"options" : 
+				[
+					{
+						"label" : "不透明區域",
+						"value" : "drop_shadow"
+					},
+					{
+						"label" : "矩形區域",
+						"value" : "box_shadow"
+					}
+				],
+				"type" : "combo",
+				"value" : "box_shadow"
+			},
+			"panel_<type>$shadow_size" : 
+			{
+				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\") && panel_<type>$shadow_type.value==\"box_shadow\"",
 				"max" : 16,
 				"min" : 0,
-				"order" : <order>14,
+				"order" : <order>15,
 				"text" : "&emsp;大小設置<sub>px</sub>",
 				"type" : "slider",
 				"value" : 0
@@ -178,7 +201,7 @@
 				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
 				"max" : 16,
 				"min" : 0,
-				"order" : <order>15,
+				"order" : <order>16,
 				"text" : "&emsp;模糊程度<sub>px</sub>",
 				"type" : "slider",
 				"value" : 0
@@ -186,7 +209,7 @@
 			"panel_<type>$shadow" : 
 			{
 				"condition" : "panel_<type>$type.value==true && (panel_<type>$shadow_blur.value!=0 || panel_<type>$shadow_size.value!=0) && (list.value==\"all\" || list.value==\"<type>\")",
-				"order" : <order>16,
+				"order" : <order>17,
 				"text" : "&emsp;顏色",
 				"type" : "color",
 				"value" : "1 1 1"
@@ -194,13 +217,13 @@
 			"panel_<type>$full_setting" : 
 			{
 				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
-				"order" : <order>17,
+				"order" : <order>18,
 				"text" : "詳細設置"
 			},
 			"panel_<type>$color" : 
 			{
 				"condition" : "panel_<type>$type.value == true && (list.value==\"all\" || list.value==\"<type>\")",
-				"order" : <order>18,
+				"order" : <order>19,
 				"text" : "&emsp;文字顏色",
 				"type" : "color",
 				"value" : "1 1 1"
@@ -210,7 +233,7 @@
 				"condition" : "panel_<type>$type.value==true && (list.value==\"all\" || list.value==\"<type>\")",
 				"max" : 150,
 				"min" : 12,
-				"order" : <order>19,
+				"order" : <order>20,
 				"text" : "&emsp;字體大小<sub>px</sub>",
 				"type" : "slider",
 				"value" : 50

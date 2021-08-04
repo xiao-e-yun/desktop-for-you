@@ -78,16 +78,37 @@ panel.set = function (pan, type, val) {
             break;
         case ("shadow_blur"):
             $pan.shadow.blur = val;
-            $pan.css({ "box-shadow": "0 0 " + $pan.shadow.blur + "px " + $pan.shadow.size + "px " + $pan.shadow.color });
+            shadow_set();
             break;
         case ("shadow_size"):
             $pan.shadow.size = val;
-            $pan.css({ "box-shadow": "0 0 " + $pan.shadow.blur + "px " + $pan.shadow.size + "px " + $pan.shadow.color });
+            shadow_set();
+            break;
+        case ("shadow_type"):
+            $pan.shadow.type = val;
+            shadow_set();
             break;
         case ("shadow"):
             $pan.shadow.color = get_color(val, true);
-            $pan.css({ "box-shadow": "0 0 " + $pan.shadow.blur + "px " + $pan.shadow.size + "px " + $pan.shadow.color });
+            shadow_set();
             break;
+    }
+    function shadow_set() {
+        let $css;
+        if ($pan.shadow.type === "drop_shadow") {
+            // $pan.shadow.size 在drop-shadow不工作
+            $css = {
+                "filter": "drop-shadow(0 0 " + $pan.shadow.blur + "px " + $pan.shadow.color + ")",
+                "box-shadow": "none"
+            };
+        }
+        else { //box_shadow
+            $css = {
+                "filter": "none",
+                "box-shadow": "0 0 " + $pan.shadow.blur + "px " + $pan.shadow.size + "px " + $pan.shadow.color
+            };
+        }
+        $pan.css($css);
     }
     //=================================================================
     //                           特定呼叫
@@ -95,7 +116,7 @@ panel.set = function (pan, type, val) {
     switch (pan) {
         //==================================時鐘==================================
         case ("clock"):
-            let clock = this.clock;
+            const clock = this.clock;
             switch (type) {
                 case ("type"): //啟用時鐘
                     timer["clock"] = val;
@@ -155,7 +176,7 @@ panel.set = function (pan, type, val) {
             break;
         //==================================日曆==================================
         case ("cal"):
-            let cal = this.cal;
+            const cal = this.cal;
             switch (type) {
                 case ("type"): //啟用日曆
                     timer["cal"] = val;
@@ -171,5 +192,17 @@ panel.set = function (pan, type, val) {
                     timer.set();
                     break;
             }
+            break;
+        case ("logo"):
+            const logo = this.logo;
+            switch (type) {
+                case ("image"):
+                    const html = /*html*/ `<img src="file:///${val}"/>`;
+                    logo.dom.html(html);
+                    break;
+                case ("image_size"):
+                    logo.dom.children().css({ "width": val + "%", "height": val + "%" });
+            }
+            break;
     }
 };

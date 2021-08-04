@@ -60,7 +60,7 @@ const clock_opt = {
         date: undefined,
     },
     remind: {
-        run: newFunction(),
+        run: undefined,
         type: undefined,
         color: undefined,
     },
@@ -91,6 +91,7 @@ const audv = {
 const panel = {
     clock: undefined,
     cal: undefined,
+    logo: undefined,
     RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm,
     set: undefined,
     creat: function (_id) {
@@ -155,6 +156,7 @@ window.requestAnimationFrame(fx.fps.run);
 //================================創建面板================================
 panel.creat("clock"); //時鐘
 panel.creat("cal"); //日曆
+panel.creat("logo"); //標誌
 //==================================監聽==================================
 window["wallpaperPropertyListener"] = {
     //▲-------------------------監聽暫停-------------------------▲
@@ -314,11 +316,6 @@ $(() => {
         }
     };
 });
-function newFunction() {
-    return false;
-}
-//==================================函式==================================
-//讀取顏色
 function get_color(data, type) {
     let color = data.split(' ');
     if (type) { //轉RGB格式

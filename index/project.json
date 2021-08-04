@@ -591,6 +591,11 @@
 				"order": 49,
 				"text": "_________________________________<br />___| 特效修改 |_____________________<br />"
 			},
+			"lineLOGO": {
+				"condition": "list.value==\"all\" || list.value==\"logo\"",
+				"order": 399,
+				"text": "_________________________________<br />___| 標誌修改 |_____________________<br />"
+			},
 			"lineOTHER": {
 				"condition": "list.value==\"all\" || list.value==\"other\"",
 				"order": 999,
@@ -621,6 +626,10 @@
 					{
 						"label": "音效視覺化",
 						"value": "audv"
+					},
+					{
+						"label": "標誌",
+						"value": "logo"
 					},
 					{
 						"label": "其他",
@@ -715,7 +724,7 @@
 			},
 			"panel_cal$color": {
 				"condition": "panel_cal$type.value == true && (list.value==\"all\" || list.value==\"cal\")",
-				"order": 218,
+				"order": 219,
 				"text": "&emsp;文字顏色",
 				"type": "color",
 				"value": "1 1 1"
@@ -732,14 +741,14 @@
 						"value": "us"
 					}
 				],
-				"order": 221,
+				"order": 222,
 				"text": "&emsp;&emsp;星期幾",
 				"type": "combo",
 				"value": "zh"
 			},
 			"panel_cal$full_setting": {
 				"condition": "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
-				"order": 217,
+				"order": 218,
 				"text": "詳細設置"
 			},
 			"panel_cal$pos": {
@@ -797,7 +806,7 @@
 			},
 			"panel_cal$shadow": {
 				"condition": "panel_cal$type.value==true && (panel_cal$shadow_blur.value!=0 || panel_cal$shadow_size.value!=0) && (list.value==\"all\" || list.value==\"cal\")",
-				"order": 216,
+				"order": 217,
 				"text": "&emsp;顏色",
 				"type": "color",
 				"value": "1 1 1"
@@ -806,7 +815,7 @@
 				"condition": "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
 				"max": 16,
 				"min": 0,
-				"order": 215,
+				"order": 216,
 				"text": "&emsp;模糊程度<sub>px</sub>",
 				"type": "slider",
 				"value": 0
@@ -816,18 +825,37 @@
 				"order": 213,
 				"text": "光暈設置"
 			},
+			"panel_cal$shadow_type" : 
+			{
+				"condition" : "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
+				"order" : 214,
+				"text" : "&emsp;光暈區塊",
+				"options" : 
+				[
+					{
+						"label" : "不透明區域",
+						"value" : "drop_shadow"
+					},
+					{
+						"label" : "矩形區域",
+						"value" : "box_shadow"
+					}
+				],
+				"type" : "combo",
+				"value" : "box_shadow"
+			},
 			"panel_cal$shadow_size": {
-				"condition": "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
+				"condition" : "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\") && panel_cal$shadow_type.value==\"box_shadow\"",
 				"max": 16,
 				"min": 0,
-				"order": 214,
+				"order": 215,
 				"text": "&emsp;大小設置<sub>px</sub>",
 				"type": "slider",
 				"value": 0
 			},
 			"panel_cal$show_week": {
 				"condition": "panel_cal$type.value == true && (list.value==\"all\" || list.value==\"cal\")",
-				"order": 220,
+				"order": 221,
 				"text": "&emsp;顯示星期",
 				"type": "bool",
 				"value": true
@@ -836,7 +864,7 @@
 				"condition": "panel_cal$type.value==true && (list.value==\"all\" || list.value==\"cal\")",
 				"max": 150,
 				"min": 12,
-				"order": 219,
+				"order": 220,
 				"text": "&emsp;字體大小<sub>px</sub>",
 				"type": "slider",
 				"value": 50
@@ -931,14 +959,14 @@
 			},
 			"panel_clock$color": {
 				"condition": "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
-				"order": 118,
+				"order": 119,
 				"text": "&emsp;文字顏色",
 				"type": "color",
 				"value": "1 1 1"
 			},
 			"panel_clock$full_setting": {
 				"condition": "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
-				"order": 117,
+				"order": 118,
 				"text": "詳細設置"
 			},
 			"panel_clock$pos": {
@@ -1010,21 +1038,21 @@
 						"value": "none"
 					}
 				],
-				"order": 120,
+				"order": 121,
 				"text": "&emsp;小時提醒<sub>顯示不明顯</sub>",
 				"type": "combo",
 				"value": "color"
 			},
 			"panel_clock$remind_color": {
 				"condition": "panel_clock$type.value == true && panel_clock$remind.value == \"color\" && (list.value==\"all\" || list.value==\"clock\")",
-				"order": 121,
+				"order": 122,
 				"text": "&emsp;&emsp;顏色",
 				"type": "color",
 				"value": "0 0 0"
 			},
 			"panel_clock$shadow": {
 				"condition": "panel_clock$type.value==true && (panel_clock$shadow_blur.value!=0 || panel_clock$shadow_size.value!=0) && (list.value==\"all\" || list.value==\"clock\")",
-				"order": 116,
+				"order": 117,
 				"text": "&emsp;顏色",
 				"type": "color",
 				"value": "1 1 1"
@@ -1033,7 +1061,7 @@
 				"condition": "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
 				"max": 16,
 				"min": 0,
-				"order": 115,
+				"order": 116,
 				"text": "&emsp;模糊程度<sub>px</sub>",
 				"type": "slider",
 				"value": 0
@@ -1043,18 +1071,37 @@
 				"order": 113,
 				"text": "光暈設置"
 			},
+			"panel_clock$shadow_type" : 
+			{
+				"condition" : "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
+				"order" : 114,
+				"text" : "&emsp;光暈區塊",
+				"options" : 
+				[
+					{
+						"label" : "不透明區域",
+						"value" : "drop_shadow"
+					},
+					{
+						"label" : "矩形區域",
+						"value" : "box_shadow"
+					}
+				],
+				"type" : "combo",
+				"value" : "box_shadow"
+			},
 			"panel_clock$shadow_size": {
-				"condition": "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
+				"condition" : "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\") && panel_clock$shadow_type.value==\"box_shadow\"",
 				"max": 16,
 				"min": 0,
-				"order": 114,
+				"order": 115,
 				"text": "&emsp;大小設置<sub>px</sub>",
 				"type": "slider",
 				"value": 0
 			},
 			"panel_clock$show_sec": {
 				"condition": "panel_clock$type.value == true && (list.value==\"all\" || list.value==\"clock\")",
-				"order": 123,
+				"order": 124,
 				"text": "&emsp;顯示秒數",
 				"type": "bool",
 				"value": true
@@ -1063,7 +1110,7 @@
 				"condition": "panel_clock$type.value==true && (list.value==\"all\" || list.value==\"clock\")",
 				"max": 150,
 				"min": 12,
-				"order": 119,
+				"order": 120,
 				"text": "&emsp;字體大小<sub>px</sub>",
 				"type": "slider",
 				"value": 50
@@ -1080,7 +1127,7 @@
 						"value": false
 					}
 				],
-				"order": 122,
+				"order": 123,
 				"text": "&emsp;小時格式",
 				"type": "combo",
 				"value": true
@@ -1091,6 +1138,179 @@
 				"text": "啟用時鐘",
 				"type": "bool",
 				"value": true
+			},
+			"panel_logo$type" : 
+			{
+				"condition" : "list.value==\"all\" || list.value==\"logo\"",
+				"order" : 400,
+				"text" : "啟用標誌",
+				"type" : "bool",
+				"value" : true
+			},
+            "panel_logo$image" : 
+			{
+				"condition" : "panel_logo$type.value == true && (list.value==\"all\" || list.value==\"logo\")",
+				"order" : 401,
+				"text" : "圖片設置",
+				"type" : "file"
+			},
+			"panel_logo$border" : 
+			{
+				"condition" : "panel_logo$type.value == true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"order" : 406,
+				"text" : "邊框設置",
+				"type" : "bool",
+				"value" : false
+			},
+			"panel_logo$border_width" : 
+			{
+				"condition" : "panel_logo$type.value == true && panel_logo$border.value == true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"max" : 10,
+				"min" : 1,
+				"order" : 407,
+				"text" : "&emsp;邊框寬度<sub>px</sub>",
+				"type" : "slider",
+				"value" : 2
+			},
+			"panel_logo$border_opacity" : 
+			{
+				"condition" : "panel_logo$type.value == true && panel_logo$border.value == true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"max" : 100,
+				"min" : 1,
+				"order" : 408,
+				"text" : "&emsp;邊框透明度<sub>%</sub>",
+				"type" : "slider",
+				"value" : 100
+			},
+			"panel_logo$border_color" : 
+			{
+				"condition" : "panel_logo$type.value == true && panel_logo$border.value == true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"order" : 409,
+				"text" : "&emsp;邊框顏色",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+			"panel_logo$pos" : 
+			{
+				"condition" : "panel_logo$type.value == true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"options" : 
+				[
+					{
+						"label" : "百分比模式",
+						"value" : "pc"
+					},
+					{
+						"label" : "像素模式",
+						"value" : "px"
+					}
+				],
+				"order" : 410,
+				"text" : "位置設置",
+				"type" : "combo",
+				"value" : "pc"
+			},
+			"panel_logo$pos_pc_x" : 
+			{
+				"condition" : "panel_logo$type.value==true && panel_logo$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"max" : 100,
+				"min" : 0,
+				"precision": 1,
+				"step": 0.10000000000000001,
+				"order" : 411,
+				"text" : "&emsp;左右位置<sub>%</sub>",
+				"type" : "slider",
+				"value" : 50
+			},
+			"panel_logo$pos_pc_y" : 
+			{
+				"condition" : "panel_logo$type.value==true && panel_logo$pos.value == \"pc\" && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"max" : 100,
+				"min" : 0,
+				"precision": 1,
+				"step": 0.10000000000000001,
+				"order" : 412,
+				"text" : "&emsp;上下位置<sub>%</sub>",
+				"type" : "slider",
+				"value" : 50
+			},
+			"panel_logo$pos_px_x" : 
+			{
+				"condition" : "panel_logo$type.value==true && panel_logo$pos.value == \"px\" && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"order" : 411,
+				"text" : "&emsp;左右位置<sub>px</sub>",
+				"type" : "textinput",
+				"value" : "0"
+			},
+			"panel_logo$pos_px_y" : 
+			{
+				"condition" : "panel_logo$type.value==true && panel_logo$pos.value == \"px\" && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"order" : 412,
+				"text" : "&emsp;上下位置<sub>px</sub>",
+				"type" : "textinput",
+				"value" : "0"
+			},
+			"panel_logo$shadow_setting" : 
+			{
+				"condition" : "panel_logo$type.value==true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"order" : 413,
+				"text" : "光暈設置"
+			},
+			"panel_logo$shadow_type" : 
+			{
+				"condition" : "panel_logo$type.value==true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"order" : 414,
+				"text" : "&emsp;光暈區塊",
+				"options" : 
+				[
+					{
+						"label" : "不透明區域",
+						"value" : "drop_shadow"
+					},
+					{
+						"label" : "矩形區域",
+						"value" : "box_shadow"
+					}
+				],
+				"type" : "combo",
+				"value" : "box_shadow"
+			},
+			"panel_logo$shadow_size" : 
+			{
+				"condition" : "panel_logo$type.value==true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$shadow_type.value==\"box_shadow\"",
+				"max" : 16,
+				"min" : 0,
+				"order" : 415,
+				"text" : "&emsp;大小設置<sub>px</sub>",
+				"type" : "slider",
+				"value" : 0
+			},
+			"panel_logo$shadow_blur" : 
+			{
+				"condition" : "panel_logo$type.value==true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"max" : 16,
+				"min" : 0,
+				"order" : 416,
+				"text" : "&emsp;模糊程度<sub>px</sub>",
+				"type" : "slider",
+				"value" : 0
+			},
+			"panel_logo$shadow" : 
+			{
+				"condition" : "panel_logo$type.value==true && (panel_logo$shadow_blur.value!=0 || panel_logo$shadow_size.value!=0) && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"order" : 417,
+				"text" : "&emsp;顏色",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+            "panel_logo$image_size" : 
+			{
+				"condition" : "panel_logo$type.value==true && (list.value==\"all\" || list.value==\"logo\") && panel_logo$image.value!=\"\"",
+				"max" : 150,
+				"min" : 10,
+				"order" : 402,
+				"text" : "&emsp;圖片大小<sub>%</sub>",
+				"type" : "slider",
+				"value" : 100
 			},
 			"schemecolor": {
 				"condition": "dev.value == true",

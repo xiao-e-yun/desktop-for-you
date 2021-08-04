@@ -62,7 +62,7 @@ const clock_opt = {
         date:undefined as number,
     },
     remind: {
-        run: newFunction(),
+        run: undefined as boolean,
         type:undefined as string,
         color:undefined as string,
     },
@@ -101,17 +101,41 @@ const audv = {
 interface Panel {
     id: string,
     dom:JQuery<HTMLDivElement>,
-    bg:any,
-    bor:any,
-    pos:any,
-    shadow:any,
+    bg:{
+        type:string,
+        blur:number,
+        opc:number,
+        color:Array<number>,
+        img:string,
+    },
+    bor:{
+        type:string,
+        width:number,
+        color:Array<number>,
+        opc:number,
+    },
+    pos:{
+        type:string,
+        pc_x:string,
+        pc_y:string,
+        px_x:string,
+        px_y:string,
+    },
+    shadow:{
+        type:string,
+        blur:string,
+        size:string,
+        color:string,
+    },
+    color:string,
     display:(type:boolean)=>void,
-    css:(type:string)=>void,
+    css:(type:string|{[css_key:string]:string})=>void,
     chg:(type:any)=>void,
 }
 const panel = {
     clock:undefined as Panel,
     cal:undefined as Panel,
+    logo:undefined as Panel,
 
     RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm,
     set:undefined as (pan:string, type:string, val:any)=>void,
@@ -176,6 +200,7 @@ window.requestAnimationFrame(fx.fps.run);
 //================================創建面板================================
 panel.creat("clock") //時鐘
 panel.creat("cal") //日曆
+panel.creat("logo") //標誌
 //==================================監聽==================================
 window["wallpaperPropertyListener"] = {
     //▲-------------------------監聽暫停-------------------------▲
@@ -342,21 +367,21 @@ $(() => {
 
     }
 })
-function newFunction() {
-    return false;
-}
 
 //==================================函式==================================
 
 //讀取顏色
-function get_color(data: string, type?: boolean): any {
+function get_color(data: string, type:true):string
+function get_color(data: string, type?:false):Array<number>
+function get_color(data: string, type?: boolean): string|Array<number> {
     let color = data.split(' ');
     if (type) { //轉RGB格式
         return 'rgb(' + color.map(function (c: any) { return Math.ceil(c * 255) }) + ')';
     } else { //轉數組
         return color.map(function (c: any) { return Math.ceil(c * 255) });
     }
-}
+} 
+
 //顏色+透明度 => RGBA
 function to_rgba(color: number[] | string, opacity: number): string {
     return "rgba(" + color + "," + opacity + ")"
