@@ -19,7 +19,7 @@ body {
     height: 100%;
     margin: 0;
     overflow: hidden;
-    & > div {
+    & > div ,.panel {
         position: fixed;
         background-size: cover;
         border-style: solid;

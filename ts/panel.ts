@@ -202,16 +202,17 @@ panel.set = function (this: typeof panel, pan, type, val) { //this = panel
             const logo = this.logo
             switch (type) {
                 case ("image"):
-                    let html:string
+                    let src:string
                     if(val === "" || val === null){
-                        html = val
-                    }else{
-                        html = /*html*/`<img src="file:///${val}"/>`
+                        src = "data:,"
+                    }else{ 
+                        src = `file:///${val}`
                     }
-                    logo.dom.html(html)
+                    const tag = logo.dom[0] as HTMLImageElement
+                    tag.src = src
                     break;
                 case ("image_size"):
-                    logo.dom.children().css({ "width": val + "%", "height": val + "%" })
+                    logo.css({ "height": val + "%"})
             }
             break;
     }

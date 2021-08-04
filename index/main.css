@@ -21,7 +21,7 @@ body {
   margin: 0;
   overflow: hidden;
 }
-body > div {
+body > div, body .panel {
   position: fixed;
   background-size: cover;
   border-style: solid;
