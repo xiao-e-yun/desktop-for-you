@@ -79,6 +79,10 @@ body > div {
 }
 
 /*特效*/
+#audv {
+  color: #00000000;
+}
+
 canvas,
 video {
   position: fixed;
