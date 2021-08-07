@@ -1,4 +1,5 @@
 "use strict";
+console.log("main settings is load!");
 //==================================變數==================================
 const bg = {};
 //特效設定
@@ -7,13 +8,14 @@ const fx = {
         fixed: 0,
         last: performance.now() / 1000,
         fpsThreshold: 0,
-        req: null,
+        req: 0,
         run: function () {
             // 刷新畫面
             fx.fps.req = window.requestAnimationFrame(fx.fps.run);
             // 計算時差
-            var now = performance.now() / 1000; // 
-            var dt = now - fx.fps.last;
+            let now = performance.now() / 1000; // 
+            let dt = now - fx.fps.last;
+            let stop = false;
             fx.fps.last = now;
             // FPS LIMIT IMPLEMENTATION HERE
             if (fx.fps.fixed > 0) {
@@ -21,7 +23,7 @@ const fx = {
                 if (fx.fps.fpsThreshold < 1.0 / fx.fps.fixed) {
                     window.cancelAnimationFrame(fx.fps.req);
                     setTimeout(() => { fx.fps.req = window.requestAnimationFrame(fx.fps.run); }, fx.fps.fpsThreshold * 1000);
-                    var stop = true;
+                    stop = true;
                 }
                 else {
                     fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
@@ -36,6 +38,12 @@ const fx = {
             }
         }
     },
+    wec: {
+        "brs": 50,
+        "con": 50,
+        "hue": 50,
+        "sa": 50,
+    },
     sakura: {
         chg_opc: function () {
             if (fx.sakura.tmp && fx.sakura.type) {
@@ -44,7 +52,7 @@ const fx = {
         },
         type: false,
         tmp: false,
-        opacity: Number,
+        opacity: null,
     },
     dom: false,
 };
@@ -52,52 +60,54 @@ const fx = {
 const clock_opt = {
     time: {
         AM_PM: "",
-        new_sec: undefined,
-        mon: undefined,
-        hr: undefined,
-        min: undefined,
-        sec: undefined,
-        date: undefined,
+        new_sec: 0,
+        mon: 0,
+        hr: 0,
+        min: 0,
+        sec: 0,
+        date: 0,
     },
     remind: {
-        run: undefined,
-        type: undefined,
-        color: undefined,
+        run: false,
+        type: "",
+        color: "",
     },
     day: {
         lang: "zh",
         zh: [
             "日", "一", "二", "三", "四", "五", "六"
         ],
-        us: [
+        en: [
             "&nbsp;Sun", "&nbsp;Mon", "Tues", "&nbsp;Wed", "Thur", "&nbsp;Fri", "&nbsp;Sat"
         ],
     },
-    type: undefined,
-    color: undefined,
-    twelve_hour: undefined,
-    show_sec: undefined,
-    show_week: undefined,
+    type: "",
+    color: "",
+    twelve_hour: false,
+    show_sec: false,
+    show_week: false,
 };
-//音效可視化
 const audv = {
+    audio: [],
     opt: {},
     run: undefined,
     set: undefined,
     reload: undefined,
     tmp: false,
-    maintmp: undefined
+    maintmp: {}
 };
+//快取DOM
+const DOMcache = {};
 const panel = {
-    clock: undefined,
-    cal: undefined,
-    logo: undefined,
+    items: {},
     RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm,
     set: undefined,
     creat: function (_id) {
-        this[_id] = {
+        // 新增新的面板
+        this.items[_id] = {
             id: _id,
             dom: $("#" + _id),
+            color: "",
             bg: {},
             bor: {},
             pos: {},
@@ -105,8 +115,8 @@ const panel = {
             display: function (bool) {
                 this.dom[bool ? "fadeIn" : "fadeOut"]();
             },
-            css: function (set) {
-                this.dom.css(set);
+            css: function (style) {
+                this.dom.css(style);
             },
             chg: function (type) {
                 switch (type) {
@@ -157,8 +167,7 @@ window.requestAnimationFrame(fx.fps.run);
 panel.creat("clock"); //時鐘
 panel.creat("cal"); //日曆
 panel.creat("logo"); //標誌
-//==================================監聽==================================
-window["wallpaperPropertyListener"] = {
+window.wallpaperPropertyListener = {
     //▲-------------------------監聽暫停-------------------------▲
     setPaused: function (isPaused) {
         if (!isPaused) { //重新啟動
@@ -177,19 +186,91 @@ window["wallpaperPropertyListener"] = {
     //▲-------------------------監聽用戶設定-------------------------▲
     applyUserProperties: function (user) {
         if (fx.dom) { //等待DOM加載完成
-            apply_setting(user);
+            window.apply_setting(user);
         }
         else {
             console.log("DOM need ready!");
-            $(() => { apply_setting(user); });
+            $(() => { window.apply_setting(user); });
         }
     }
 };
 $(() => {
     fx.dom = true;
-    window["apply_setting"] = function (user) {
+    window.apply_setting = function (user) {
+        //==================================翻轉==================================
+        function change_wec() {
+            const el = DOMcache.wec_style || (() => {
+                const el = document.createElement("style");
+                el.id = "wec_style";
+                DOMcache.wec_style = el;
+                return document.body.appendChild(el);
+            })();
+            let style = "";
+            for (const [key, val] of Object.entries(fx.wec)) {
+                if (val === 50) {
+                    continue;
+                }
+                switch (key) {
+                    case ("brs"): //亮度
+                        let brightness = val / 50;
+                        style += `brightness(${brightness}) `;
+                        break;
+                    case ("con"): //對比度
+                        let contrast = val / 50;
+                        style += `contrast(${contrast}) `;
+                        break;
+                    case ("sa"): //色相偏差
+                        let saturate = val / 50;
+                        style += `saturate(${saturate}) `;
+                        break;
+                    case ("hue"): //飽和度
+                        let hue_rotate = ((val - 50) / 50) * 360;
+                        style += `hue-rotate(${hue_rotate}deg) `;
+                        break;
+                }
+            }
+            el.innerHTML = style === "" ? "" : `html{filter:${style};}`;
+        }
+        let new_wec = false;
+        if (user.wec_brs) {
+            fx.wec.brs = user.wec_brs.value;
+            new_wec = true;
+        }
+        if (user.wec_con) {
+            fx.wec.con = user.wec_con.value;
+            new_wec = true;
+        }
+        if (user.wec_hue) {
+            fx.wec.hue = user.wec_hue.value;
+            new_wec = true;
+        }
+        if (user.wec_sa) {
+            fx.wec.sa = user.wec_sa.value;
+            new_wec = true;
+        }
+        if (new_wec)
+            change_wec();
+        if (user.alignmentfliph) {
+            const val = user.alignmentfliph.value;
+            const el = document.getElementById("alignmentfliph") || (() => {
+                const el = document.createElement("style");
+                el.id = "alignmentfliph";
+                return document.body.appendChild(el);
+            })();
+            if (val) {
+                el.innerHTML =
+                    "body>div{" +
+                        "transform:rotateY(180deg);";
+                "}";
+            }
+            else {
+                el.innerHTML = "";
+            }
+        }
         //==================================背景==================================
-        let body = $("body");
+        const body = DOMcache.body || (() => {
+            return DOMcache.body = $("body");
+        })();
         function change_bg() {
             body.css({
                 "background-image": "",
@@ -218,7 +299,8 @@ $(() => {
                             $("body").append("<video id=\"bg_video\" src=\"\" loop autoplay></video>");
                             bg.video_tmp = true;
                         }
-                        $("#bg_video")[0]["src"] = "file:///" + bg.video_file;
+                        const bg_video = document.getElementById("bg_video");
+                        bg_video.src = "file:///" + bg.video_file;
                     }
                     break;
                 case ("bing_api"):
@@ -274,7 +356,10 @@ $(() => {
                     fx.sakura.tmp = true;
                 }
             }
-            $("#sakura")[val ? "fadeIn" : "fadeOut"]();
+            const sakura = DOMcache.sakura || (() => {
+                return DOMcache.sakura = $("#sakura");
+            })();
+            sakura[val ? "fadeIn" : "fadeOut"]();
             fx.sakura.type = val;
             fx.sakura.chg_opc();
         }
@@ -301,14 +386,21 @@ $(() => {
                     }
                     audv.opt[main] = val;
                     if (audv.tmp) {
-                        audv.set(main);
+                        audv.set("main");
                     }
                     // 在json添加| audio_visualization$類型 |
                 }
                 //==================================面板==================================
                 if ($key.indexOf("panel_") === 0) { //驗證是否為面板
-                    let key = panel.RegExp.exec($key).groups;
-                    let val = $val["value"];
+                    const exec = panel.RegExp.exec($key);
+                    if (exec === null) {
+                        return;
+                    }
+                    const key = exec.groups;
+                    if (key === undefined) {
+                        return;
+                    }
+                    const val = $val["value"];
                     panel.RegExp.lastIndex = 0;
                     panel.set(key.panel, key.type, val);
                 }

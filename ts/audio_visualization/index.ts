@@ -1,19 +1,29 @@
-declare let wallpaperRegisterAudioListener:any
+interface JQuery {
+    "visualizerBars":
+        (() => void) &
+        ((mode: "set", key: keyof audv_opt_type, val: any) => void) & 
+        ((mode: "drawCanvas", key?: Float32Array[]) => void),
+    "visualizerCircle":
+        (() => void) &
+        ((mode: "set", key: keyof audv_opt_type, val: any) => void) & 
+        ((mode: "drawCanvas", key?: Float32Array[]) => void),
+}
+declare const wallpaperRegisterAudioListener: (callback: (audio: Float32Array[]) => void) => void
 
 console.log("audio-visualization settings is load!")
 console.log("jQuery AudioVisualizer Bars v0.0.15\njQuery AudioVisualizer  Circle v0.0.20\n\nproject form \n  https://github.com/Alice-Jie/AudioVisualizer\n  https://gitee.com/Alice_Jie/circleaudiovisualizer\n  https://steamcommunity.com/sharedfiles/filedetails/?id=921617616\n\nLICENSE MIT licensed\nAUTHOR Alice\nDATE 2018/08/17")
 let sel = $("#audv")
 audv.set = function (type) {
     let val = audv.opt[type]
-    function turn($key,$val = val) {
-        if (audv.maintmp && audv.maintmp.strip){sel["visualizerBars"]("set", $key, $val)};
-        if (audv.maintmp && audv.maintmp.round){sel["visualizerCircle"]("set", $key, $val)};
+    function turn($key: keyof audv_opt_type, $val = val) {
+        if (audv.maintmp && audv.maintmp.strip && sel.visualizerBars) { sel.visualizerBars("set", $key, $val) };
+        if (audv.maintmp && audv.maintmp.round && sel.visualizerCircle) { sel.visualizerCircle("set", $key, $val) };
     }
     if (type === "type") {
         wallpaperRegisterAudioListener((audio) => { this.audio = audio });
         sel[val ? "fadeIn" : "fadeOut"]()
+        sel.fadeIn()
     } else if (type === "maintype") {
-        if (!this.maintmp) { this.maintmp = {} }
         let tmp = this.maintmp
         if (val == "strip" && !tmp.strip) {
             $.getScript("audio_visualization/jquery.audiovisualizer.bars.js", () => {
@@ -31,16 +41,16 @@ audv.set = function (type) {
         }
         $("#canvas-visualizerBars")[val == "strip" ? "fadeIn" : "fadeOut"]()
         $("#canvas-visualizerCircle")[val == "round" ? "fadeIn" : "fadeOut"]()
-        }
+    }
 
-        if(type === "colorMode" && val === "monochrome"){turn("color",get_color(audv.opt.color).join(","))}
+    if (type === "colorMode" && val === "monochrome") { turn("color", get_color(audv.opt.color).join(",")) }
 
-        switch(type){//顏色
-            case("color"):
-            case("shadowColor"):
+    switch (type) {//顏色
+        case ("color"):
+        case ("shadowColor"):
             val = get_color(val).join(",")
-        }
-        turn(type) 
+    }
+    turn(type)
 }
 audv.reload = function () {
     Object.keys(this.opt).forEach(($key) => {

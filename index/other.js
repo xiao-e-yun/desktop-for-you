@@ -1,6 +1,9 @@
 "use strict";
 console.log("other settings is load!");
 var timer = {
+    cal: false,
+    clock: false,
+    sys: 0,
     type: false,
     run_time: 0,
     set: function () {
@@ -14,14 +17,14 @@ var timer = {
         else {
             if (this.type == true) {
                 clearInterval(this.sys);
+                this.type = false;
             }
-            this.type = false;
         }
     },
     run: function (opt = false) {
         var time = new Date();
         if (timer["clock"]) { //時鐘
-            var $clock = panel.clock.dom;
+            var $clock = panel.items.clock.dom;
             var setting = clock_opt.time;
             setting.new_sec = time.getSeconds();
             function clock_remind() {

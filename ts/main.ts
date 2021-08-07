@@ -1,12 +1,13 @@
-﻿//==================================變數==================================
+﻿console.log("main settings is load!")
+//==================================變數==================================
 const bg = {} as {
-    type:"color"|"image"|"video"|"bing_api",
-    color:string,
-    img_type:string,
-    img_file:string,
-    img_url:string,
-    video_file:string,
-    video_tmp:boolean,
+    type: "color" | "image" | "video" | "bing_api",
+    color: string,
+    img_type: "file" | "url",
+    img_file: string,
+    img_url: string,
+    video_file: string,
+    video_tmp: boolean,
 }
 //特效設定
 const fx = {
@@ -14,29 +15,37 @@ const fx = {
         fixed: 0,
         last: performance.now() / 1000,
         fpsThreshold: 0,
-        req: null,
+        req: 0,
         run: function () {
             // 刷新畫面
             fx.fps.req = window.requestAnimationFrame(fx.fps.run);
             // 計算時差
-            var now = performance.now() / 1000; // 
-            var dt = now - fx.fps.last;
-            fx.fps.last = now;
+            let now = performance.now() / 1000 // 
+            let dt = now - fx.fps.last
+            let stop = false
+
+            fx.fps.last = now
             // FPS LIMIT IMPLEMENTATION HERE
             if (fx.fps.fixed > 0) {
-                fx.fps.fpsThreshold += dt;
+                fx.fps.fpsThreshold += dt
                 if (fx.fps.fpsThreshold < 1.0 / fx.fps.fixed) {
                     window.cancelAnimationFrame(fx.fps.req)
                     setTimeout(() => { fx.fps.req = window.requestAnimationFrame(fx.fps.run) }, fx.fps.fpsThreshold * 1000)
-                    var stop = true
+                    stop = true
                 } else {
-                    fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed;
+                    fx.fps.fpsThreshold -= 1.0 / fx.fps.fixed
                 }
             }
             //執行
             if (typeof (animate) == "function" && fx.sakura.type && !stop) { animate() }
             if (typeof (audv.run) == "function" && audv.opt.type && !stop) { audv.run() }
         }
+    },
+    wec: {
+        "brs": 50 as number,
+        "con": 50 as number,
+        "hue": 50 as number,
+        "sa": 50 as number,
     },
     sakura: {//櫻花
         chg_opc: function () {
@@ -46,114 +55,118 @@ const fx = {
         },
         type: false,
         tmp: false,
-        opacity:Number,
+        opacity: null as unknown as number,
     },
-    dom:false,
+    dom: false,
 }
 //時鐘設定
 const clock_opt = {
     time: {
         AM_PM: "",
-        new_sec:undefined as number,
-        mon:undefined as number,
-        hr:undefined as number,
-        min:undefined as number,
-        sec:undefined as number,
-        date:undefined as number,
+        new_sec: 0,
+        mon: 0,
+        hr: 0,
+        min: 0,
+        sec: 0,
+        date: 0,
     },
     remind: {
-        run: undefined as boolean,
-        type:undefined as string,
-        color:undefined as string,
+        run: false,
+        type: "",
+        color: "",
     },
     day: {
-        lang: "zh",
+        lang: "zh" as "zh" | "en",
         zh: [ //中文
             "日", "一", "二", "三", "四", "五", "六"
         ],
-        us: [ //英文縮寫
+        en: [ //英文縮寫
             "&nbsp;Sun", "&nbsp;Mon", "Tues", "&nbsp;Wed", "Thur", "&nbsp;Fri", "&nbsp;Sat"
         ],
     },
-    type:undefined as string,
-    color:undefined as string,
-    twelve_hour:undefined as boolean,
-    show_sec:undefined as boolean,
-    show_week:undefined as boolean,
+    type: "",
+    color: "",
+    twelve_hour: false,
+    show_sec: false,
+    show_week: false,
 }
 //音效可視化
+interface audv_opt_type {
+    [opt: string]: any,
+    maintype: "strip" | "round"
+}
 const audv = {
-    opt: {} as {
-        type: string,
-        color: string,
-        maintype:"strip"|"round"
-    },
-    run:undefined as ()=>void,
-    set:undefined as (type: string) => void,
-    reload:undefined as ()=>void,
-    tmp:false as boolean,
-    maintmp:undefined as {
-        "strip":boolean,
-        "round":boolean,
+    audio: [] as Float32Array[],
+    opt: {} as audv_opt_type,
+    run: undefined as unknown as () => void,
+    set: undefined as unknown as (type: keyof audv_opt_type) => void,
+    reload: undefined as unknown as () => void,
+    tmp: false as boolean,
+    maintmp: {} as unknown as {
+        "strip": boolean,
+        "round": boolean,
     }
 }
+//快取DOM
+const DOMcache = {} as {[id: string]: HTMLElement|JQuery<HTMLElement>}
 //==================================面板==================================
 interface Panel {
     id: string,
-    dom:JQuery<HTMLDivElement>,
-    bg:{
-        type:string,
-        blur:number,
-        opc:number,
-        color:Array<number>,
-        img:string,
+    dom: JQuery<HTMLDivElement>,
+    bg: {
+        type: "color" | "img",
+        blur: number,
+        opc: number,
+        color: Array<number>,
+        img: string,
     },
-    bor:{
-        type:string,
-        width:number,
-        color:Array<number>,
-        opc:number,
+    bor: {
+        type: "" | "none",
+        width: number,
+        color: Array<number>,
+        opc: number,
     },
-    pos:{
-        type:string,
-        pc_x:string,
-        pc_y:string,
-        px_x:string,
-        px_y:string,
+    pos: {
+        type: "pc" | "px",
+        pc_x: string,
+        pc_y: string,
+        px_x: string,
+        px_y: string,
     },
-    shadow:{
-        type:string,
-        blur:string,
-        size:string,
-        color:string,
+    shadow: {
+        type: string,
+        blur: string,
+        size: string,
+        color: string,
     },
-    color:string,
-    display:(type:boolean)=>void,
-    css:(type:string|{[css_key:string]:string})=>void,
-    chg:(type:any)=>void,
+    color: string,
+    display: (type: boolean) => void,
+    css: (type: { [css_key: string]: string | number }) => void,
+    chg: (type: "bg" | "bor" | "pos") => void,
 }
+
 const panel = {
-    clock:undefined as Panel,
-    cal:undefined as Panel,
-    logo:undefined as Panel,
+    items: {} as { [item: string]: Panel },
 
     RegExp: /panel_(?<panel>.*)\$(?<type>.*)$/gm,
-    set:undefined as (pan:string, type:string, val:any)=>void,
+    set: undefined as unknown as (pan: string, type: string, val: any) => void,
     creat: function (_id: string) {
-        this[_id] = {
+        // 新增新的面板
+        this.items[_id] = {
             id: _id, //ID
             dom: $("#" + _id), //dom
-            bg: {}, //背景
-            bor: {}, //邊框
-            pos: {}, //位置
-            shadow: {}, //光暈
-            display: function (bool) {//顯示模式
+            color: "", //顏色
+            bg: {} as Panel["bg"], //背景
+            bor: {} as Panel["bor"], //邊框
+            pos: {} as Panel["pos"], //位置
+            shadow: {} as Panel["shadow"], //光暈
+            display: function (bool: boolean) {//顯示模式
                 this.dom[bool ? "fadeIn" : "fadeOut"]()
             },
-            css: function (set) {//修改css
-                this.dom.css(set)
+            css: function (style) {//修改css
+                this.dom.css(style)
             },
-            chg: function (type) {  // 修改背景類型
+            chg: function (type: "bg" | "bor" | "pos") {  // 修改背景類型
                 switch (type) {
                     case ("bg"):
                         if (this.bg.type == "color") { //純色
@@ -202,7 +215,14 @@ panel.creat("clock") //時鐘
 panel.creat("cal") //日曆
 panel.creat("logo") //標誌
 //==================================監聽==================================
-window["wallpaperPropertyListener"] = {
+interface Window {
+    wallpaperPropertyListener: {
+        setPaused: (isPaused: boolean) => void,
+        applyGeneralProperties: (setting: any) => void,
+        applyUserProperties: (user: { [key: string]: any }) => void
+    }
+}
+window.wallpaperPropertyListener = {
     //▲-------------------------監聽暫停-------------------------▲
     setPaused: function (isPaused) {
         if (!isPaused) {//重新啟動
@@ -210,7 +230,7 @@ window["wallpaperPropertyListener"] = {
         }
         // else
         // { //已暫停
-        
+
         // }
     },
     //▲-------------------------監聽系統設定-------------------------▲
@@ -221,22 +241,82 @@ window["wallpaperPropertyListener"] = {
 
     },
     //▲-------------------------監聽用戶設定-------------------------▲
-    applyUserProperties: function (user) {
+    applyUserProperties: function (user: { [key: string]: { value: any } }) {
         if (fx.dom) {//等待DOM加載完成
-            apply_setting(user)
+            window.apply_setting(user)
         } else {
             console.log("DOM need ready!")
-            $(() => {apply_setting(user) })
+            $(() => { window.apply_setting(user) })
         }
     }
 };
 
-declare let apply_setting:(user:any)=>void
+interface Window {
+    apply_setting: (setting: { [key: string]: { value: any } }) => void;
+}
 $(() => {
     fx.dom = true
-    window["apply_setting"] = function(user:any): void {
+    window.apply_setting = function (user: { [key: string]: { value: any } }): void {
+        //==================================翻轉==================================
+        function change_wec() {
+            const el = DOMcache.wec_style as HTMLStyleElement || (() => {
+                const el = document.createElement("style")
+                el.id = "wec_style"
+                DOMcache.wec_style = el 
+                return document.body.appendChild(el)
+            })()
+
+            let style = ""
+            for (const [key, val] of Object.entries(fx.wec)) {
+                if (val === 50) { continue }
+                switch (key) {
+                    case ("brs")://亮度
+                        let brightness = val / 50
+                        style += `brightness(${brightness}) `
+                        break
+                    case ("con")://對比度
+                        let contrast = val / 50
+                        style += `contrast(${contrast}) `
+                        break
+                    case ("sa")://色相偏差
+                        let saturate = val / 50
+                        style += `saturate(${saturate}) `
+                        break
+                    case ("hue")://飽和度
+                        let hue_rotate = ((val - 50) / 50) * 360
+                        style += `hue-rotate(${hue_rotate}deg) `
+                        break
+                }
+            }
+            el.innerHTML = style === "" ? "" : `html{filter:${style};}`
+        }
+        let new_wec = false
+        if (user.wec_brs) { fx.wec.brs = user.wec_brs.value; new_wec = true }
+        if (user.wec_con) { fx.wec.con = user.wec_con.value; new_wec = true }
+        if (user.wec_hue) { fx.wec.hue = user.wec_hue.value; new_wec = true }
+        if (user.wec_sa) { fx.wec.sa = user.wec_sa.value; new_wec = true }
+        if (new_wec) change_wec()
+
+        if (user.alignmentfliph) {
+            const val = user.alignmentfliph.value
+            const el = document.getElementById("alignmentfliph") as HTMLStyleElement || (() => {
+                const el = document.createElement("style")
+                el.id = "alignmentfliph"
+                return document.body.appendChild(el)
+            })()
+            if (val) {
+                el.innerHTML =
+                    "body>div{" +
+                    "transform:rotateY(180deg);"
+                "}"
+            } else {
+                el.innerHTML = ""
+            }
+        }
         //==================================背景==================================
-        let body = $("body")
+        const body = DOMcache.body as JQuery<HTMLElement> || (() => {
+            return DOMcache.body = $("body")
+        })()
 
         function change_bg() {
             body.css({
@@ -268,7 +348,8 @@ $(() => {
                             $("body").append("<video id=\"bg_video\" src=\"\" loop autoplay></video>")
                             bg.video_tmp = true
                         }
-                        $("#bg_video")[0]["src"] = "file:///" + bg.video_file
+                        const bg_video = document.getElementById("bg_video") as HTMLVideoElement
+                        bg_video.src = "file:///" + bg.video_file
                     }
                     break;
                 case ("bing_api"):
@@ -324,7 +405,10 @@ $(() => {
                     fx.sakura.tmp = true
                 }
             }
-            $("#sakura")[val ? "fadeIn" : "fadeOut"]()
+            const sakura = DOMcache.sakura as JQuery<HTMLElement> || (() => {
+                return DOMcache.sakura = $("#sakura")
+            })()
+            sakura[val ? "fadeIn" : "fadeOut"]()
             fx.sakura.type = val
             fx.sakura.chg_opc()
         }
@@ -342,7 +426,7 @@ $(() => {
                 //==================================聲音可視化==================================Z
                 let audio = "audio_visualization$"
                 if ($key.indexOf(audio) === 0) {//驗證是否為聲音可視化
-                    let main = $key.slice(audio.length)
+                    let main = $key.slice(audio.length) as string
                     let val = $val["value"]
                     if (main === "type" && val === true && !audv.tmp) {
                         $.getScript("audio_visualization/index.js", () => {
@@ -351,14 +435,17 @@ $(() => {
                         })
                     }
                     audv.opt[main] = val
-                    if (audv.tmp) { audv.set(main); }
+                    if (audv.tmp) { audv.set("main"); }
                     // 在json添加| audio_visualization$類型 |
                 }
 
                 //==================================面板==================================
                 if ($key.indexOf("panel_") === 0) {//驗證是否為面板
-                    let key = panel.RegExp.exec($key).groups
-                    let val = $val["value"]
+                    const exec = panel.RegExp.exec($key)
+                    if (exec === null) { return }
+                    const key = exec.groups
+                    if (key === undefined) { return }
+                    const val = $val["value"]
                     panel.RegExp.lastIndex = 0;
                     panel.set(key.panel, key.type, val)
                 }
@@ -371,16 +458,16 @@ $(() => {
 //==================================函式==================================
 
 //讀取顏色
-function get_color(data: string, type:true):string
-function get_color(data: string, type?:false):Array<number>
-function get_color(data: string, type?: boolean): string|Array<number> {
+function get_color(data: string, type: true): string
+function get_color(data: string, type?: false): Array<number>
+function get_color(data: string, type?: boolean): string | Array<number> {
     let color = data.split(' ');
     if (type) { //轉RGB格式
         return 'rgb(' + color.map(function (c: any) { return Math.ceil(c * 255) }) + ')';
     } else { //轉數組
         return color.map(function (c: any) { return Math.ceil(c * 255) });
     }
-} 
+}
 
 //顏色+透明度 => RGBA
 function to_rgba(color: number[] | string, opacity: number): string {

@@ -786,7 +786,7 @@
 					},
 					{
 						"label" : "英文",
-						"value" : "us"
+						"value" : "en"
 					}
 				],
 				"order" : 222,
@@ -1433,7 +1433,7 @@
 			{
 				"condition" : "dev.value == true",
 				"type" : "bool",
-				"value" : true
+				"value" : false
 			},
 			"wec_hue" : 
 			{
@@ -1460,7 +1460,7 @@
 	"tags" : [ "Relaxing" ],
 	"title" : "精緻桌布",
 	"type" : "Web",
-	"version" : 12,
+	"version" : 13,
 	"visibility" : "public",
 	"workshopid" : "2440585648",
 	"workshopurl" : "steam://url/CommunityFilePage/2440585648"

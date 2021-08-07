@@ -1,7 +1,8 @@
 "use strict";
 console.log("panel settings is load!");
 panel.set = function (pan, type, val) {
-    let $pan = this[pan];
+    // 
+    let $pan = this.items[pan];
     //=================================================================
     //                              基本面板設置
     //=================================================================
@@ -116,7 +117,7 @@ panel.set = function (pan, type, val) {
     switch (pan) {
         //==================================時鐘==================================
         case ("clock"):
-            const clock = this.clock;
+            const clock = this.items.clock;
             switch (type) {
                 case ("type"): //啟用時鐘
                     timer["clock"] = val;
@@ -176,7 +177,7 @@ panel.set = function (pan, type, val) {
             break;
         //==================================日曆==================================
         case ("cal"):
-            const cal = this.cal;
+            const cal = this.items.cal;
             switch (type) {
                 case ("type"): //啟用日曆
                     timer["cal"] = val;
@@ -194,7 +195,7 @@ panel.set = function (pan, type, val) {
             }
             break;
         case ("logo"):
-            const logo = this.logo;
+            const logo = this.items.logo;
             switch (type) {
                 case ("image"):
                     let src;

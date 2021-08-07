@@ -1,7 +1,8 @@
 console.log("panel settings is load!")
 
-panel.set = function (this: typeof panel, pan, type, val) { //this = panel
-    let $pan = this[pan] as Panel
+panel.set = function (pan:string, type:string, val:any) { //this = panel
+    // 
+    let $pan = this.items[pan] as Panel
     //=================================================================
     //                              基本面板設置
     //=================================================================
@@ -121,7 +122,7 @@ panel.set = function (this: typeof panel, pan, type, val) { //this = panel
     switch (pan) {
         //==================================時鐘==================================
         case ("clock"):
-            const clock = this.clock
+            const clock = this.items.clock
             switch (type) {
                 case ("type"): //啟用時鐘
                     timer["clock"] = val;
@@ -181,7 +182,7 @@ panel.set = function (this: typeof panel, pan, type, val) { //this = panel
 
         //==================================日曆==================================
         case ("cal"):
-            const cal = this.cal
+            const cal = this.items.cal
             switch (type) {
                 case ("type"): //啟用日曆
                     timer["cal"] = val;
@@ -199,7 +200,7 @@ panel.set = function (this: typeof panel, pan, type, val) { //this = panel
             }
             break;
         case ("logo"):
-            const logo = this.logo
+            const logo = this.items.logo
             switch (type) {
                 case ("image"):
                     let src:string

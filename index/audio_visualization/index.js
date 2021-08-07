@@ -5,23 +5,21 @@ let sel = $("#audv");
 audv.set = function (type) {
     let val = audv.opt[type];
     function turn($key, $val = val) {
-        if (audv.maintmp && audv.maintmp.strip) {
-            sel["visualizerBars"]("set", $key, $val);
+        if (audv.maintmp && audv.maintmp.strip && sel.visualizerBars) {
+            sel.visualizerBars("set", $key, $val);
         }
         ;
-        if (audv.maintmp && audv.maintmp.round) {
-            sel["visualizerCircle"]("set", $key, $val);
+        if (audv.maintmp && audv.maintmp.round && sel.visualizerCircle) {
+            sel.visualizerCircle("set", $key, $val);
         }
         ;
     }
     if (type === "type") {
         wallpaperRegisterAudioListener((audio) => { this.audio = audio; });
         sel[val ? "fadeIn" : "fadeOut"]();
+        sel.fadeIn();
     }
     else if (type === "maintype") {
-        if (!this.maintmp) {
-            this.maintmp = {};
-        }
         let tmp = this.maintmp;
         if (val == "strip" && !tmp.strip) {
             $.getScript("audio_visualization/jquery.audiovisualizer.bars.js", () => {
