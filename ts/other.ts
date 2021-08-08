@@ -11,7 +11,7 @@ var timer = {
             this.run(true);
             if (this.type == false) {
                 this.type = true
-                this.sys = setInterval(this.run, 500)
+                this.sys = setInterval(this.run, 500) as unknown as number
             }
         } else {
             if (this.type == true) {

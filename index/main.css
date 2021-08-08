@@ -96,6 +96,11 @@ video {
   z-index: 100;
 }
 
+#sakura_shader {
+  display: block;
+  transform: none;
+}
+
 @keyframes rainbow {
   100%, 0% {
     background-color: red;

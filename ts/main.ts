@@ -1,4 +1,8 @@
-﻿console.log("main settings is load!")
+﻿$.ajaxSetup({
+    cache: true
+})
+
+console.log("main settings is load!")
 //==================================變數==================================
 const bg = {} as {
     type: "color" | "image" | "video" | "bing_api",
@@ -37,7 +41,7 @@ const fx = {
                 }
             }
             //執行
-            if (typeof (animate) == "function" && fx.sakura.type && !stop) { animate() }
+            if (typeof (fx.sakura.animate) == "function" && fx.sakura.type && !stop) { fx.sakura.animate() }
             if (typeof (audv.run) == "function" && audv.opt.type && !stop) { audv.run() }
         }
     },
@@ -47,6 +51,10 @@ const fx = {
         "hue": 50 as number,
         "sa": 50 as number,
     },
+    wec_style: {
+        "wec":"",
+        "alignmentfliph":""
+    },
     sakura: {//櫻花
         chg_opc: function () {
             if (fx.sakura.tmp && fx.sakura.type) {
@@ -55,7 +63,10 @@ const fx = {
         },
         type: false,
         tmp: false,
-        opacity: null as unknown as number,
+        opacity: 0 as number,
+
+        onload: undefined as unknown as () => void,
+        animate: undefined as unknown as () => void,
     },
     dom: false,
 }
@@ -108,7 +119,7 @@ const audv = {
     }
 }
 //快取DOM
-const DOMcache = {} as {[id: string]: HTMLElement|JQuery<HTMLElement>}
+const DOMcache = {} as { [id: string]: HTMLElement | JQuery<HTMLElement> }
 //==================================面板==================================
 interface Panel {
     id: string,
@@ -262,7 +273,7 @@ $(() => {
             const el = DOMcache.wec_style as HTMLStyleElement || (() => {
                 const el = document.createElement("style")
                 el.id = "wec_style"
-                DOMcache.wec_style = el 
+                DOMcache.wec_style = el
                 return document.body.appendChild(el)
             })()
 
@@ -283,12 +294,15 @@ $(() => {
                         style += `saturate(${saturate}) `
                         break
                     case ("hue")://飽和度
-                        let hue_rotate = ((val - 50) / 50) * 360
+                        let hue_rotate = ((val - 50) / 50) * 180
                         style += `hue-rotate(${hue_rotate}deg) `
                         break
                 }
             }
-            el.innerHTML = style === "" ? "" : `html{filter:${style};}`
+            
+
+            fx.wec_style.wec = style === "" ? "" : `html{filter:${style};};`
+            el.innerHTML = fx.wec_style.wec + fx.wec_style.alignmentfliph
         }
         let new_wec = false
         if (user.wec_brs) { fx.wec.brs = user.wec_brs.value; new_wec = true }
@@ -299,19 +313,16 @@ $(() => {
 
         if (user.alignmentfliph) {
             const val = user.alignmentfliph.value
-            const el = document.getElementById("alignmentfliph") as HTMLStyleElement || (() => {
+            const el = DOMcache.wec_style as HTMLStyleElement || (() => {
                 const el = document.createElement("style")
-                el.id = "alignmentfliph"
+                el.id = "wec_style"
+                DOMcache.wec_style = el
                 return document.body.appendChild(el)
             })()
-            if (val) {
-                el.innerHTML =
-                    "body>div{" +
-                    "transform:rotateY(180deg);"
-                "}"
-            } else {
-                el.innerHTML = ""
-            }
+
+            const style = val?"body>div{transform:rotateY(180deg);};":""
+            fx.wec_style.alignmentfliph = style
+            el.innerHTML = fx.wec_style.wec + fx.wec_style.alignmentfliph
         }
         //==================================背景==================================
         const body = DOMcache.body as JQuery<HTMLElement> || (() => {
@@ -398,20 +409,31 @@ $(() => {
             let val = user.fx_sakura$type.value
             if (val) {
                 if (!fx.sakura.tmp) {
-                    $.get("sakura/shader.html", (data) => {
-                        $("body").append(data)
-                        sakura_onload()
+                    $.get("fx/sakura/shader.html", (data: string) => {
+                        const el = document.createElement("div")
+                        el.id = "sakura_shader"
+                        el.innerHTML = '<canvas id="sakura"></canvas>'
+                        document.body.appendChild(el)
+                        $.getScript("fx/sakura/main.js", () => {
+                            $(data).appendTo(el)
+                            fx.sakura.onload()
+                        })
                     })
                     fx.sakura.tmp = true
                 }
             }
-            const sakura = DOMcache.sakura as JQuery<HTMLElement> || (() => {
-                return DOMcache.sakura = $("#sakura")
-            })()
-            sakura[val ? "fadeIn" : "fadeOut"]()
+
             fx.sakura.type = val
             fx.sakura.chg_opc()
+
+            const sakura = DOMcache.sakura as JQuery<HTMLElement> || (() => {
+                const el = $("#sakura")
+                if (el.length !== 0) DOMcache.sakura = el
+                return el
+            })()
+            sakura[val ? "fadeIn" : "fadeOut"]()
         }
+
         if (user.fx_sakura$opc) {
             fx.sakura.opacity = user.fx_sakura$opc.value
             fx.sakura.chg_opc()
