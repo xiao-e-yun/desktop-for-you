@@ -586,6 +586,24 @@
 				"type" : "bool",
 				"value" : false
 			},
+			"fx_snow$opc" : 
+			{
+				"condition" : "fx_snow$type.value == true  && (list.value==\"all\" || list.value==\"fx\")",
+				"max" : 100,
+				"min" : 0,
+				"order" : 54,
+				"text" : "&emsp;&emsp;透明度<sub>%</sub>",
+				"type" : "slider",
+				"value" : 95
+			},
+			"fx_snow$type" : 
+			{
+				"condition" : "list.value==\"all\" || list.value==\"fx\"",
+				"order" : 53,
+				"text" : "&emsp;雪花特效",
+				"type" : "bool",
+				"value" : false
+			},
 			"fxinfo" : 
 			{
 				"condition" : "fx.value == true  && (list.value==\"all\" || list.value==\"fx\")",

@@ -33,10 +33,13 @@ const fx = {
                 }
             }
             //執行
-            if (typeof (fx.sakura.animate) == "function" && fx.sakura.type && !stop) {
+            if (fx.sakura.type && fx.sakura.opacity !== 0 && !stop) {
                 fx.sakura.animate();
             }
-            if (typeof (audv.run) == "function" && audv.opt.type && !stop) {
+            if (fx.snow.type && fx.snow.opacity !== 0 && !stop) {
+                fx.snow.animate();
+            }
+            if (audv.opt.type && !stop) {
                 audv.run();
             }
         }
@@ -54,15 +57,31 @@ const fx = {
     sakura: {
         chg_opc: function () {
             if (fx.sakura.tmp && fx.sakura.type) {
-                $("#sakura").css("opacity", 1 - this.opacity / 100);
+                $("#sakura").css("opacity", this.opacity / 100);
             }
         },
         type: false,
         tmp: false,
         opacity: 0,
         onload: undefined,
-        animate: undefined,
+        animate: () => { },
     },
+    snow: {
+        chg_opc: function () {
+            if (fx.snow.tmp && fx.snow.type) {
+                const el = $("#snow_shader");
+                el.css("opacity", this.opacity / 100);
+            }
+        },
+        type: false,
+        tmp: false,
+        opacity: 0,
+        onload: undefined,
+        animate: () => { },
+    },
+    /**
+     * @name 等待DOM加載完成
+    **/
     dom: false,
 };
 //時鐘設定
@@ -367,8 +386,6 @@ $(() => {
                     fx.sakura.tmp = true;
                 }
             }
-            fx.sakura.type = val;
-            fx.sakura.chg_opc();
             const sakura = DOMcache.sakura || (() => {
                 const el = $("#sakura");
                 if (el.length !== 0)
@@ -376,10 +393,36 @@ $(() => {
                 return el;
             })();
             sakura[val ? "fadeIn" : "fadeOut"]();
+            fx.sakura.type = val;
+            fx.sakura.chg_opc();
         }
         if (user.fx_sakura$opc) {
             fx.sakura.opacity = user.fx_sakura$opc.value;
             fx.sakura.chg_opc();
+        }
+        if (user.fx_snow$type) {
+            let val = user.fx_snow$type.value;
+            if (val) {
+                if (!fx.snow.tmp) {
+                    $.getScript("fx/snow/main.js", () => {
+                        fx.snow.onload();
+                    });
+                    fx.snow.tmp = true;
+                }
+            }
+            const snow = DOMcache.snow || (() => {
+                const el = $("#snow_shader");
+                if (el.length !== 0)
+                    DOMcache.snow = el;
+                return el;
+            })();
+            snow[val ? "fadeIn" : "fadeOut"]();
+            fx.snow.type = val;
+            fx.snow.chg_opc();
+        }
+        if (user.fx_snow$opc) {
+            fx.snow.opacity = user.fx_snow$opc.value;
+            fx.snow.chg_opc();
         }
         const $key = Object.keys(user);
         if ($key.some((t) => { return t.indexOf("$") != -1; })) {

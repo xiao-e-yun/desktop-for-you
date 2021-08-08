@@ -41,8 +41,9 @@ const fx = {
                 }
             }
             //執行
-            if (typeof (fx.sakura.animate) == "function" && fx.sakura.type && !stop) { fx.sakura.animate() }
-            if (typeof (audv.run) == "function" && audv.opt.type && !stop) { audv.run() }
+            if (fx.sakura.type && fx.sakura.opacity!==0 && !stop) { fx.sakura.animate() }
+            if (fx.snow.type && fx.snow.opacity!==0 && !stop) { fx.snow.animate() }
+            if (audv.opt.type && !stop) { audv.run() }
         }
     },
     wec: {
@@ -52,13 +53,13 @@ const fx = {
         "sa": 50 as number,
     },
     wec_style: {
-        "wec":"",
-        "alignmentfliph":""
+        "wec": "",
+        "alignmentfliph": ""
     },
     sakura: {//櫻花
         chg_opc: function () {
             if (fx.sakura.tmp && fx.sakura.type) {
-                $("#sakura").css("opacity", 1 - this.opacity / 100)
+                $("#sakura").css("opacity", this.opacity / 100)
             }
         },
         type: false,
@@ -66,8 +67,25 @@ const fx = {
         opacity: 0 as number,
 
         onload: undefined as unknown as () => void,
-        animate: undefined as unknown as () => void,
+        animate: ()=>{},
     },
+    snow: {//雪花
+        chg_opc: function () {
+            if (fx.snow.tmp && fx.snow.type) {
+                const el = $("#snow_shader")
+                el.css("opacity", this.opacity / 100)
+            }
+        },
+        type: false,
+        tmp: false,
+        opacity: 0 as number,
+
+        onload: undefined as unknown as () => void,
+        animate: ()=>{},
+    },
+    /**
+     * @name 等待DOM加載完成
+    **/
     dom: false,
 }
 //時鐘設定
@@ -299,7 +317,7 @@ $(() => {
                         break
                 }
             }
-            
+
 
             fx.wec_style.wec = style === "" ? "" : `html{filter:${style};};`
             el.innerHTML = fx.wec_style.wec + fx.wec_style.alignmentfliph
@@ -320,7 +338,7 @@ $(() => {
                 return document.body.appendChild(el)
             })()
 
-            const style = val?"body>div{transform:rotateY(180deg);};":""
+            const style = val ? "body>div{transform:rotateY(180deg);};" : ""
             fx.wec_style.alignmentfliph = style
             el.innerHTML = fx.wec_style.wec + fx.wec_style.alignmentfliph
         }
@@ -423,20 +441,48 @@ $(() => {
                 }
             }
 
-            fx.sakura.type = val
-            fx.sakura.chg_opc()
-
             const sakura = DOMcache.sakura as JQuery<HTMLElement> || (() => {
                 const el = $("#sakura")
                 if (el.length !== 0) DOMcache.sakura = el
                 return el
             })()
             sakura[val ? "fadeIn" : "fadeOut"]()
+
+            fx.sakura.type = val
+            fx.sakura.chg_opc()
         }
 
         if (user.fx_sakura$opc) {
             fx.sakura.opacity = user.fx_sakura$opc.value
             fx.sakura.chg_opc()
+        }
+
+        if (user.fx_snow$type) {
+            let val = user.fx_snow$type.value
+            if (val) {
+                if (!fx.snow.tmp) {
+                    $.getScript("fx/snow/main.js", () => {
+                        fx.snow.onload()
+                    })
+                    fx.snow.tmp = true
+                }
+            }
+
+            const snow = DOMcache.snow as JQuery<HTMLElement> || (() => {
+                const el = $("#snow_shader")
+                if (el.length !== 0) DOMcache.snow = el
+                return el
+            })()
+
+            snow[val ? "fadeIn" : "fadeOut"]()
+
+            fx.snow.type = val
+            fx.snow.chg_opc()
+        }
+
+        if (user.fx_snow$opc) {
+            fx.snow.opacity = user.fx_snow$opc.value
+            fx.snow.chg_opc()
         }
 
         const $key = Object.keys(user)
