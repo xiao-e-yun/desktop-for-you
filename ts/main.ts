@@ -503,7 +503,7 @@ $(() => {
                         })
                     }
                     audv.opt[main] = val
-                    if (audv.tmp) { audv.set("main"); }
+                    if (audv.tmp) { audv.set(main); }
                     // 在json添加| audio_visualization$類型 |
                 }
 

@@ -1,4 +1,5 @@
 (function () {
+    console.log("snow is load!\nsource code from https://69.run/8NXGPw")
 
 	let canvas:HTMLCanvasElement
     let ctx:CanvasRenderingContext2D
@@ -86,5 +87,4 @@
 		points = [] as unknown as typeof points
 		generatePoints(window.innerWidth / 3)
 	}
-
 })()

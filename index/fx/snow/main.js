@@ -1,5 +1,6 @@
 "use strict";
 (function () {
+    console.log("snow is load!\nsource code from https://69.run/8NXGPw");
     let canvas;
     let ctx;
     let points = [];
