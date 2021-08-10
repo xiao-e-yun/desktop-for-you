@@ -227,6 +227,11 @@ exports.default = [
     {
         "name": "其他",
         "id": "other",
-        items: []
+        items: [
+            {
+                "name": `<img title="Steam/工作坊/精緻桌布" src="https://xiaoeyun.me/Qimage/img/%E5%BD%88%E7%8F%A0%E6%B1%BD%E6%B0%B4.png" width="100%"><h4>如果喜歡桌布的話<br>請<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2440585648">Steam</a>上留言評價</h4><br>`,
+                "id": "about",
+            }
+        ]
     }
 ];

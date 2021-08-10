@@ -22,7 +22,7 @@ for (const index of project) {
     //
     const key = "line" + index.id.toUpperCase()
     properties.set_properties(key, {
-        text: "<h2>" + index.name + "修改</h2>",
+        text: "<h2>" + index.name + "設置</h2>",
         root: index.id,
     })
     //
@@ -38,7 +38,7 @@ for (const index of project) {
                     ((typeof index.default !== "undefined") ? index.default as boolean : true),
                     index.hide,
                     index.rep
-                    )
+                )
                 break
         }
     }
@@ -65,7 +65,7 @@ for (const index of project) {
     //
 }
 
-let description = `[h1]兼顧美觀和性能[/h1]
+const description = `[h1]兼顧美觀和性能[/h1]
 整體由可自訂性為核心
 同時採用 "自動包含"
 盡量降低性能損失
@@ -91,10 +91,13 @@ let description = `[h1]兼顧美觀和性能[/h1]
 
 原始碼[url=https://69.run/E3xQ8X]github[/url]`
 
-
+const tips =
+`<h2>重大更新</h2>
+導致部分設定如:背景,特效,少量例外設定<br>
+需要重新設置，十分抱歉 ! <a href="https://steamcommunity.com/sharedfiles/filedetails/changelog/2440585648">更新紀錄</a> ! `
 //整合
-const res = properties.return_project(description, index_list)
-const json_path = path.resolve(__dirname,"../index/project.json")
+const res = properties.return_project(description, tips, index_list)
+const json_path = path.resolve(__dirname, "../index/project.json")
 fs.writeFile(json_path, JSON.stringify(res), (err) => {
     if (err) {
         console.error(err)

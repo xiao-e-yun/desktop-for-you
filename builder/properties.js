@@ -33,8 +33,12 @@ exports.default = {
         this.order++;
         return this.set_properties;
     },
-    return_project(description, index_list) {
+    return_project(description, tips, index_list) {
         const properties = Object.assign(this.properties, {
+            "tips": {
+                "text": tips === "" ? tips : (tips + "<br><hr width=\"150%\">"),
+                "order": -50,
+            },
             "list": {
                 "options": index_list,
                 "order": -2,
