@@ -41,8 +41,8 @@ const fx = {
                 }
             }
             //執行
-            if (fx.sakura.type && fx.sakura.opacity!==0 && !stop) { fx.sakura.animate() }
-            if (fx.snow.type && fx.snow.opacity!==0 && !stop) { fx.snow.animate() }
+            if (fx.sakura.type && fx.sakura.opacity !== 0 && !stop) { fx.sakura.animate() }
+            if (fx.snow.type && fx.snow.opacity !== 0 && !stop) { fx.snow.animate() }
             if (audv.opt.type && !stop) { audv.run() }
         }
     },
@@ -67,7 +67,7 @@ const fx = {
         opacity: 0 as number,
 
         onload: undefined as unknown as () => void,
-        animate: ()=>{},
+        animate: () => { },
     },
     snow: {//雪花
         chg_opc: function () {
@@ -81,7 +81,7 @@ const fx = {
         opacity: 0 as number,
 
         onload: undefined as unknown as () => void,
-        animate: ()=>{},
+        animate: () => { },
     },
     /**
      * @name 等待DOM加載完成
@@ -343,9 +343,165 @@ $(() => {
             el.innerHTML = fx.wec_style.wec + fx.wec_style.alignmentfliph
         }
         //==================================背景==================================
+        const $key = Object.keys(user)
+        if (!$key.some((t) => { return t.indexOf("$") != -1 })) { return }
+        // ============================================================================================
+        //                                   ※switch 大型搜尋設置
+        // ============================================================================================
+        for (const [$key, $val] of Object.entries(user)) {
+
+            if ($val === null || !$val.hasOwnProperty("value")) { continue }
+            const val = $val["value"]
+
+            //==================================聲音可視化==================================
+            const audio = "audio_visualization$"
+            if ($key.indexOf(audio) === 0) {//驗證是否為聲音可視化
+                let main = $key.slice(audio.length) as string
+                if (main === "type" && val === true && !audv.tmp) {
+                    $.getScript("audio_visualization/index.js", () => {
+                        audv.tmp = true
+                        audv.reload()
+                    })
+                }
+                audv.opt[main] = val
+                if (audv.tmp) { audv.set(main); }
+                // 在json添加| audio_visualization$類型 |
+                continue
+            }
+            //==================================面板==================================
+            if ($key.indexOf("panel_") === 0) {//驗證是否為面板
+                const exec = panel.RegExp.exec($key)
+                if (exec === null) { return }
+                const key = exec.groups
+                if (key === undefined) { return }
+                panel.RegExp.lastIndex = 0;
+                panel.set(key.panel, key.type, val)
+                continue
+            }
+            //==================================特效==================================
+            if ($key.indexOf("fx$") === 0) {//驗證是否為聲音可視化
+                const main_and_type = $key.substr(3)
+                const [main, type] = main_and_type.split("$$")
+
+                if (main === "info") { continue }
+                //fx$main$$type
+                fx_switch(main, type, val)
+                continue
+            }
+            //==================================背景==================================
+            if ($key.indexOf("bg$") === 0) {//驗證是否為聲音可視化
+                const type = $key.substr(3)
+                //bg$main
+                bg_switch(type, val)
+                continue
+            }
+        }
+    }
+
+    function fx_switch(main: string, type: string, val: any) {
+        switch (main) {
+            case "sakura":
+                switch (type) {
+                    case "type":
+                        if (val) {
+                            if (!fx.sakura.tmp) {
+                                $.get("fx/sakura/shader.html", (data: string) => {
+                                    const el = document.createElement("div")
+                                    el.id = "sakura_shader"
+                                    el.innerHTML = '<canvas id="sakura"></canvas>'
+                                    document.body.appendChild(el)
+                                    $.getScript("fx/sakura/main.js", () => {
+                                        $(data).appendTo(el)
+                                        fx.sakura.onload()
+                                    })
+                                })
+                                fx.sakura.tmp = true
+                            }
+                        }
+
+                        const sakura = DOMcache.sakura as JQuery<HTMLElement> || (() => {
+                            const el = $("#sakura")
+                            if (el.length !== 0) DOMcache.sakura = el
+                            return el
+                        })()
+                        sakura[val ? "fadeIn" : "fadeOut"]()
+
+                        fx.sakura.type = val
+                        fx.sakura.chg_opc()
+                        break
+                    case "opacity":
+                        fx.sakura.opacity = val
+                        fx.sakura.chg_opc()
+                }
+                break
+            case "snow":
+                switch (type) {
+                    case "type":
+                        if (val) {
+                            if (!fx.snow.tmp) {
+                                $.getScript("fx/snow/main.js", () => {
+                                    fx.snow.onload()
+                                })
+                                fx.snow.tmp = true
+                            }
+                        }
+
+                        const snow = DOMcache.snow as JQuery<HTMLElement> || (() => {
+                            const el = $("#snow_shader")
+                            if (el.length !== 0) DOMcache.snow = el
+                            return el
+                        })()
+
+                        snow[val ? "fadeIn" : "fadeOut"]()
+
+                        fx.snow.type = val
+                        fx.snow.chg_opc()
+                        break
+                    case "opacity":
+                        fx.snow.opacity = val
+                        fx.snow.chg_opc()
+                        break
+                }
+                break
+        }
+    }
+
+    function bg_switch(type: string, val: string) {
         const body = DOMcache.body as JQuery<HTMLElement> || (() => {
             return DOMcache.body = $("body")
         })()
+        switch (type) {
+            case "type":
+                bg.type = val as "video" | "color" | "image" | "bing_api"
+                change_bg()
+                break
+            case "color":
+                bg.color = get_color(val, true)
+                change_bg()
+                break
+            case "image_type":
+                bg.img_type = val as "file" | "url"
+                change_bg()
+                break
+            case "image_file":
+                bg.img_file = (val == "") ? ("background.webp") : ("file:///" + val)
+                change_bg()
+                break
+            case "image_url":
+                if (val.indexOf("https://") === -1 && val.indexOf("http://") === -1) {
+                    val = "https://" + val
+                }
+                bg.img_url = val
+                change_bg()
+                break
+            case "video_file":
+                bg.video_file = unescape(val)
+                change_bg()
+                break
+            case "size":
+                body.css({ "background-size": val })
+                break
+        }
 
         function change_bg() {
             body.css({
@@ -390,136 +546,6 @@ $(() => {
                     break;
             }
         }
-        if (user.background_type) {
-            bg.type = user.background_type.value
-            change_bg()
-        }
-        if (user.background_color) {
-            bg.color = get_color(user.background_color.value, true)
-            change_bg()
-        }
-        if (user.background_image_type) {
-            bg.img_type = user.background_image_type.value
-            change_bg()
-        }
-        if (user.background_image_file) {
-            let val = user.background_image_file.value
-            bg.img_file = (val == "") ? ("background.webp") : ("file:///" + val)
-            change_bg()
-        }
-        if (user.background_image_url) {
-            let val = user.background_image_url.value
-            if (val.indexOf("https://") === -1 && val.indexOf("http://") === -1) {
-                val = "https://" + val
-            }
-            bg.img_url = val
-            change_bg()
-        }
-        if (user.background_video_file) {
-            bg.video_file = unescape(user.background_video_file.value)
-            change_bg()
-        }
-        if (user.background_size) {
-            body.css({ "background-size": user.background_size.value })
-        }
-        //==================================特效==================================
-        if (user.fx_sakura$type) {
-            let val = user.fx_sakura$type.value
-            if (val) {
-                if (!fx.sakura.tmp) {
-                    $.get("fx/sakura/shader.html", (data: string) => {
-                        const el = document.createElement("div")
-                        el.id = "sakura_shader"
-                        el.innerHTML = '<canvas id="sakura"></canvas>'
-                        document.body.appendChild(el)
-                        $.getScript("fx/sakura/main.js", () => {
-                            $(data).appendTo(el)
-                            fx.sakura.onload()
-                        })
-                    })
-                    fx.sakura.tmp = true
-                }
-            }
-
-            const sakura = DOMcache.sakura as JQuery<HTMLElement> || (() => {
-                const el = $("#sakura")
-                if (el.length !== 0) DOMcache.sakura = el
-                return el
-            })()
-            sakura[val ? "fadeIn" : "fadeOut"]()
-
-            fx.sakura.type = val
-            fx.sakura.chg_opc()
-        }
-
-        if (user.fx_sakura$opc) {
-            fx.sakura.opacity = user.fx_sakura$opc.value
-            fx.sakura.chg_opc()
-        }
-
-        if (user.fx_snow$type) {
-            let val = user.fx_snow$type.value
-            if (val) {
-                if (!fx.snow.tmp) {
-                    $.getScript("fx/snow/main.js", () => {
-                        fx.snow.onload()
-                    })
-                    fx.snow.tmp = true
-                }
-            }
-
-            const snow = DOMcache.snow as JQuery<HTMLElement> || (() => {
-                const el = $("#snow_shader")
-                if (el.length !== 0) DOMcache.snow = el
-                return el
-            })()
-
-            snow[val ? "fadeIn" : "fadeOut"]()
-
-            fx.snow.type = val
-            fx.snow.chg_opc()
-        }
-
-        if (user.fx_snow$opc) {
-            fx.snow.opacity = user.fx_snow$opc.value
-            fx.snow.chg_opc()
-        }
-
-        const $key = Object.keys(user)
-        if ($key.some((t) => { return t.indexOf("$") != -1 })) {
-            // ============================================================================================
-            //                                   ※switch 大型搜尋設置
-            // ============================================================================================
-            for (const [$key, $val] of Object.entries(user)) {
-                //==================================聲音可視化==================================Z
-                let audio = "audio_visualization$"
-                if ($key.indexOf(audio) === 0) {//驗證是否為聲音可視化
-                    let main = $key.slice(audio.length) as string
-                    let val = $val["value"]
-                    if (main === "type" && val === true && !audv.tmp) {
-                        $.getScript("audio_visualization/index.js", () => {
-                            audv.tmp = true
-                            audv.reload()
-                        })
-                    }
-                    audv.opt[main] = val
-                    if (audv.tmp) { audv.set(main); }
-                    // 在json添加| audio_visualization$類型 |
-                }
-
-                //==================================面板==================================
-                if ($key.indexOf("panel_") === 0) {//驗證是否為面板
-                    const exec = panel.RegExp.exec($key)
-                    if (exec === null) { return }
-                    const key = exec.groups
-                    if (key === undefined) { return }
-                    const val = $val["value"]
-                    panel.RegExp.lastIndex = 0;
-                    panel.set(key.panel, key.type, val)
-                }
-            }
-        }
-
     }
 })
 

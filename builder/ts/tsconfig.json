@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES2020",
+        "strict": true,
+        "outDir": "..",
+        "allowJs": true
+    },
+    "include": [
+        "*",
+        "**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}
