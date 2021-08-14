@@ -45,8 +45,8 @@
                 let currTime = new Date().getTime();
                 let timeToCall = Math.max(0, 16 - (currTime - lastTime));
                 let id = window.setTimeout(function () {
-                        callback(currTime + timeToCall);
-                    },
+                    callback(currTime + timeToCall);
+                },
                     timeToCall);
                 lastTime = currTime + timeToCall;
                 return id;
@@ -159,7 +159,7 @@
     function getRingArray(audioArray, num) {
         let audioArray1 = [].concat(audioArray) || [];
         let num1 = 3;
-        if (typeof(num) === 'number') {
+        if (typeof (num) === 'number') {
             num1 = Math.max(3, num);
         }
         let max = audioArray1.length - num1;
@@ -435,19 +435,19 @@
 
         let matrix = getTransform(from, to);  // 4x4仿射变换矩阵
         return 'matrix3d(' + function () {
-                let results = [];
-                // XYZ按顺序输出四个参数
-                for (let i = 0; i < 4; i++) {
-                    results.push(function () {
-                        let results1 = [];
-                        for (let j = 0; j < 4; j++) {
-                            results1.push(matrix[j][i].toFixed(20));
-                        }
-                        return results1;
-                    }());
-                }
-                return results;
-            }().join(',') + ')';
+            let results = [];
+            // XYZ按顺序输出四个参数
+            for (let i = 0; i < 4; i++) {
+                results.push(function () {
+                    let results1 = [];
+                    for (let j = 0; j < 4; j++) {
+                        results1.push(matrix[j][i].toFixed(20));
+                    }
+                    return results1;
+                }());
+            }
+            return results;
+        }().join(',') + ')';
     }
 
     // 构造函数和公共方法
@@ -462,8 +462,8 @@
     let VisualizerCircle = function (el, options) {
         this.$el = $(el);
         // 音频参数
-        this.amplitude = options.amplitude * 10;           // 振幅
-        this.decline = ( options.decline / 500 ) + 0.05 ;  // 衰退值 建議.1 ~ .2 ， .05 ~ .25<= (x/500 +.05) x=MAX:100~MIN:0
+        this.amplitude = options.amplitude * 50;           // 振幅
+        this.decline = (options.decline / 500) + 0.05;  // 衰退值 建議.1 ~ .2 ， .05 ~ .25<= (x/500 +.05) x=MAX:100~MIN:0
         this.peak = options.peak;                          // 峰值
         // 圆环参数
         this.isRing = options.isRing;                      // 显示圆环
@@ -471,7 +471,7 @@
         this.isStaticRing = options.isStaticRing;          // 显示静态环
         this.isInnerRing = options.isInnerRing;            // 显示内环
         this.isOuterRing = options.isOuterRing;            // 显示外环
-        this.isLineTo = options.isLineTo;                  // 显示连线
+        this.isLineTo = options.isLineTo;            // 显示连线
         this.lineDirection = options.lineDirection;        // 连线方向
         this.isWave = options.isWave;                      // 显示波浪
         this.waveDirectionCircle = options.waveDirectionCircle;        // 波浪方向
@@ -558,8 +558,8 @@
 
         // 获取最小宽度以及原点XY坐标
         minLength = Math.min(canvasWidth, canvasHeight);
-        originX = canvasWidth * this.offsetX /100;
-        originY = canvasHeight * this.offsetY /100;
+        originX = canvasWidth * this.offsetX / 100;
+        originY = canvasHeight * this.offsetY / 100;
 
         // 初始化originalPos、targetPos
         targetPos = originalPos = [
@@ -760,12 +760,12 @@
             $(canvas).css({
                 'transform-origin': '50% 50%',
                 'transform': perspective
-                + 'translateX(' + canvasWidth * this.translateX + 'px)'
-                + 'translateY(' + canvasHeight * this.translateY + 'px)'
-                + 'scale(' + this.width + ', ' + this.height + ')'
-                + 'skewX(' + this.skewX + 'deg)'
-                + 'skewY(' + this.skewY + 'deg)'
-                + 'rotate3d(' + -mouseY + ',' + mouseX + ',0,' + deg + 'deg)'
+                    + 'translateX(' + canvasWidth * this.translateX + 'px)'
+                    + 'translateY(' + canvasHeight * this.translateY + 'px)'
+                    + 'scale(' + this.width + ', ' + this.height + ')'
+                    + 'skewX(' + this.skewX + 'deg)'
+                    + 'skewY(' + this.skewY + 'deg)'
+                    + 'rotate3d(' + -mouseY + ',' + mouseX + ',0,' + deg + 'deg)'
             });
         },
 
@@ -791,14 +791,14 @@
                     $(canvas).css({
                         'transform-origin': '50% 50%',
                         'transform': perspective
-                        + 'translateX(' + canvasWidth * this.translateX + 'px)'
-                        + 'translateY(' + canvasHeight * this.translateY + 'px)'
-                        + 'scale(' + this.width + ', ' + this.height + ')'
-                        + 'skewX(' + this.skewX + 'deg)'
-                        + 'skewY(' + this.skewY + 'deg)'
-                        + 'rotateX(' + this.rotateX + 'deg)'
-                        + 'rotateY(' + this.rotateY + 'deg)'
-                        + 'rotateZ(' + this.rotateZ + 'deg)'
+                            + 'translateX(' + canvasWidth * this.translateX + 'px)'
+                            + 'translateY(' + canvasHeight * this.translateY + 'px)'
+                            + 'scale(' + this.width + ', ' + this.height + ')'
+                            + 'skewX(' + this.skewX + 'deg)'
+                            + 'skewY(' + this.skewY + 'deg)'
+                            + 'rotateX(' + this.rotateX + 'deg)'
+                            + 'rotateY(' + this.rotateY + 'deg)'
+                            + 'rotateZ(' + this.rotateZ + 'deg)'
                     });
                     break;
                 case 'matrix3d':
@@ -873,9 +873,9 @@
             }
             for (let i = 0; i < audioArray.length; i++) {
                 sinArray[i] = this.waveAmplitude * Math.sin(
-                        sinToken * (Math.PI * 2)
-                        + i * this.groupVelocity * (360 / this.pointNum) * (Math.PI / 180)
-                    );
+                    sinToken * (Math.PI * 2)
+                    + i * this.groupVelocity * (360 / this.pointNum) * (Math.PI / 180)
+                );
             }
             sinToken += this.respiratoryRate;
             return sinArray;
@@ -1153,7 +1153,7 @@
          */
         setRainBow: function (pointNum) {
             let pointNum1 = 3;
-            if (typeof(pointNum) === 'number') {
+            if (typeof (pointNum) === 'number') {
                 pointNum1 = Math.max(3, pointNum);
             }
             let rainBowArray = [];
@@ -1164,7 +1164,7 @@
                 currantH += incrementH;
                 let endH = currantH;
                 currantH += incrementH;
-                rainBowArray.push({startH: startH, endH: endH});
+                rainBowArray.push({ startH: startH, endH: endH });
             }
             return rainBowArray;
         },
@@ -1287,8 +1287,8 @@
                 canvasHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
                 // 获取最小宽度以及原点
                 minLength = Math.min(canvasWidth, canvasHeight);
-                originX = canvasWidth * this.offsetX /100;
-                originY = canvasHeight * this.offsetY /100;
+                originX = canvasWidth * this.offsetX / 100;
+                originY = canvasHeight * this.offsetY / 100;
                 that.updateVisualizerCircle(currantAudioArray);
                 that.drawVisualizerCircle();
             });
@@ -1311,8 +1311,8 @@
          */
         updateVisualizerCircle: function (audioArray) {
             // 更新原点XY坐标
-            originX = canvasWidth * this.offsetX /100;
-            originY = canvasHeight * this.offsetY /100;
+            originX = canvasWidth * this.offsetX / 100;
+            originY = canvasHeight * this.offsetY / 100;
             // 更新并处理音频数组
             currantAudioArray = [].concat(audioArray) || new Array(128);
             this.compareAudioArray();  // 更新lastAudioArray
@@ -1452,21 +1452,21 @@
         drawCanvas: function (audioArray) {
             this.updateVisualizerCircle(audioArray);
             if (// 非静默状态
-            !isSilence(currantAudioArray)
+                !isSilence(currantAudioArray)
                 // 静默特效
-            || (this.isSilenceEffect && isSilence(currantAudioArray) && silenceToken >= silenceTokenMAX)
+                || (this.isSilenceEffect && isSilence(currantAudioArray) && silenceToken >= silenceTokenMAX)
                 // 颜色变换状态
-            || this.colorMode === 'colorTransformation'
+                || this.colorMode === 'colorTransformation'
                 // 彩虹模式且颜色偏移处于激活状态
-            || (this.colorMode === 'rainBow' && this.gradientOffset !== 0)
+                || (this.colorMode === 'rainBow' && this.gradientOffset !== 0)
                 // 蒙版状态
-            || this.isMasking
+                || this.isMasking
                 // 圆环旋转且启用连线模式
-            || (this.ringRotation && this.isLineTo)
+                || (this.ringRotation && this.isLineTo)
                 // 圆环旋转且小球绑定圆环旋转
-            || (this.ringRotation && this.bindRingRotation)
+                || (this.ringRotation && this.bindRingRotation)
                 // 小球旋转
-            || this.ballRotation) {
+                || this.ballRotation) {
                 this.drawVisualizerCircle();
                 redrawToken = redrawTokenMAX;
             } else if (redrawToken > 0) {
@@ -1487,7 +1487,7 @@
         runVisualizerCircleTimer: function () {
             this.stopVisualizerCircleTimer();
             timer = setTimeout(
-                ()=> {
+                () => {
                     // 缺少静态判断
                     this.drawVisualizerCircle();
                     this.runVisualizerCircleTimer();
@@ -1512,7 +1512,7 @@
         set: function (property, value) {
             switch (property) {
                 case 'opacity':
-                    this.opacity = value/100;
+                    this.opacity = value / 100;
                     $(canvas).css('opacity', this.opacity);
                     break;
                 case 'color':
@@ -1551,12 +1551,14 @@
                     setColorObj(color2, this.secondColor);
                     setRGBIncrement();
                     break;
+                case 'amplitude':
+                    this[property] = value * 50;
+                    break;
                 case 'colorMode':
                 case 'isRandomColor':
                 case 'isChangeBlur':
                 case 'gradientOffset':
                 case 'isClickOffset':
-                case 'amplitude':
                 case 'decline':
                 case 'peak':
                 case 'milliSec':
@@ -1564,6 +1566,8 @@
                 case 'degSize':
                     this[property] = value;
                     break;
+                case 'isLineTo$round':
+                    property = 'isLineTo';
                 case 'shadowOverlay':
                 case 'saturationRange':
                 case 'lightnessRange':
@@ -1572,7 +1576,6 @@
                 case 'isMasking':
                 case 'maskOpacity':
                 case 'isRing':
-                case 'isLineTo':
                 case 'isWave':
                 case 'isBall':
                 case 'isStaticRing':

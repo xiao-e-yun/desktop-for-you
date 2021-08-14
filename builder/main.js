@@ -42,7 +42,7 @@ for (const index of project) {
             root: index.id,
             type: item.type,
             value: item.value,
-            condition: item.condition || undefined,
+            condition: item.condition || "",
             //combo
             options: item.options || undefined,
             //slider
@@ -79,9 +79,7 @@ const description = `[h1]兼顧美觀和性能[/h1]
     作品:[url=https://www.pixiv.net/artworks/71994556]囚われの繭[/url]
 
 原始碼[url=https://69.run/E3xQ8X]github[/url]`;
-const tips = `<h2>重大更新</h2>
-導致部分設定如:背景,特效,少量例外設定<br>
-需要重新設置，十分抱歉 ! <a href="https://steamcommunity.com/sharedfiles/filedetails/changelog/2440585648">更新紀錄</a> ! `;
+const tips = ``;
 //整合
 const res = properties.return_project(description, tips, index_list);
 const json_path = path.resolve(__dirname, "../index/project.json");

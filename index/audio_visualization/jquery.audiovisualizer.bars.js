@@ -352,7 +352,7 @@
     let VisualizerBars = function (el, options) {
         this.$el = $(el);
         // 音频参数
-        this.amplitude = options.amplitude * 10; // 振幅
+        this.amplitude = options.amplitude * 50; // 振幅
         this.decline = (options.decline / 500) + 0.05; // 衰退值 建議.1 ~ .2 ， .05 ~ .25<= (x/500 +.05) x=MAX:100~MIN:0
         this.peak = options.peak; // 峰值
         // 条形参数
@@ -1288,6 +1288,8 @@
                     setRGBIncrement();
                     break;
                 case 'amplitude':
+                    this[property] = value * 50;
+                    break;
                 case 'decline':
                 case 'peak':
                 case 'isSilenceEffect':
@@ -1308,6 +1310,8 @@
                     this[property] = value;
                     this.drawVisualizerBars();
                     break;
+                case 'isLineTo$strip':
+                    property = "isLineTo";
                 case 'shadowOverlay':
                 case 'saturationRange':
                 case 'lightnessRange':
@@ -1317,7 +1321,6 @@
                 case 'waveDirectionBars':
                 case 'barsWidth':
                 case 'barsHeight':
-                case 'isLineTo':
                 case 'barsRotation':
                 case 'offsetX':
                 case 'offsetY':

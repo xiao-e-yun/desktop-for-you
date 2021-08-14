@@ -414,7 +414,7 @@
     let VisualizerCircle = function (el, options) {
         this.$el = $(el);
         // 音频参数
-        this.amplitude = options.amplitude * 10; // 振幅
+        this.amplitude = options.amplitude * 50; // 振幅
         this.decline = (options.decline / 500) + 0.05; // 衰退值 建議.1 ~ .2 ， .05 ~ .25<= (x/500 +.05) x=MAX:100~MIN:0
         this.peak = options.peak; // 峰值
         // 圆环参数
@@ -1448,12 +1448,14 @@
                     setColorObj(color2, this.secondColor);
                     setRGBIncrement();
                     break;
+                case 'amplitude':
+                    this[property] = value * 50;
+                    break;
                 case 'colorMode':
                 case 'isRandomColor':
                 case 'isChangeBlur':
                 case 'gradientOffset':
                 case 'isClickOffset':
-                case 'amplitude':
                 case 'decline':
                 case 'peak':
                 case 'milliSec':
@@ -1461,6 +1463,8 @@
                 case 'degSize':
                     this[property] = value;
                     break;
+                case 'isLineTo$round':
+                    property = 'isLineTo';
                 case 'shadowOverlay':
                 case 'saturationRange':
                 case 'lightnessRange':
@@ -1469,7 +1473,6 @@
                 case 'isMasking':
                 case 'maskOpacity':
                 case 'isRing':
-                case 'isLineTo':
                 case 'isWave':
                 case 'isBall':
                 case 'isStaticRing':

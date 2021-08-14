@@ -354,7 +354,7 @@ $(() => {
             const val = $val["value"]
 
             //==================================聲音可視化==================================
-            const audio = "audio_visualization$"
+            const audio = "audv$"
             if ($key.indexOf(audio) === 0) {//驗證是否為聲音可視化
                 let main = $key.slice(audio.length) as string
                 if (main === "type" && val === true && !audv.tmp) {
@@ -365,7 +365,7 @@ $(() => {
                 }
                 audv.opt[main] = val
                 if (audv.tmp) { audv.set(main); }
-                // 在json添加| audio_visualization$類型 |
+                // 在json添加| audv$類型 |
                 continue
             }
             //==================================面板==================================

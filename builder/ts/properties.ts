@@ -20,7 +20,8 @@ export default {
             step?: number,
         }) {
         this.properties[key] = {
-            "condition": `(list.value==="all" || list.value==="${value.root}") ` + ((typeof value.condition === "undefined") ? "" : "&& " + value.condition),
+            "condition": `(list.value==="all" || list.value==="${value.root}") ` + (
+                (value.condition === "" ||typeof value.condition ==="undefined")? "" : "&& " + value.condition),
             "order": this.order,
             "text": value.text + (this.dev?`<sub>${key}</sub>`:''),
             "type": value.type,
@@ -49,12 +50,13 @@ export default {
         return this.set_properties
     },
     return_project(description:string,tips:string,index_list: { label: string; value: string; }[]) {
-        const properties = Object.assign(this.properties, {
-
-            "tips": {
-                "text": tips===""?tips:(tips + "<br><hr width=\"150%\">"),
+        if(tips !== ""){
+            this.properties["tips"] = {
+                "text": tips + "<br><hr width=\"150%\">",
                 "order":-50,
-            },
+            }
+        }
+        const properties = Object.assign(this.properties, {
             "list": {
                 "options": index_list,
                 "order": -2,

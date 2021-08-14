@@ -1,6 +1,5 @@
 const $export = [
     {
-        "condition": "",
         "options": [
             {"長條":"strip"},
             {"圓形":"round"}
@@ -11,21 +10,26 @@ const $export = [
         "id": "maintype"
     },
     {
-        "condition": "",
         "name": "音頻設置",
         "id": "audio_info"
     },
     {
-        "condition": "",
         "max": 100,
         "min": 0,
         "type": "slider",
-        "value": "0.2",
+        "value": 30,
+        "name": "&emsp;振動幅度",
+        "id": "amplitude"
+    },
+    {
+        "max": 100,
+        "min": 0,
+        "type": "slider",
+        "value": 5,
         "name": "&emsp;下落速度",
         "id": "decline"
     },
     {
-        "condition": "",
         "max": 120,
         "min": 2,
         "step": 2,
@@ -35,12 +39,10 @@ const $export = [
         "id": "pointNum"
     },
     {
-        "condition": "",
         "name": "位置設置",
         "id": "pos_info"
     },
     {
-        "condition": "",
         "max": 100,
         "min": 0,
         "precision": 1,
@@ -51,7 +53,6 @@ const $export = [
         "id": "offsetY"
     },
     {
-        "condition": "",
         "max": 100,
         "min": 0,
         "precision": 1,
@@ -62,7 +63,6 @@ const $export = [
         "id": "offsetX"
     },
     {
-        "condition": "",
         "name": "顏色設置",
         "id": "color_info"
     },
@@ -86,7 +86,6 @@ const $export = [
         "id": "color"
     },
     {
-        "condition": "",
         "max": 100,
         "min": 0,
         "type": "slider",
@@ -95,7 +94,6 @@ const $export = [
         "id": "opacity"
     },
     {
-        "condition": "",
         "max": 16,
         "min": 0,
         "type": "slider",
@@ -104,16 +102,38 @@ const $export = [
         "id": "shadowBlur"
     },
     {
-        "condition": "",
         "type": "color",
         "value": "1 1 1",
         "name": "&emsp;&emsp;顏色",
         "id": "shadowColor"
     },
     {
-        "condition": "",
         "name": "基礎設置",
         "id": "setting_info"
+    },
+    {
+        "condition": " && audv$maintype.value == \"strip\"",
+        "info": "長條使用 strip",
+        "type": "bool",
+        "value": true,
+        "name": "&emsp;顯示長條",
+        "id": "isBars"
+    },
+    {
+        "condition": " && audv$maintype.value == \"strip\"",
+        "info": "長條使用 strip",
+        "type": "bool",
+        "value": true,
+        "name": "&emsp;頂點間連線",
+        "id": "isLineTo$strip"
+    },
+    {
+        "condition": " && audv$maintype.value == \"round\"",
+        "info": "圓環使用 round",
+        "type": "bool",
+        "value": true,
+        "name": "&emsp;顯示長條",
+        "id": "isLineTo$round"
     },
     {
         "condition": " && audv$maintype.value == \"round\"",
@@ -161,7 +181,6 @@ const $export = [
         "id": "isOuterRing"
     },
     {
-        "condition": "",
         "info": "共用 all",
         "type": "bool",
         "value": false,
@@ -180,13 +199,6 @@ const $export = [
         "value": "innerRing",
         "name": "&emsp;&emsp;成長方向",
         "id": "waveDirectionCircle"
-    },
-    {
-        "condition": "",
-        "type": "bool",
-        "value": false,
-        "name": "&emsp;隨鼠標3D旋轉",
-        "id": "isRotate3D"
     },
     {
         "condition": " && audv$maintype.value == \"round\"",
@@ -223,7 +235,6 @@ const $export = [
         "id": "bindRingRotation"
     },
     {
-        "condition": "",
         "name": "大小設置",
         "id": "size_info"
     },
@@ -248,7 +259,6 @@ const $export = [
         "id": "barsHeight"
     },
     {
-        "condition": "",
         "info": "共用",
         "options": [
             {"直角":"butt"},
@@ -263,7 +273,7 @@ const $export = [
 ]
 
 $export.forEach((i)=>{
-    i.condition = "audv$type.value == true" + i.condition;
+    i.condition = "audv$type.value == true" + (i.condition||"");
 })
 $export.unshift({
     "type": "bool",
