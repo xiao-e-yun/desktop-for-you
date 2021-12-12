@@ -43,7 +43,7 @@ for (const index of project) {
         }
     }
     //
-    for (const item of index.items as any[]) {
+    for (const item of index.items as any[] || []) {
         const key = tag + "$" + item.id
         properties.set_properties(key, {
             text: item.name,
@@ -91,7 +91,7 @@ const description = `[h1]兼顧美觀和性能[/h1]
 
 原始碼[url=https://69.run/E3xQ8X]github[/url]`
 
-const tips = ``
+const tips = `<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2670119805">精緻桌布v2</a>在此提供，歡迎體驗!`
 //整合
 const res = properties.return_project(description, tips, index_list)
 const json_path = path.resolve(__dirname, "../index/project.json")

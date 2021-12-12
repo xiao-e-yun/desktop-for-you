@@ -1,0 +1,9 @@
+{
+  "name": "config-builder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "BSD-3-clause",
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}
